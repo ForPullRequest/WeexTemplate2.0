@@ -1,0 +1,115 @@
+<template>
+    <div>
+        <list v-if="hasData" id="list">
+            <!-- 当myWidth不写时 在column的场景中refresh和load在iOS会出问题 -->
+            <page-refresh :style="{width:myWidth}" v-if="hasRefresh" ref="pageR" :refreshstatus="refreshliststatus" v-on:onrefresh="refresh"></page-refresh>
+                <slot></slot>
+            <page-load :style="{width:myWidth}" v-if="hasLoad" :loadstatus="loadliststatus" :nomoreload="hasMore" v-on:onload="load"></page-load>
+        </list>
+        <div v-if="!hasData" class="frame center" @click="clickRefresh">
+            <!-- <image style="flex: 1;position: absolute;top: 0;bottom: 0;left: 0;right: 0;" src="back_detail_no_content"></image> -->
+            <image class="noContentImg" :src="noContentImg"></image>
+            <text class="noContentTxt">{{noContentTxt}}</text>
+        </div>
+    </div>
+</template>
+<style scoped>
+.frame{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.center{
+    justify-content: center;
+    align-items: center;
+}
+.noContentImg{
+    height: 320;
+    width: 320;
+}
+.noContentTxt{
+    margin-top: 56;
+    font-size: 34;
+    color: #6C7D8F
+}
+</style>
+<script>
+    const animation = weex.requireModule('animation');
+    module.exports = {
+        props: {
+            hasMore:{
+                default:false
+            },
+            hasData:{
+                default:true
+            },
+            hasRefresh:{
+                default:true
+            },
+            hasLoad:{
+                default:true
+            },
+            noContentImg:{
+                default:'../../images/tmp/components/ic_no_content.png'
+            },
+            noContentTxt:{
+                default:'暂无数据'
+            },
+            myWidth:{
+                default:750
+            }
+        },
+        data(){
+            return {
+                refreshliststatus: 0,
+                loadliststatus: false,
+            }
+        },
+        components: {
+            pageRefresh: require('./UIRefresh.vue'),
+            pageLoad: require('./UILoad.vue'),
+        },
+        methods: {
+            clickRefresh: function () {
+                var self = this;
+                setTimeout(() => {
+                    self.$emit('mrefresh', {isClick:true});
+                }, 200)
+            },
+            refresh: function (val) {
+                var self = this;
+                this.refreshliststatus = val;
+                setTimeout(() => {
+                    self.$emit('mrefresh', {isClick:false});
+                }, 200)
+            },
+            load:function (val) {
+                var self = this;
+                this.loadliststatus = true;
+                setTimeout(() => {
+                    if(!this.hasMore){
+                        self.$emit('mload');
+                    }else{
+                        self.loadliststatus = false;
+                    }
+                }, 400)
+            },
+            endLoad:function(){
+                this.loadliststatus = false;
+            },
+            endRefresh:function(){
+                if(this.$refs.pageR){
+                    this.$refs.pageR.endRefresh();
+                }
+            },
+
+        },
+        created(){
+            
+        }
+    }
+</script>
+
+
