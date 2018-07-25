@@ -22,6 +22,7 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     components: {
         searchT: require('./searchT.vue'),
@@ -31,7 +32,7 @@ export default{
         pageNo:1,
         totalPage:1,
         list:[],//只用于显示
-        noContentImg:'../../images/tmp/components/ic_no_content.png',
+        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
         noContentTxt:'暂无数据',
     }),
     created(){

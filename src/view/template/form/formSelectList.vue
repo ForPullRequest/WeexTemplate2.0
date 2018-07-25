@@ -8,7 +8,7 @@
             <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
             <div class="dropdowm-title" @click="dropDown" :style="{'justify-content':isLeft?'flex-start':'flex-end'}">
                 <text class="dropdown-text" :style="{color:titleColor, 'font-size': fontSize}">{{textValue}}</text>
-                <image class="icon-arrow" ref="arrowImg" src="../../images/tmp/arrow.png"></image>
+                <image class="icon-arrow" ref="arrowImg" :src="config.dir+'/images/tmp/arrow.png'"></image>
             </div>
             <dropdown slot="below" ref="dropdownList" :items="list" :textColor="titleColor" class="dropdowm-list" tag="tag" @dd_itemClick="itemClick"></dropdown>
         </formCustom>
@@ -17,6 +17,7 @@
 
 <script>
 import formCustom from '../formCustom.vue';
+import config from '../config.js';
 export default {
     components:{
         formCustom,
@@ -37,6 +38,7 @@ export default {
         }
     },
     data:()=> ({
+        config,
         output:'',
         selectCheck:[],
         fontSize:34,

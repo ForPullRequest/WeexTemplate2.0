@@ -18,6 +18,35 @@
         </cell>
     </listT>
 </template>
+<style>
+.btnDiv{
+    border-color: #999999;
+    border-width: 2;
+    border-radius: 16;
+    padding: 12;
+}
+.btnRowDiv{
+    margin-top: 10;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.bodyTxt{
+    font-size: 28;
+    color: #66ccff;
+}
+.demoTxt{
+    font-size: 28;
+    color: #ff7b35;
+}
+.itemDiv{
+    flex-direction: column;
+    padding: 20;
+}
+.item {
+    align-items: center;
+    font-size: 32
+}
+</style>
 <script>
 // const normal = require('./old/normal.js').normal;
 const newNormal = require('./normal.js').normal;
@@ -150,32 +179,3 @@ export default {
     }
 }
 </script>
-<style>
-.btnDiv{
-    border-color: #999999;
-    border-width: 2;
-    border-radius: 16;
-    padding: 12;
-}
-.btnRowDiv{
-    margin-top: 10;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-.bodyTxt{
-    font-size: 28;
-    color: #66ccff;
-}
-.demoTxt{
-    font-size: 28;
-    color: #ff7b35;
-}
-.itemDiv{
-    flex-direction: column;
-    padding: 20;
-}
-.item {
-    align-items: center;
-    font-size: 32
-}
-</style>

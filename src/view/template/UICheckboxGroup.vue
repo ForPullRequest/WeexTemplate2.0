@@ -30,54 +30,54 @@
 }
 </style>
 <script>
-    const dom = weex.requireModule('dom')
-    module.exports = {
-        props: {
-            checkboxs:{
-                default: [],
-            },
-            value:{
-                default: [],
-            },
-            selectImg:{
-                default:'',//TODO
-            },
-            unselectImg:{
-                default:'',//TODO
-            },
-            textSize:{
-                default: 34,
-            }
+const dom = weex.requireModule('dom')
+module.exports = {
+    props: {
+        checkboxs:{
+            default: [],
         },
-        data(){
-            return {
-                // checkboxs: [],
-                chcklists: this.value,
-                textSize:34,
-            }
+        value:{
+            default: [],
         },
-        methods: {
-            onCheckboxSelect:function (val) {
-                var index = val.target.attr.index;
-                for(var i=0;i<this.checkboxs.length;i++){
-                    if(index==i){
-                        this.checkboxs[i].selected=!this.checkboxs[i].selected
-                    }
+        selectImg:{
+            default:'',//TODO
+        },
+        unselectImg:{
+            default:'',//TODO
+        },
+        textSize:{
+            default: 34,
+        }
+    },
+    data(){
+        return {
+            // checkboxs: [],
+            chcklists: this.value,
+            textSize:34,
+        }
+    },
+    methods: {
+        onCheckboxSelect:function (val) {
+            var index = val.target.attr.index;
+            for(var i=0;i<this.checkboxs.length;i++){
+                if(index==i){
+                    this.checkboxs[i].selected=!this.checkboxs[i].selected
                 }
-                this.$emit('input', this.getEmitData());
-            },
-            getEmitData:function () {
-                var data = []
-                for(var i=0;i<this.checkboxs.length;i++){
-                    if(this.checkboxs[i].selected){ data.push(i);}
+            }
+            this.$emit('input', this.getEmitData());
+        },
+        getEmitData:function () {
+            var data = []
+            for(var i=0;i<this.checkboxs.length;i++){
+                if(this.checkboxs[i].selected){ data.push(i);}
 
-                }
-                return data;
-            },
-            addPanes: function (item, name) {
-                const index = this.$slots.default.indexOf(item.$vnode);
-                this.checkboxs.push({title: name,selected:this.chcklists[index]==index?true:false});
             }
+            return data;
         },
-    }
+        addPanes: function (item, name) {
+            const index = this.$slots.default.indexOf(item.$vnode);
+            this.checkboxs.push({title: name,selected:this.chcklists[index]==index?true:false});
+        }
+    },
+}
 </script>

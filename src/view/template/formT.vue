@@ -182,7 +182,6 @@ import formCheckbox from './form/formCheckbox.vue';
 import formRadio from './form/formRadio.vue';
 import formList  from './form/formSelectList.vue';
 
-
 export default {
     props:{
         'itemData':{

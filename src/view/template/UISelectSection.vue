@@ -1,18 +1,18 @@
 <template>
-<div class="dataDiv" onclick="empty" append = "node">
-    <div class="upView" v-if="false">
-        <text class="title">{{tag}}</text>
-        <div v-if="false" class="cancelDiv" @click="cancel">
-            <image class="cancelImg" src="../img/ic_close"></image>
+    <div class="dataDiv" onclick="empty" append = "node">
+        <div class="upView" v-if="false">
+            <text class="title">{{tag}}</text>
+            <div v-if="false" class="cancelDiv" @click="cancel">
+                <image class="cancelImg" :src="config.dir+'/images/tmp/ic_close.png'"></image>
+            </div>
         </div>
+        <scroller :style="{height: scrollerHeight}">
+            <div :style="{height: itemHeight}" v-for="item, index in list" :key="item">
+                <text class="text" @click="itemClick(index)">{{item.text}}</text>
+                <div class="line"></div>
+            </div>
+        </scroller>
     </div>
-    <scroller :style="{height: scrollerHeight}">
-        <div :style="{height: itemHeight}" v-for="item, index in list" :key="item">
-            <text class="text" @click="itemClick(index)">{{item.text}}</text>
-            <div class="line"></div>
-        </div>
-    </scroller>
-</div>
 </template>
 <style scoped>
 .cancelDiv{
@@ -66,8 +66,10 @@
 </style>
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default {
     data:()=> ({
+        config,
         list:[],
         tag:'',
     }),

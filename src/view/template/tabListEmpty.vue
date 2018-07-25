@@ -22,12 +22,13 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     components: {
         tabListT: require('./tabListT.vue'),
     },
     data:()=>({
-        noContentImg:'../../images/tmp/components/ic_no_content.png',
+        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
         noContentTxt:'暂无数据',
         tabs:[{
             name: "tab1",

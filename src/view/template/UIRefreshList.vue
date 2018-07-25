@@ -36,80 +36,79 @@
 }
 </style>
 <script>
-    const animation = weex.requireModule('animation');
-    module.exports = {
-        props: {
-            hasMore:{
-                default:false
-            },
-            hasData:{
-                default:true
-            },
-            hasRefresh:{
-                default:true
-            },
-            hasLoad:{
-                default:true
-            },
-            noContentImg:{
-                default:'../../images/tmp/components/ic_no_content.png'
-            },
-            noContentTxt:{
-                default:'暂无数据'
-            },
-            myWidth:{
-                default:750
-            }
+const animation = weex.requireModule('animation');
+import config from './config.js';
+module.exports = {
+    props: {
+        hasMore:{
+            default:false
         },
-        data(){
-            return {
-                refreshliststatus: 0,
-                loadliststatus: false,
-            }
+        hasData:{
+            default:true
         },
-        components: {
-            pageRefresh: require('./UIRefresh.vue'),
-            pageLoad: require('./UILoad.vue'),
+        hasRefresh:{
+            default:true
         },
-        methods: {
-            clickRefresh: function () {
-                var self = this;
-                setTimeout(() => {
-                    self.$emit('mrefresh', {isClick:true});
-                }, 200)
-            },
-            refresh: function (val) {
-                var self = this;
-                this.refreshliststatus = val;
-                setTimeout(() => {
-                    self.$emit('mrefresh', {isClick:false});
-                }, 200)
-            },
-            load:function (val) {
-                var self = this;
-                this.loadliststatus = true;
-                setTimeout(() => {
-                    if(!this.hasMore){
-                        self.$emit('mload');
-                    }else{
-                        self.loadliststatus = false;
-                    }
-                }, 400)
-            },
-            endLoad:function(){
-                this.loadliststatus = false;
-            },
-            endRefresh:function(){
-                if(this.$refs.pageR){
-                    this.$refs.pageR.endRefresh();
-                }
-            },
-
+        hasLoad:{
+            default:true
         },
-        created(){
-            
+        noContentImg:{
+            default:config.dir+'/images/tmp/components/ic_no_content.png'
+        },
+        noContentTxt:{
+            default:'暂无数据'
+        },
+        myWidth:{
+            default:750
         }
+    },
+    data(){
+        return {
+            refreshliststatus: 0,
+            loadliststatus: false,
+        }
+    },
+    components: {
+        pageRefresh: require('./UIRefresh.vue'),
+        pageLoad: require('./UILoad.vue'),
+    },
+    methods: {
+        clickRefresh: function () {
+            var self = this;
+            setTimeout(() => {
+                self.$emit('mrefresh', {isClick:true});
+            }, 200)
+        },
+        refresh: function (val) {
+            var self = this;
+            this.refreshliststatus = val;
+            setTimeout(() => {
+                self.$emit('mrefresh', {isClick:false});
+            }, 200)
+        },
+        load:function (val) {
+            var self = this;
+            this.loadliststatus = true;
+            setTimeout(() => {
+                if(!this.hasMore){
+                    self.$emit('mload');
+                }else{
+                    self.loadliststatus = false;
+                }
+            }, 400)
+        },
+        endLoad:function(){
+            this.loadliststatus = false;
+        },
+        endRefresh:function(){
+            if(this.$refs.pageR){
+                this.$refs.pageR.endRefresh();
+            }
+        },
+
+    },
+    created(){
+        
     }
+}
 </script>
-
-

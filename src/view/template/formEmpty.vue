@@ -58,6 +58,7 @@
 </style>
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     components: {
         listT: require('./listT.vue'),
@@ -187,7 +188,7 @@ export default{
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
                         canCancel:true,//是否可删除图片
-                        list:['../../images/tmp/ic_immune.png','../../images/tmp/ic_image.png'],//要显示的图片行表
+                        list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片行表
                     },{
                         tag:'showList',//必需，为接口中该值的名称
                         index:5,//必需，为了output
@@ -196,15 +197,15 @@ export default{
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
                         canCancel:false,//是否可删除图片
-                        list:['../../images/tmp/ic_immune.png','../../images/tmp/ic_image.png'],//要显示的图片列表
+                        list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片列表
                     },{
                         tag:'sex',//必需，为接口中该值的名称
                         index:6,//必需，为了output
                         type:'radio',//单选
                         title:'性别:',//该行的标题
                         titleColor:'#5f5f5f',//标题颜色
-                        isCheck:'../../images/tmp/ico-radio-selected.png',//选中的图片
-                        unCheck:'../../images/tmp/ico-radio-selected-gray.png',//未选中图片
+                        isCheck:config.dir+'/images/tmp/ico-radio-selected.png',//选中的图片
+                        unCheck:config.dir+'/images/tmp/ico-radio-selected-gray.png',//未选中图片
                         selectRadio:'0',//默认选中第一个选项时需要写为'0'
                         ifRequire:true,//是否必填（显示星号）
                         isLeft:false,//是否靠左
@@ -215,8 +216,8 @@ export default{
                         type:'checkbox',//多选
                         title:'复选:',//该行的标题
                         titleColor:'#5f5f5f',//标题颜色
-                        isCheck:'../../images/tmp/star_select.png',//选中的图片
-                        unCheck:'../../images/tmp/star.png',//未选中图片
+                        isCheck:config.dir+'/images/tmp/star_select.png',//选中的图片
+                        unCheck:config.dir+'/images/tmp/star.png',//未选中图片
                         ifRequire:true,//是否必填（显示星号）
                         isLeft:false,//是否靠左
                         //title为选项名，selected为是否选中

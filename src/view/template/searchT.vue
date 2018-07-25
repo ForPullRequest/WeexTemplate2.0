@@ -10,7 +10,7 @@
             <!-- show -->
             <div class="searchWrapper" v-if="!isSearch">
                 <div class="searchContent" @click="showSearch">
-                    <image src="../../images/ico_search_bar.png" style="height: 36px;width: 36px" ></image>
+                    <image :src="config.dir+'/images/ico_search_bar.png'" style="height: 36px;width: 36px" ></image>
                     <text class="searchText">搜索</text>
                 </div>
             </div>
@@ -18,11 +18,11 @@
             <div class="searchWrapper" v-if="isSearch">
                 <div class="inputContent">
                     <div style="margin-left: 16;margin-right: 8;">
-                        <image src="../../images/ico_search_bar.png" style="height: 36px;width: 36px;" ></image>
+                        <image :src="config.dir+'/images/ico_search_bar.png'" style="height: 36px;width: 36px;" ></image>
                     </div>
                     <input ref="searchInput" class="input" :type="inputType" :value="keyword" @input="input" :placeholder="placeholder"></input>
                     <div style="margin-right: 16;margin-left: 16;" @click="eraser">
-                        <image src="../../images/erase-normal.png" style="width:28;height: 28;"></image>
+                        <image :src="config.dir+'/images/tmp/components/erase-normal.png'" style="width:28;height: 28;"></image>
                     </div>
                 </div>
                 <div class="cancelDiv" @click="hideSearch">
@@ -99,6 +99,7 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
@@ -107,7 +108,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: '../../images/tmp/back.png'},
+        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -127,7 +128,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: '../../images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
         //无数据文字
         noContentTxt:   {default: '暂无数据'},
 
@@ -141,6 +142,7 @@ export default{
         'list-item': require('./UIListItem.vue'),
     },
     data:()=>({
+        config,
         // selectIndex:0,
         // lastIndex:0,
         isRefresh:false,

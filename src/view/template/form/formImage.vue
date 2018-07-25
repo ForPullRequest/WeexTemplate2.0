@@ -12,11 +12,11 @@
                         <image class="img" :src="item"></image>
                     </div>
                     <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
-                        <image class="img-cancel" src="../../images/tmp/components/erase-normal.png"></image>
+                        <image class="img-cancel" :src="config.dir+'/images/tmp/components/erase-normal.png'"></image>
                     </div>
                 </div>
                 <div class="picBlock" v-if="canCancel" @click="addPic(index)">
-                    <image class="img" src="../../images/tmp/upload.png"></image>
+                    <image class="img" :src="config.dir+'/images/tmp/upload.png'"></image>
                 </div>
             </div>
         </formCustom>
@@ -25,6 +25,7 @@
 
 <script>
 import formCustom from '../formCustom.vue';
+import config from '../config.js';
 export default {
     components:{
         formCustom,
@@ -43,6 +44,7 @@ export default {
         }
     },
     data:()=> ({
+        config,
         output:'',
         fontSize:34,
         numColor:'#999999',

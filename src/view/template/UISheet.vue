@@ -85,55 +85,55 @@
 </style>
 
 <script>
-    const animation = require('./alert-anim').animation;
-    export default {
-        components: {
+const animation = require('./alert-anim').animation;
+export default {
+    components: {
 
-        },
-        props: {
-            showActionSheet:{default:false},
-            asBackground:  {default:'white'},
-            asWidth:       {default:500},       //左右显示时宽度
-            asHeight:      {default:500},       //上下显示时高度
-            asModel:       {default:'top'},     //top bottom left right
-            borderRadius:  {default:0},
-            borderColor:   {default:'#F3F3F3'},
-            borderWidth:   {default:0},
-        },
-        computed: {
-            isShowActionSheet() {
-                setTimeout(function () {
-                    //执行动画
-                    this.animationToShow();
-                }.bind(this),10);
-                return this.showActionSheet;
-            }
-        },
-        data:()=> ({
-
-        }),
-        methods: {
-            touchView() {
-                this.$emit('touchBg',{});
-            },
-            touchActionSheet() {
-
-            },
-            animationToShow() {
-                var view_ref        = this.$refs.view_actionsheet_ref;  //组件引用
-                var view_distance   = 0;          //移动距离
-                 if (this.asModel === 'bottom' || this.asModel === 'top') {
-                     view_distance = this.asHeight;
-                 }  else if (this.asModel === 'left' || this.asModel === 'right'){
-                     view_distance = this.asWidth;
-                 }
-                animation.animation_actionSheet(view_ref,this.asModel,view_distance,function () {
-                    
-                });
-            }
-        },
-        created() {
-
+    },
+    props: {
+        showActionSheet:{default:false},
+        asBackground:  {default:'white'},
+        asWidth:       {default:500},       //左右显示时宽度
+        asHeight:      {default:500},       //上下显示时高度
+        asModel:       {default:'top'},     //top bottom left right
+        borderRadius:  {default:0},
+        borderColor:   {default:'#F3F3F3'},
+        borderWidth:   {default:0},
+    },
+    computed: {
+        isShowActionSheet() {
+            setTimeout(function () {
+                //执行动画
+                this.animationToShow();
+            }.bind(this),10);
+            return this.showActionSheet;
         }
+    },
+    data:()=> ({
+
+    }),
+    methods: {
+        touchView() {
+            this.$emit('touchBg',{});
+        },
+        touchActionSheet() {
+
+        },
+        animationToShow() {
+            var view_ref        = this.$refs.view_actionsheet_ref;  //组件引用
+            var view_distance   = 0;          //移动距离
+             if (this.asModel === 'bottom' || this.asModel === 'top') {
+                 view_distance = this.asHeight;
+             }  else if (this.asModel === 'left' || this.asModel === 'right'){
+                 view_distance = this.asWidth;
+             }
+            animation.animation_actionSheet(view_ref,this.asModel,view_distance,function () {
+                
+            });
+        }
+    },
+    created() {
+
     }
+}
 </script>

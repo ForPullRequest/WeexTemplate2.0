@@ -15,8 +15,53 @@
     </base>
 <!-- </div> -->
 </template>
+
+<style scoped>
+.row{
+    flex-direction: row;
+}
+.column{
+    flex-direction: column;
+}
+.jcCenter{
+    justify-content: center;
+}
+.aiCenter{
+    align-items: center;
+}
+.flex{
+    flex: 1;
+}
+.red{
+    background-color:red;
+}
+.yellow{
+    background-color:yellow;
+}
+.white{
+    background-color: white;
+}
+.line{
+    background-color: #e5e5e5;
+    height: 1;
+    width: 750;
+}
+
+.text {
+    font-size: 36;
+    align-self: center;
+}
+.list{
+    flex: 1;
+}
+.itemDiv{
+    padding: 20;
+}
+</style>
+
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
@@ -25,7 +70,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: '../../images/tmp/back.png'},
+        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -45,7 +90,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: '../../images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 
@@ -160,46 +205,3 @@ export default{
     }
 }
 </script>
-
-<style scoped>
-.row{
-    flex-direction: row;
-}
-.column{
-    flex-direction: column;
-}
-.jcCenter{
-    justify-content: center;
-}
-.aiCenter{
-    align-items: center;
-}
-.flex{
-    flex: 1;
-}
-.red{
-    background-color:red;
-}
-.yellow{
-    background-color:yellow;
-}
-.white{
-    background-color: white;
-}
-.line{
-    background-color: #e5e5e5;
-    height: 1;
-    width: 750;
-}
-
-.text {
-    font-size: 36;
-    align-self: center;
-}
-.list{
-    flex: 1;
-}
-.itemDiv{
-    padding: 20;
-}
-</style>

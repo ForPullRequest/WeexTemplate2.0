@@ -1,9 +1,9 @@
 <template>
-        <loading  @loading="onloading"  class="loading" :display="showloading?'show':'hide'"  @pullingdown="onpullingdown">
-            <image   src="../../images/tmp/components/loading.gif" v-if="!isloadingall"
-                   class="refresh-icon"></image>
-            <text class="loadingtext">{{loadmoretext}}</text>
-        </loading>
+    <loading  @loading="onloading"  class="loading" :display="showloading?'show':'hide'"  @pullingdown="onpullingdown">
+        <image :src="config.dir+'/images/tmp/components/loading.gif'" v-if="!isloadingall"
+               class="refresh-icon"></image>
+        <text class="loadingtext">{{loadmoretext}}</text>
+    </loading>
 </template>
 <style scoped>
 
@@ -27,50 +27,51 @@
 }
 </style>
 <script>
-    const animation = weex.requireModule('animation');
-    // const modal = weex.requireModule('modal');
-    // var cache = weex.requireModule('TSLCache');
-    module.exports = {
-        props:{
-            loadstatus:{
-                default:false
-            },
-            nomoreload:{
-                default:false,
-            }
+const animation = weex.requireModule('animation');
+import config from './config.js';
+module.exports = {
+    props:{
+        loadstatus:{
+            default:false
         },
-        data() {
-            return {
-                showloading:this.loadstatus,
-                isloadingall:this.nomoreload,
-            }
+        nomoreload:{
+            default:false,
+        }
+    },
+    data() {
+        return {
+            config,
+            showloading:this.loadstatus,
+            isloadingall:this.nomoreload,
+            // src:config.dir+'/images/tmp/components/loading.gif',
+        }
+    },
+    watch:{
+        loadstatus(val){
+            this.showloading = val
         },
-        watch:{
-            loadstatus(val){
-                this.showloading = val
-            },
-            nomoreload(val){
-                this.isloadingall = val
-            }
-        },
-        components: {
+        nomoreload(val){
+            this.isloadingall = val
+        }
+    },
+    components: {
 
+    },
+    computed: {
+        loadmoretext(){
+            return this.isloadingall?"已加载完毕":"正在加载"
+        }
+    },
+    methods: {
+        onloading (event) {
+            this.dispatchloadevent();
+            this.showloading = true;
         },
-        computed: {
-            loadmoretext(){
-                return this.isloadingall?"已加载完毕":"正在加载"
-            }
+        dispatchloadevent:function () {
+            this.$emit('onload',this.showloading);
         },
-        methods: {
-            onloading (event) {
-                this.dispatchloadevent();
-                this.showloading = true;
-            },
-            dispatchloadevent:function () {
-                this.$emit('onload',this.showloading);
-            },
-        },
-        created:function () {
-        },
-    }
+    },
+    created:function () {
+    },
+}
 </script>

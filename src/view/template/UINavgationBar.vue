@@ -68,75 +68,75 @@
 </style>
 
 <script>
-    const normal          = require('./normal.js').normal;
+const normal = require('./normal.js').normal;
+import config from './config.js';
+export default {
+    components: {
 
-    export default {
-        components: {
-
+    },
+    props: {
+        BRPageId                : {default: ''},                    //博睿监控PageId
+        BRPageName              : {default: ''},                    //博睿监控PageName
+        backItemImage           : {default: config.dir+'/images/tmp/back.png'},
+        rightItemText           : {default: ''},
+        rightItemImage          : {default: ''},//ico_menu.png
+        contentBackGroundColor  : {default: '#f6f6f6'},
+        barBackGroundColor      : {default: 'white'},
+        title                   : {default: ''},
+        barTitleColor           : {default: '#333333'},
+        isIndex                 : {default: false},
+        isShow                  : {default: true},
+    },
+    data:()=>({
+        height                  : 112,
+        top                     : 40,
+        bottom                  : 0
+    }),
+    methods: {
+        touchBack() {
+            this.$emit("backItemAction",{});
         },
-        props: {
-            BRPageId                : {default: ''},                    //博睿监控PageId
-            BRPageName              : {default: ''},                    //博睿监控PageName
-            backItemImage           : {default: '../img/back.png'},
-            rightItemText           : {default: ''},
-            rightItemImage          : {default: ''},//ico_menu.png
-            contentBackGroundColor  : {default: '#f6f6f6'},
-            barBackGroundColor      : {default: 'white'},
-            title                   : {default: ''},
-            barTitleColor           : {default: '#333333'},
-            isIndex                 : {default: false},
-            isShow                  : {default: true},
+        touchTitle() {
+            this.$emit("titleAction",{});
         },
-        data:()=>({
-            height                  : 112,
-            top                     : 40,
-            bottom                  : 0
-        }),
-        methods: {
-            touchBack() {
-                this.$emit("backItemAction",{});
-            },
-            touchTitle() {
-                this.$emit("titleAction",{});
-            },
-            touchRightItem() {
-                this.$emit("rightItemAction",{});
-            },
-            viewWillAppear() {
-                this.$emit("viewWillAppear",{});
-            },
-            viewWillDisAppear() {
-                this.$emit("viewWillDisAppear",{});
+        touchRightItem() {
+            this.$emit("rightItemAction",{});
+        },
+        viewWillAppear() {
+            this.$emit("viewWillAppear",{});
+        },
+        viewWillDisAppear() {
+            this.$emit("viewWillDisAppear",{});
+        }
+    },
+    mounted(){
+        if(this.isIndex && weex.config.env.platform==='iOS'){
+            this.viewWillAppear();
+        }
+    },
+    created() {
+        /**
+         * 对导航栏进行设备适配   iOS 40px+88px;  android 112px
+         */
+        switch (weex.config.env.platform) {
+            case "android": {
+                this.height     = 112;
+                this.top        = 0;
             }
-        },
-        mounted(){
-            if(this.isIndex && weex.config.env.platform==='iOS'){
-                this.viewWillAppear();
-            }
-        },
-        created() {
-            /**
-             * 对导航栏进行设备适配   iOS 40px+88px;  android 112px
-             */
-            switch (weex.config.env.platform) {
-                case "android": {
-                    this.height     = 112;
-                    this.top        = 0;
+                break;
+            default: {
+                if (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6') {
+                    //iphoneX
+                    this.top    = 88;
+                    this.height = 176;
+                    this.bottom = 64;
+                } else {
+                    this.top    = 40;
+                    this.height = 128;
                 }
-                    break;
-                default: {
-                    if (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6') {
-                        //iphoneX
-                        this.top    = 88;
-                        this.height = 176;
-                        this.bottom = 64;
-                    } else {
-                        this.top    = 40;
-                        this.height = 128;
-                    }
-                }
-                    break;
             }
+                break;
         }
     }
+}
 </script>

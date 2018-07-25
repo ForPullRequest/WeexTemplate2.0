@@ -26,6 +26,7 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 
 export default {
     props:{
@@ -35,7 +36,7 @@ export default {
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: '../../images/tmp/back.png'},
+        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片

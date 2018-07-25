@@ -16,6 +16,7 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     components: {
         listT: require('./listT.vue'),
@@ -26,7 +27,7 @@ export default{
         totalPage:1,
         pageSize:10,
         list:[],
-        noContentImg:'../../images/tmp/components/ic_no_content.png',
+        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
         noContentTxt:'暂无数据',
     }),
     created(){

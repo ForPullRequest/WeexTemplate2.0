@@ -6,7 +6,7 @@
                 <div v-for="item,index in items" class="cell" :style="{ height: itemHeight, backgroundColor: itemColor }"
                       @click="onItemClick(index)">
                     <text class="name" :style="{ color: index==selectedIndex?selectedTextColor:textColor, fontSize: textSize }">{{item.name}}</text>
-                    <image class="icon-curr-flag" src="iconSelect" v-if="index==selectedIndex"></image>
+                    <image class="icon-curr-flag" :src="iconSelect" v-if="index==selectedIndex"></image>
                 </div>
             </scroller>
         </div>
@@ -65,74 +65,75 @@
 
 </style>
 <script>
-    var animation = require('./animation.js').animation;
-    module.exports = {
-        data(){
-            return {
-                mWidth: 750,
-                selectedIndex: '-1',
-                headerColor: '#dfdfdf',
-                headerHeight: 90,
-                isMaskShow: false,
-                itemHeight: 90,
-                itemColor: 'white',
-            }
-        },
-        props: {
-            items: {default : [
-                    {id: '0', name: 'All'},
-                    {id: '1', name: 'Doing'},
-                    {id: '2', name: 'Done'}
-                ]}, 
-            tag: {default : ''}, 
-            showNum: {default : 5}, 
-            textSize: {default : 32}, 
-            textColor: {default : '#000000'},
-            selectedTextColor: {default : '#0088FB'}
-        },
-        computed: {
-            optionTop(){
-                return this.items.length>this.showNum?-(this.itemHeight*(this.showNum)):-((this.items.length)*this.itemHeight);
-            },
-            getHeight(){
-                return this.items.length>this.showNum?this.itemHeight*this.showNum:this.items.length*this.itemHeight;
-            }
-        },
-        methods: {
-            switchView() {
-                this.isMaskShow = !this.isMaskShow;
-                // animation.opacity(this.$refs.mask, 0.1, 1, true);
-                // animation.translate(this.$refs.options, 0, this.items.length>this.showNum?(this.itemHeight*this.showNum):(this.items.length*this.itemHeight), true);
-            },
-
-            onItemClick(index) {
-                this.selectedIndex = index;
-                this.$emit('dd_itemClick',index);
-            },
-
-            toggleMaskVisible() {
-                
-            },
-
-            setSelected(selected) {
-                for (var i = 0; i < this.items.length; i++) {
-                    if(this.items[i].name==selected){
-                        this.selectedIndex = i;
-                        break;
-                    }
-                }
-            },
-
-            getSelected() {
-                return this.items[this.selectedIndex].name;
-            },
-
-            getSelectedId() {
-                return this.selectedIndex;
-            },
-            getSelectedId() {
-                return this.selectedIndex;
-            },
+var animation = require('./animation.js').animation;
+module.exports = {
+    data(){
+        return {
+            mWidth: 750,
+            selectedIndex: '-1',
+            headerColor: '#dfdfdf',
+            headerHeight: 90,
+            isMaskShow: false,
+            itemHeight: 90,
+            itemColor: 'white',
         }
+    },
+    props: {
+        items: {default : [
+                {id: '0', name: 'All'},
+                {id: '1', name: 'Doing'},
+                {id: '2', name: 'Done'}
+            ]}, 
+        tag: {default : ''}, 
+        showNum: {default : 5}, 
+        textSize: {default : 32}, 
+        textColor: {default : '#000000'},
+        selectedTextColor: {default : '#0088FB'},
+        iconSelect: {default : ''},//TODO
+    },
+    computed: {
+        optionTop(){
+            return this.items.length>this.showNum?-(this.itemHeight*(this.showNum)):-((this.items.length)*this.itemHeight);
+        },
+        getHeight(){
+            return this.items.length>this.showNum?this.itemHeight*this.showNum:this.items.length*this.itemHeight;
+        }
+    },
+    methods: {
+        switchView() {
+            this.isMaskShow = !this.isMaskShow;
+            // animation.opacity(this.$refs.mask, 0.1, 1, true);
+            // animation.translate(this.$refs.options, 0, this.items.length>this.showNum?(this.itemHeight*this.showNum):(this.items.length*this.itemHeight), true);
+        },
+
+        onItemClick(index) {
+            this.selectedIndex = index;
+            this.$emit('dd_itemClick',index);
+        },
+
+        toggleMaskVisible() {
+            
+        },
+
+        setSelected(selected) {
+            for (var i = 0; i < this.items.length; i++) {
+                if(this.items[i].name==selected){
+                    this.selectedIndex = i;
+                    break;
+                }
+            }
+        },
+
+        getSelected() {
+            return this.items[this.selectedIndex].name;
+        },
+
+        getSelectedId() {
+            return this.selectedIndex;
+        },
+        getSelectedId() {
+            return this.selectedIndex;
+        },
     }
+}
 </script>

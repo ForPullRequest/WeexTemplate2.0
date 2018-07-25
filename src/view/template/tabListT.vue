@@ -6,13 +6,13 @@
     <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 左侧类型的tab 可以滚动 -->
         <div style="flex-direction: row;" v-if="!isCenter">
-            <tabpage :items="items" @touchPage="touchPage"></tabpage>
+            <tabpage :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></tabpage>
         </div>
         <!-- 中间类型的tab 不能滚动 -->
         <div style="flex-direction: row;width: 750;justify-content: center;" v-if="isCenter">
-            <centerTabpage style="width: 750;" :items="items" @touchPage="touchPage"></centerTabpage>
+            <centerTabpage style="width: 750;" :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></centerTabpage>
         </div>
-        <div style="flex: 1">
+        <div style="flex: 1;border-top-color: #d4d4d4;border-top-width: 2;">
             <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <!-- 通过slot将item布局外放 -->
                 <slot></slot>
@@ -30,6 +30,7 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
@@ -38,7 +39,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: '../../images/tmp/back.png'},
+        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -58,7 +59,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: '../../images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 

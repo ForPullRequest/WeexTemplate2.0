@@ -3,7 +3,7 @@
         <div>
             <zoom-img class="img" :style="{width:myWidth,height:myHeight,}" :src='imgUrl'></zoom-img>
             <div class="closeDiv" @click="close">
-                <image class="closeImg" src="../../images/tmp/ic_close.png"></image>
+                <image class="closeImg" :src="config.dir+'/images/tmp/ic_close.png'"></image>
             </div>
         </div>
     <!-- </base> -->
@@ -26,11 +26,13 @@
 
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 export default{
     components: {
         // base: require('./base.vue'),
     },
     data:()=>({
+        config,
         isShow:true,
         title:"查看图片",
         myWidth:750,

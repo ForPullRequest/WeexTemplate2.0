@@ -15,8 +15,21 @@
 
 </template>
 
+<style scoped>
+.item {
+    height: 88px;
+    align-items: center;
+}
+.list{
+    flex: 1;
+}
+.itemDiv{
+    padding: 20;
+}
+</style>
 <script>
 const normal = require('./normal.js').normal;
+import config from './config.js';
 
 export default{
     props:{
@@ -26,7 +39,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: '../../images/tmp/back.png'},
+        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -46,7 +59,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: '../../images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
     },
@@ -113,16 +126,3 @@ export default{
     },
 }
 </script>
-
-<style scoped>
-.item {
-    height: 88px;
-    align-items: center;
-}
-.list{
-    flex: 1;
-}
-.itemDiv{
-    padding: 20;
-}
-</style>
