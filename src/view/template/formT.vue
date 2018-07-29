@@ -7,6 +7,7 @@
 
         <!-- text -->
         <formText v-if="type=='text'"
+                :index="index"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -16,7 +17,9 @@
                 :inputType="inputType"
                 :isLeft="isLeft"
                 :hasOpen="hasOpen"
-                :lineNumber="lineNumber" 
+                :lineNumber="lineNumber"
+                :titleWidth="titleWidth"
+                :fontSize="fontSize"
                 @clickOpen="clickOpen" 
                 @textClick="textClick"></formText>
 
@@ -34,6 +37,7 @@
 
         <!-- input -->
         <formInput v-if="type=='input'"
+                :index="index"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -43,6 +47,8 @@
                 :inputType="inputType"
                 :isBelow="isBelow"
                 :isLeft="isLeft" 
+                :titleWidth="titleWidth" 
+                :fontSize="fontSize"
                 @formInput="input"></formInput>
 
         <!-- <formCustom v-if="type=='input'" :ifRequire=ifRequire :titleSize=fontSize>
@@ -53,17 +59,20 @@
  -->
         <!-- textarea -->
         <formTextArea v-if="type=='textarea'"
-                    :ifRequire="ifRequire"
-                    :title="title"
-                    :titleColor="titleColor"
-                    :textValue="textValue"
-                    :textColor="textColor"
-                    :lines="lines"
-                    :placeholder="placeholder"
-                    :inputType="inputType"
-                    :maxNum="maxNum"
-                    :isBelow="isBelow" 
-                    @formInput="input"></formTextArea>
+                :index="index"
+                :ifRequire="ifRequire"
+                :title="title"
+                :titleColor="titleColor"
+                :textValue="textValue"
+                :textColor="textColor"
+                :lines="lines"
+                :placeholder="placeholder"
+                :inputType="inputType"
+                :maxNum="maxNum"
+                :isBelow="isBelow" 
+                :titleWidth="titleWidth" 
+                :fontSize="fontSize"
+                @formInput="input"></formTextArea>
 
 
        <!--  <formCustom v-if="type=='textarea'" :ifRequire=ifRequire :titleSize=fontSize>
@@ -84,11 +93,18 @@
 
         <!-- 图片选择 -->
         <formImage v-if="type=='image'"
+                :index="index"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
                 :canCancel="canCancel"
-                :list="list" 
+                :list="list"
+                :titleWidth="titleWidth" 
+                :fontSize="fontSize"
+                :isBelow="isBelow"
+                :maxImg="maxImg"
+                :imgWidth="imgWidth"
+                :imgHeight="imgHeight"
                 @imgClick="imgClick"
                 @imgCancel="imgCancel"
                 @addPic="addPic"></formImage>
@@ -112,6 +128,7 @@
 
         <!-- 单选框 -->
         <formRadio v-if="type=='radio'"
+                :index="index"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -119,7 +136,11 @@
                 :unCheck="unCheck"
                 :selectRadio="selectRadio"
                 :isLeft="isLeft"
-                :list="list"></formRadio>
+                :list="list"
+                :titleWidth="titleWidth"
+                :fontSize="fontSize"
+                @radioSelect="radioSelect"
+                @getOutPut="getOutPut" ></formRadio>
 
 
         <!-- <formCustom v-if="type=='radio'" :ifRequire=ifRequire :titleSize=fontSize>
@@ -134,13 +155,18 @@
         </formCustom> -->
         <!-- 复选框 -->
         <formCheckbox v-if="type=='checkbox'"
-                    :ifRequire="ifRequire"
-                    :title="title"
-                    :titleColor="titleColor"
-                    :isCheck="isCheck"
-                    :unCheck="unCheck"
-                    :isLeft="isLeft"
-                    :list="list"></formCheckbox>
+                :index="index"
+                :ifRequire="ifRequire"
+                :title="title"
+                :titleColor="titleColor"
+                :isCheck="isCheck"
+                :unCheck="unCheck"
+                :isLeft="isLeft"
+                :list="list"
+                :titleWidth="titleWidth"
+                :fontSize="fontSize"
+                @checkSelect="checkSelect"
+                @getOutPut="getOutPut" ></formCheckbox>
 
 
         <!-- <formCustom v-if="type=='checkbox'" :ifRequire=ifRequire :titleSize=fontSize>
@@ -152,13 +178,17 @@
         </formCustom> -->
         <!-- 选择列表 -->
         <formList v-if="type=='dropdown'"
+                :index="index"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
                 :textValue="textValue"
                 :isLeft="isLeft"
                 :list="list"
-                @ddItemClick="ddItemClick"></formList>
+                :titleWidth="titleWidth"
+                :fontSize="fontSize"
+                @ddItemClick="ddItemClick"
+                @getOutPut="getOutPut" ></formList>
 
         <!-- <formCustom v-if="type=='dropdown'" :ifRequire=ifRequire :titleSize=fontSize>
             <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
@@ -189,10 +219,14 @@ export default {
                 index:0,
                 //dropdown:选择列表 image:图片选择 radio:单选框 checkbox:复选框
                 type:'text',
+                //字体大小
+                fontSize:34,
                 //title
                 title:'',
                 //title颜色
                 titleColor:'#5f5f5f',
+                //title宽度
+                titleWidth:180,
                 //text文本
                 textValue:'',
                 //text颜色
@@ -205,6 +239,12 @@ export default {
                 inputType:'text',
                 //textarea可输入最大字数
                 maxNum:200,
+                //最大图片数量
+                maxImg:-1,
+                //图片的宽
+                imgWidth:100,
+                //图片的宽
+                imgHeight:100,
                 //选中img
                 isCheck:'',
                 //未选中img
@@ -222,7 +262,7 @@ export default {
                 canCancel:false,
                 //是否有展开
                 hasOpen:false,
-                //每行的字数
+                //最大显示字数，hasOpen填了则必需
                 lineNumber:-1,
                 list:[],
                 model:[],
@@ -230,18 +270,27 @@ export default {
         },
     },
     computed: {
+        index(){
+            return this.itemData.index?this.itemData.index:0;
+        },
         type(){
             return this.itemData.type?this.itemData.type:'text';
         },
         ifRequire() {
             return this.itemData.ifRequire?this.itemData.ifRequire:false;
         },
+        fontSize(){
+            return this.itemData.fontSize?this.itemData.fontSize:34;
+        },
         title(){
-            this.getOutPut();
+            // this.getOutPut();
             return this.itemData.title?this.itemData.title:'';
         },
         titleColor(){
             return this.itemData.titleColor?this.itemData.titleColor:'#5f5f5f';
+        },
+        titleWidth(){
+            return this.itemData.titleWidth?this.itemData.titleWidth:180;
         },
         textColor(){
             return this.itemData.textColor?this.itemData.textColor:'#999999';
@@ -279,6 +328,15 @@ export default {
         maxNum(){
             return this.itemData.maxNum?this.itemData.maxNum:200;
         },
+        maxImg(){
+            return this.itemData.maxImg?this.itemData.maxImg:-1;
+        },
+        imgWidth(){
+            return this.itemData.imgWidth?this.itemData.imgWidth:100;
+        },
+        imgHeight(){
+            return this.itemData.imgHeight?this.itemData.imgHeight:100;
+        },
         hasOpen(){
             return this.itemData.hasOpen?this.itemData.hasOpen:false;
         },
@@ -291,14 +349,14 @@ export default {
     },
     watch: {
         selectRadio(val){
-            this.getOutPut();
+            // this.getOutPut();
         },
         textValue(val){
-            this.getOutPut();
+            // this.getOutPut();
         }
     },
     data:()=> ({
-        output:'',
+        // output:'',
         // selectRadio:-1,
         selectCheck:[],
         fontSize:34,
@@ -314,13 +372,14 @@ export default {
     },
     methods:{
         checkSelect(val){
-            this.selectCheck = val;
+            this.$emit('checkSelect',val);
         },
         radioSelect(val){
-            this.selectRadio = val;
+            this.$emit('radioSelect',val);
         },
-        getOutPut(){
-            let output = '';
+        getOutPut(output){
+            // normal.alert(output)
+            // let output = '';
             //text, input, textarea, image, radio, checkbox, dropdown
             switch(this.itemData.type){
                 case 'text':
@@ -333,94 +392,57 @@ export default {
                     output = this.itemData.textValue;
                 break;
                 case 'image':
-                    output = this.itemData.textValue;
+                    // output = this.itemData.textValue;
                 break;
-                case 'radio':
-                    if(this.selectRadio==-1){
-                        output = '';
-                    }else{
-                        output = this.list[this.selectRadio];
-                    }
+                case 'radio':{
+                    output = output
+                }
                 break;
-                case 'checkbox':
-                    let check = [];
-                    for (var i = 0; i < this.selectCheck.length; i++) {
-                        check.push({
-                            text:this.list[this.selectCheck[i]].title,
-                            code:this.selectCheck[i]
-                        })
-                    }
-                    output = check;
+                case 'checkbox':{
+                    output = output;
+                }
                 break;
                 case 'dropdown':
-                    output = this.itemData.textValue;
+                    output = output;
                 break;
             }
             // console.log('-----'+this.itemData.index + output + '/'+normal.json(this.itemData))
-            this.$emit('getOutPut', {
-                output:output?output:'',
-                index:this.itemData.index,
-            });
+            this.$emit('getOutPut', output);
         },
-        textClick(){
-            this.$emit('textClick',{
-                title:this.itemData.title,
-                index:this.itemData.index,
-            });
+        textClick(e){
+            this.$emit('textClick',e);
         },
-        clickOpen(){
+        clickOpen(e){
             if(this.open == '展开'){
                 this.open = '收起';
             } else {
                 this.open = '展开';
             }
             
-            this.$emit('clickOpen',{
-                titile:this.itemData.title,
-                index:this.itemData.index,
-            });
+            this.$emit('clickOpen',e);
         },
         input(e){
-            this.output = e.value;
+            // this.output = e.value;
             this.itemData.textValue=e.value;
-            this.getOutPut();
+            // this.getOutPut();
             if(this.textValue.length>this.maxNum){
                 this.numColor='red';
             }else{
                 this.numColor='#999999';
             }
-            this.$emit("formInput",{
-                value:e.value,
-                title:this.itemData.title,
-            });
+            this.$emit("formInput",e);
         },
-        imgClick(index) {
-            this.$emit('imgClick', {
-                titile:this.itemData.title,
-                index:index,
-            });
+        imgClick(img) {
+            this.$emit('imgClick', img);
         },
-        imgCancel(index){
-            this.$emit('imgCancel', {
-                titile:this.itemData.title,
-                index:index,
-            });
+        imgCancel(img){
+            this.$emit('imgCancel', img);
         },
-        addPic(index){
-            this.$emit('addPic', {
-                title:this.itemData.title,
-            });
+        addPic(img){
+            this.$emit('addPic', img);
         },
-        ddItemClick(index){
-            this.dropDown();
-            this.itemData.textValue=this.list[index].name,
-            this.$emit('ddItemClick', {
-                title:this.itemData.title,
-                model:this.list[index],
-            });
-        },
-        dropDown(){
-            this.$refs.dropdownList.switchView();
+        ddItemClick(dd){
+            this.$emit('ddItemClick', dd);
         },
     },
     components:{

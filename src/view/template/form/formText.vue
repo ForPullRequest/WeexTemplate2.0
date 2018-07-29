@@ -4,7 +4,7 @@
 <template>
     <!-- text -->
     <formCustom style="justify-content: center;" :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
         <div class="textDiv" @click="textClick">
             <text class="text" :style="{color:textColor,'text-align':isLeft?'left':'right','lines':lines, 'font-size': fontSize}" :type="inputType" :value="textValue"></text>
         </div>
@@ -33,7 +33,9 @@ export default {
         ifRequire:  {type: Boolean, default: false},
         isLeft:     {type: Boolean, default: false},
         hasOpen:    {type: Boolean, default: false},
-        lineNumber: {type: Number, default: -1}
+        lineNumber: {type: Number, default: -1},
+        titleWidth: {type: Number, default: 180},
+        fontSize:   {type: Number, default: 34},            //文字大小
     },
     watch: {
         textValue(val){
@@ -42,7 +44,6 @@ export default {
     },
     data:()=> ({
         output:'',
-        fontSize:34,
         open:'展开'
     }),
     methods:{
@@ -84,7 +85,6 @@ export default {
 
 <style scoped>
 .title {
-    width: 180;
     margin-top: 10;
     margin-bottom: 10;
 }

@@ -5,7 +5,7 @@
     <div>
         <!-- 选择列表 -->
         <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-            <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
+            <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
             <div class="dropdowm-title" @click="dropDown" :style="{'justify-content':isLeft?'flex-start':'flex-end'}">
                 <text class="dropdown-text" :style="{color:titleColor, 'font-size': fontSize}">{{textValue}}</text>
                 <image class="icon-arrow" ref="arrowImg" :src="config.dir+'/images/tmp/arrow.png'"></image>
@@ -30,34 +30,35 @@ export default {
         textValue:  {type: String, default: ''},        //text文本
         ifRequire:  {type: Boolean, default: false},    //是否必填
         isLeft:     {type: Boolean, default: false},    //是否靠左
-        list:       {type: Array, default: []},
+        list:       {type: Array, default: []},         //列表
+        titleWidth: {type: Number, default: 180},       //title宽度
+        fontSize:   {type: Number, default: 34},        //文字大小
     },
     watch: {
         textValue(val){
-            this.getOutPut();
+
         }
     },
     data:()=> ({
         config,
         output:'',
         selectCheck:[],
-        fontSize:34,
         numColor:'#999999',
     }),
     methods:{
-        getOutPut(){
-            let output = this.textValue;
-            this.$emit('getOutPut', {
-                output:output?output:'',
-                index:this.index,
-            });
-        },
         itemClick(index){
             this.dropDown();
             this.textValue=this.list[index].name,
             this.$emit('ddItemClick', {
                 title:this.title,
+                selected:index,
+                index:this.index,
                 model:this.list[index],
+            });
+            this.$emit('getOutPut', {
+                selected:index,
+                index:this.index,
+                output:this.list[index],
             });
         },
         dropDown(){
@@ -72,7 +73,6 @@ export default {
 
 <style scoped>
 .title {
-    width: 180;
     margin-top: 10;
     margin-bottom: 10;
 }

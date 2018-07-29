@@ -4,9 +4,9 @@
 <template>
     <!-- 单选框 -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
-        <div class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}">
-            <radio-group :selectImg="isCheck" :unselectImg="unCheck" :value="selectRadio" :textSize=fontSize @input="radioSelect">
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+        <div class="groupDiv">
+            <radio-group class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}" :selectImg="isCheck" :unselectImg="unCheck" :value="selectRadio" :textSize=fontSize @input="radioSelect">
                 <div v-for="item in list">
                     <radio :label="item"></radio>
                 </div>
@@ -32,14 +32,16 @@ export default {
         selectRadio:{type: Number, default: -1},        //默认选中（单选）
         ifRequire:  {type: Boolean, default: false},    //是否必填
         isLeft:     {type: Boolean, default: false},    //是否靠左
-        list:       {type: Array, default: []},
+        list:       {type: Array, default: []},         //列表
+        titleWidth: {type: Number, default: 180},       //title宽度
+        fontSize:   {type: Number, default: 34},        //文字大小
     },
     watch: {
         selectRadio(val){
-            this.getOutPut();
+            
         },
         textValue(val){
-            this.getOutPut();
+
         }
     },
     data:()=> ({
@@ -49,20 +51,27 @@ export default {
     }),
     methods:{
         radioSelect(val){
-            this.selectRadio = val;
-        },
-        getOutPut(){
-            let output = '';
-            if(this.selectRadio==-1){
-                output = '';
-            }else{
-                output = this.list[this.selectRadio];
+            if(this.selectRadio == val){
+                return;
             }
-            this.$emit('getOutPut', {
-                output:output?output:'',
+            this.selectRadio = val;
+            let radio = '';
+            if(this.selectRadio==-1){
+                radio = '';
+            }else{
+                radio = this.list[this.selectRadio];
+            }
+            this.$emit('radioSelect', {
+                selected:this.selectRadio,
                 index:this.index,
+                radio:radio,
             });
-        }
+            this.$emit('getOutPut', {
+                selected:this.selectRadio,
+                index:this.index,
+                output:radio,
+            });
+        },
     },
     created(){
     
@@ -72,13 +81,16 @@ export default {
 
 <style scoped>
 .title {
-    width: 180;
     margin-top: 10;
     margin-bottom: 10;
 }
-.group{
+.groupDiv{
     flex: 1;
     flex-direction:row;
     margin-left: 20;
+}
+.group{
+    flex-wrap: wrap;
+    flex: 1;
 }
 </style>

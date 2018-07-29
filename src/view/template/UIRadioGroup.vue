@@ -11,7 +11,6 @@
 <style scoped>
 .container{
     flex-direction: row;
-    justify-content: center;
 }
 .div-container{
     margin: 10px;

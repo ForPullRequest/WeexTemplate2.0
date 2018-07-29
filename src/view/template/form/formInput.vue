@@ -4,7 +4,7 @@
 <template>
     <!-- input -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
         <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></input>
         <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></input>
     </formCustom>
@@ -22,11 +22,13 @@ export default {
         titleColor: {type: String, default: '#5f5f5f'} ,    //title颜色
         textValue:  {type: String, default: ''},            //text文本
         textColor:  {type: String, default: '#999999'},     //text颜色
-        placeholder:{type: String, default: '请输入内容'},   //input占位符文本
+        placeholder:{type: String, default: '请输入内容'},  //input占位符文本
         inputType:  {type: String, default: 'text'},        //input类型，日期选择 date
         ifRequire:  {type: Boolean, default: false},        //是否必填
         isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
         isLeft:     {type: Boolean, default: false},        //是否靠左
+        titleWidth: {type: Number, default: 180},           //title宽度
+        fontSize:   {type: Number, default: 34},            //文字大小
     },
     watch: {
         textValue(val){
@@ -35,7 +37,6 @@ export default {
     },
     data:()=> ({
         output:'',
-        fontSize:34,
         numColor:'#999999',
     }),
     methods:{
@@ -70,7 +71,6 @@ export default {
 
 <style scoped>
 .title {
-    width: 180;
     margin-top: 10;
     margin-bottom: 10;
 }

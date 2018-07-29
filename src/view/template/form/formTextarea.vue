@@ -5,7 +5,7 @@
     <!-- textarea -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
-        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
+        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'width': titleWidth}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
         <div class="inputNum" slot="below" v-if="!isBelow && maxNum>0">
             <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
             <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
@@ -33,11 +33,13 @@ export default {
         textValue:  {type: String, default: ''},            //text文本
         textColor:  {type: String, default: '#999999'},     //text颜色
         lines:      {type: String, default: 3},             //类型为text时文本内容最大行数
-        placeholder:{type: String, default: '请输入内容'},   //input占位符文本
+        placeholder:{type: String, default: '请输入内容'},  //input占位符文本
         inputType:  {type: String, default: 'text'},        //input类型，日期选择 date
         maxNum:     {type: Number, default: 200},           //textarea可输入最大字数
         ifRequire:  {type: Boolean, default: false},        //是否必填
         isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
+        titleWidth: {type: Number, default: 180},           //title宽度
+        fontSize:   {type: Number, default: 34},            //文字大小
     },
     watch: {
         textValue(val){
@@ -46,7 +48,6 @@ export default {
     },
     data:()=> ({
         output:'',
-        fontSize:34,
         numColor:'#999999',
     }),
     methods:{
@@ -80,7 +81,6 @@ export default {
 
 <style scoped>
 .title {
-    width: 180;
     margin-top: 10;
     margin-bottom: 10;
 }

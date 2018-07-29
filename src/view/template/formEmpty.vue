@@ -1,7 +1,7 @@
 <template>
     <listT ref="list" title="申请单" :hasData="1" :hasRefresh="false" :hasLoad="false" @listAdapter="getList" @listAppear="appear" node="tree">
         <cell v-for = "itemData, index in list">
-            <formT class="borderBottom paddingTB20 white" :itemData="itemData" @imgClick="imgClick" @imgCancel="imgCancel" @addPic="addPic" @ddItemClick="drop" @getOutPut="getOutPut" @textClick="textClick" @clickOpen="clickOpen"></formT>
+            <formT class="borderBottom paddingTB20 white" :itemData="itemData" @imgClick="imgClick" @imgCancel="imgCancel" @addPic="addPic" @getOutPut="getOutPut" @textClick="textClick" @clickOpen="clickOpen"></formT>
         </cell>
         <cell>
             
@@ -99,7 +99,8 @@ export default{
             normal.toast(title.model);
         },
         getOutPut(output){
-            this.list[output.index].output = output.output;
+            // this.list[output.index].output = output.output;
+            normal.alert(output)
         },
         clickBtn(){
             let output = new Map();
@@ -127,7 +128,7 @@ export default{
                         isLeft:false,//是否靠左
                         lines:1,//最大行数，超过会显示“...”
                         hasOpen:true,//是否有展开按钮
-                        lineNumber:15,//单行最大显示字数，hasOpen填了则必需
+                        lineNumber:15,//最大显示字数，hasOpen填了则必需
                     },{
                         tag:'input',//必需，为接口中该值的名称
                         index:1,//必需，为了output
@@ -188,6 +189,10 @@ export default{
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
                         canCancel:true,//是否可删除图片
+                        isBelow:true,//图片是否在下方
+                        maxImg:9,//最大图片数量
+                        imgWidth:100,//图片的宽
+                        imgHeight:100,//图片的高
                         list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片行表
                     },{
                         tag:'showList',//必需，为接口中该值的名称
@@ -197,6 +202,9 @@ export default{
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
                         canCancel:false,//是否可删除图片
+                        maxImg:-1,//最大图片数量，-1时不显示
+                        imgWidth:100,//图片的宽
+                        imgHeight:100,//图片的高
                         list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片列表
                     },{
                         tag:'sex',//必需，为接口中该值的名称

@@ -76,6 +76,7 @@ module.exports = {
             isMaskShow: false,
             itemHeight: 90,
             itemColor: 'white',
+            showNum: 5,
         }
     },
     props: {
@@ -85,11 +86,14 @@ module.exports = {
                 {id: '2', name: 'Done'}
             ]}, 
         tag: {default : ''}, 
-        showNum: {default : 5}, 
+        // showNum: {default : 5},
         textSize: {default : 32}, 
         textColor: {default : '#000000'},
         selectedTextColor: {default : '#0088FB'},
         iconSelect: {default : ''},//TODO
+    },
+    created(){
+        this.showNum = this.items.length;
     },
     computed: {
         optionTop(){
