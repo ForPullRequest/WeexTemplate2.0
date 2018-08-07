@@ -184,18 +184,18 @@ export default{
         //继承自list
         refresh() {
             this.getList(true, function(){
-                this.isRefresh = false;
+                // this.isRefresh = false;
                 this.$refs.mlist.endRefresh();
             }.bind(this));
         },
         load() {
             this.getList(false, function(){
-                this.isRefresh = false;
+                // this.isRefresh = false;
                 this.$refs.mlist.endLoad();
             }.bind(this));
         },
         getList(isRefresh, end){
-            this.isRefresh = true;
+            // this.isRefresh = true;
             //列表数据源的获取 控件的end由下级页面控制
             this.$emit("searchAdapter",{
                 // selectIndex: this.selectIndex,
@@ -213,18 +213,17 @@ export default{
             this.isSearch = true;
         },
         hideSearch(){
-            this.$refs.searchInput.blur();
+            // this.$refs.searchInput.blur();
             this.isSearch = false;
-            this.keyword = '';
-            this.refresh();
         },
         eraser(){
             this.keyword = '';
+            this.refresh();
         },
         input(e){
             this.keyword = e.value;
             var tmp = function(){
-                this.$refs.searchInput.blur();
+                // this.$refs.searchInput.blur();
                 this.refresh();
             }.bind(this);
             var refresh = normal.debounce(tmp, 1000);

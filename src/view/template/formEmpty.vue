@@ -85,15 +85,15 @@ export default{
                 this.list[open.index].lines = 1;
             }
         },
-        imgClick(Image){
-            normal.toast(Image);
+        imgClick(img){
+            img.showPic();
         },
         imgCancel(imgCancel){
             this.list[5].list.splice(imgCancel.index, 1);
             normal.toast(imgCancel.index);
         },
-        addPic(title){
-            normal.toast(title);
+        addPic(img){
+            normal.toast(img);
         },
         drop(title){
             normal.toast(title.model);
@@ -122,13 +122,14 @@ export default{
                         type:'text',//展示信息，不传该属性则默认为text
                         title:'姓名姓名姓名姓名姓名姓名:',//该行的标题
                         titleColor:'#5f5f5f',//标题颜色
-                        textValue:'你的名字你的名字你的名字你的名字你的名字',//该行展示内容
+                        textValue:'你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字你的名字',//该行展示内容
                         textColor:'#999999',//文本内容颜色
                         ifRequire:true,//是否必填（显示星号）
                         isLeft:false,//是否靠左
                         lines:1,//最大行数，超过会显示“...”
                         hasOpen:true,//是否有展开按钮
                         lineNumber:15,//最大显示字数，hasOpen填了则必需
+                        isBelow:true,//输入框是否在下方
                     },{
                         tag:'input',//必需，为接口中该值的名称
                         index:1,//必需，为了output
@@ -188,12 +189,19 @@ export default{
                         title:'上传图片:',//该行的标题
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
+                        hasAdd:true,//是否允许添加图片
                         canCancel:true,//是否可删除图片
                         isBelow:true,//图片是否在下方
-                        maxImg:9,//最大图片数量
+                        maxImg:9,//最大图片数量，99时不显示
                         imgWidth:100,//图片的宽
                         imgHeight:100,//图片的高
-                        list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片行表
+                        list:[{//要显示的图片行表
+                            src:config.dir+'/images/tmp/ic_immune.png',
+                            title:"标题1"
+                        },{
+                            src:config.dir+'/images/tmp/ic_image.png',
+                            title:"标题2"
+                        }],
                     },{
                         tag:'showList',//必需，为接口中该值的名称
                         index:5,//必需，为了output
@@ -201,11 +209,18 @@ export default{
                         title:'显示图片:',//该行的标题
                         titleColor:'#5f5f5f',//标题颜色
                         ifRequire:false,//是否必填（显示星号）
+                        hasAdd:false,//是否允许添加图片
                         canCancel:false,//是否可删除图片
-                        maxImg:-1,//最大图片数量，-1时不显示
+                        maxImg:99,//最大图片数量，99时不显示
                         imgWidth:100,//图片的宽
                         imgHeight:100,//图片的高
-                        list:[config.dir+'/images/tmp/ic_immune.png',config.dir+'/images/tmp/ic_image.png'],//要显示的图片列表
+                        list:[{//要显示的图片行表
+                            src:config.dir+'/images/tmp/ic_immune.png',
+                            title:"标题1"
+                        },{
+                            src:config.dir+'/images/tmp/ic_image.png',
+                            title:"标题2"
+                        }],
                     },{
                         tag:'sex',//必需，为接口中该值的名称
                         index:6,//必需，为了output

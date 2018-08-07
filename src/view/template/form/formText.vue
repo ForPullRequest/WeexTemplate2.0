@@ -5,10 +5,17 @@
     <!-- text -->
     <formCustom style="justify-content: center;" :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <div class="textDiv" @click="textClick">
+        <div class="textDiv" v-if="!isBelow" @click="textClick">
             <text class="text" :style="{color:textColor,'text-align':isLeft?'left':'right','lines':lines, 'font-size': fontSize}" :type="inputType" :value="textValue"></text>
         </div>
-        <div class="inputNum" slot="below" v-if="hasOpen" @appear="appear">
+        <div class="padding" slot="below" v-if="!isBelow&&hasOpen" @appear="appear">
+            <div class="open" @click="clickOpen">
+                <text :style="{color:'#2F7DCD', 'font-size': fontSize}">{{open}}</text>
+            </div>
+        </div>
+        <!-- below -->
+        <div class="textDiv padding" slot="below" v-if="isBelow" @appear="appear">
+            <text class="text" :style="{color:textColor,'lines':lines, 'font-size': fontSize}" :type="inputType" :value="textValue"></text>
             <div class="open" @click="clickOpen">
                 <text :style="{color:'#2F7DCD', 'font-size': fontSize}">{{open}}</text>
             </div>
@@ -36,6 +43,7 @@ export default {
         lineNumber: {type: Number, default: -1},
         titleWidth: {type: Number, default: 180},
         fontSize:   {type: Number, default: 34},            //文字大小
+        isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
     },
     watch: {
         textValue(val){
@@ -97,13 +105,11 @@ export default {
     flex: 1;
     text-overflow: ellipsis;
 }
-.inputNum{
-    flex-direction: row;
-    justify-content: flex-end;
+.padding{
+    padding-left: 20;
     padding-right: 20;
 }
 .open{
-    width: 100;
     height:50;
     align-items: flex-end;
     justify-content: center;

@@ -14,6 +14,7 @@
                 :textValue="textValue"
                 :textColor="textColor"
                 :lines="lines"
+                :isBelow="isBelow"
                 :inputType="inputType"
                 :isLeft="isLeft"
                 :hasOpen="hasOpen"
@@ -97,6 +98,7 @@
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
+                :hasAdd="hasAdd"
                 :canCancel="canCancel"
                 :list="list"
                 :titleWidth="titleWidth" 
@@ -108,6 +110,7 @@
                 @imgClick="imgClick"
                 @imgCancel="imgCancel"
                 @addPic="addPic"></formImage>
+
 
         <!-- <formCustom v-if="type=='image'" :ifRequire=ifRequire :titleSize=fontSize>
             <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
@@ -211,6 +214,7 @@ import formImage from './form/formImage.vue';
 import formCheckbox from './form/formCheckbox.vue';
 import formRadio from './form/formRadio.vue';
 import formList  from './form/formSelectList.vue';
+import config from './config.js';
 
 export default {
     props:{
@@ -258,6 +262,8 @@ export default {
                 isBelow:false,
                 //是否靠左
                 isLeft:false,
+                //是否允许添加图片
+                hasAdd:false,
                 //图片是否可删除
                 canCancel:false,
                 //是否有展开
@@ -271,7 +277,7 @@ export default {
     },
     computed: {
         index(){
-            return this.itemData.index?this.itemData.index:0;
+            return this.itemData.index!=null?this.itemData.index:0;
         },
         type(){
             return this.itemData.type?this.itemData.type:'text';
@@ -323,13 +329,16 @@ export default {
             return this.itemData.canCancel?this.itemData.canCancel:false;
         },
         selectRadio(){
-            return this.itemData.selectRadio?this.itemData.selectRadio:-1;
+            return this.itemData.selectRadio!=null?this.itemData.selectRadio:-1;
         },
         maxNum(){
             return this.itemData.maxNum?this.itemData.maxNum:200;
         },
         maxImg(){
-            return this.itemData.maxImg?this.itemData.maxImg:-1;
+            return this.itemData.maxImg!=null?this.itemData.maxImg:99;
+        },
+        hasAdd(){
+            return this.itemData.hasAdd?this.itemData.hasAdd:false;
         },
         imgWidth(){
             return this.itemData.imgWidth?this.itemData.imgWidth:100;
@@ -344,7 +353,7 @@ export default {
             return this.itemData.list?this.itemData.list:{};
         },
         lineNumber(){
-            return this.itemData.lineNumber?this.itemData.lineNumber:-1;
+            return this.itemData.lineNumber!=null?this.itemData.lineNumber:-1;
         }
     },
     watch: {
@@ -375,6 +384,7 @@ export default {
             this.$emit('checkSelect',val);
         },
         radioSelect(val){
+            this.itemData.selectRadio = val.selected;
             this.$emit('radioSelect',val);
         },
         getOutPut(output){
@@ -433,6 +443,10 @@ export default {
             this.$emit("formInput",e);
         },
         imgClick(img) {
+            let showPic = function(){
+                normal.push(config.dir + '/view/template/showPic',{imgUrl:img.item.src});
+            }
+            img.showPic = showPic;
             this.$emit('imgClick', img);
         },
         imgCancel(img){
@@ -442,6 +456,7 @@ export default {
             this.$emit('addPic', img);
         },
         ddItemClick(dd){
+            this.itemData.textValue=dd.model.name;
             this.$emit('ddItemClick', dd);
         },
     },

@@ -8,8 +8,9 @@
             <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
             <div class="group" v-if="!isBelow"><!--  :style="{'justify-content':isLeft?'flex-start':'flex-end'}" -->
                 <div class="picBlock" v-for="item,index in list" >
-                    <div @click="imgClick(index)">
-                        <image class="img" :src="item" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <div style="flex-direction: column;" @click="imgClick(index)">
+                        <image class="img" :src="item.src" :style="{width:imgWidth, height:imgHeight}"></image>
+                        <text style="font-size: 28;lines:2;text-overflow: ellipsis;" v-if="item.text">{{item.text}}</text>
                     </div>
                     <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
                         <image class="img-cancel" :src="config.dir+'/images/tmp/components/erase-normal.png'"></image>
@@ -18,12 +19,13 @@
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
                     <image class="img" :src="config.dir+'/images/tmp/upload.png'"></image>
                 </div>
-                <text class="maxPrompt" v-if="maxImg!=-1">{{list.length}}/{{maxImg}}</text>
+                <text class="maxPrompt" v-if="maxImg!=99">{{list.length}}/{{maxImg}}</text>
             </div>
             <div slot="below" class="belowBox" style="flex-wrap: wrap;flex: 1;" v-if="isBelow">
                 <div class="picBlock" v-for="item,index in list" >
-                    <div @click="imgClick(index)">
-                        <image class="img" :src="item" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <div style="flex-direction: column;align-items: center;justify-content: center;" @click="imgClick(index)">
+                        <image class="img" :src="item.src" :style="{width:imgWidth, height:imgHeight}"></image>
+                        <text style="font-size: 28;lines:2;text-overflow: ellipsis;max-width: 100;" v-if="item.text">{{item.text}}</text>
                     </div>
                     <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
                         <image class="img-cancel" :src="config.dir+'/images/tmp/components/erase-normal.png'"></image>
@@ -32,7 +34,7 @@
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
                     <image class="img" :src="config.dir+'/images/tmp/upload.png'"></image>
                 </div>
-                <text class="maxPrompt belowPrompt" v-if="maxImg!=-1">{{list.length}}/{{maxImg}}</text>
+                <text class="maxPrompt belowPrompt" v-if="maxImg!=99">{{list.length}}/{{maxImg}}</text>
             </div>
         </formCustom>
     </div>
@@ -56,7 +58,7 @@ export default {
         titleWidth: {type: Number, default: 180},       //title宽度
         fontSize:   {type: Number, default: 34},        //文字大小
         isBelow:    {type: Boolean, default: false},    //false：图片在右侧  ture： 图片在下方
-        maxImg:     {type: Number, default:-1},         //最大图片数量
+        maxImg:     {type: Number, default:9},         //最大图片数量
         imgWidth:   {type: Number, default:100},        //图片的宽
         imgHeight:  {type: Number, default:100},        //图片的高
     },

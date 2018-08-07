@@ -325,6 +325,26 @@ exports.normal = {
             }
         });
     },
+    imageInfo: function(src, success, fail, complete){
+        image.getImageInfo({
+            src: src,
+            success: function(res){
+                if(success){
+                    success(res);
+                }
+            },
+            fail: function(error){
+                if(fail){
+                    fail(error);
+                }
+            },
+            complete: function(res){
+                if(complete){
+                    complete(res);
+                }
+            }
+        });
+    },
 
 /* image */
 /* cache Sync慎用 容易出bug*/
