@@ -1,12 +1,7 @@
 <template>
-    <!-- <base :title="title" :isShow="isShow" @baseAppear="appear"> -->
-        <div>
-            <zoom-img class="img" :style="{width:myWidth,height:myHeight,}" :src='imgUrl'></zoom-img>
-            <div class="closeDiv" @click="close">
-                <image class="closeImg" :src="config.dir+'/images/tmp/ic_close.png'"></image>
-            </div>
-        </div>
-    <!-- </base> -->
+    <base :title="title" :isShow="isShow" @baseAppear="appear">
+        <zoom-img class="img" :style="{width:myWidth,height:myHeight,}" :src='imgUrl'></zoom-img>
+    </base>
 </template>
 
 <style scoped>
@@ -29,7 +24,7 @@ const normal = require('./normal.js').normal;
 import config from './config.js';
 export default{
     components: {
-        // base: require('./base.vue'),
+        base: require('./base.vue'),
     },
     data:()=>({
         config,
@@ -41,6 +36,7 @@ export default{
     }),
     created(){
         let top = weex.config.env.platform=="android"?48:0;
+        top += this.getNavHeight();
         this.myHeight = 750 / weex.config.env.deviceWidth * weex.config.env.deviceHeight - top;
         // normal.alert(weex.config.env.deviceHeight);
     },
@@ -50,6 +46,25 @@ export default{
         },
         close(){
             normal.back();
+        },
+        getNavHeight(){
+            let height = 0;
+            switch (weex.config.env.platform) {
+                case "android": {
+                    height     = 112;
+                }
+                    break;
+                default: {
+                    if (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6') {
+                        //iphoneX
+                        height = 176;
+                    } else {
+                        height = 128;
+                    }
+                }
+                    break;
+            }
+            return height;
         }
     }
 }
