@@ -50,6 +50,8 @@
                 :isLeft="isLeft" 
                 :titleWidth="titleWidth" 
                 :fontSize="fontSize"
+                :max="max"
+                :min="min"
                 @formInput="input"></formInput>
 
         <!-- <formCustom v-if="type=='input'" :ifRequire=ifRequire :titleSize=fontSize>
@@ -73,6 +75,7 @@
                 :isBelow="isBelow" 
                 :titleWidth="titleWidth" 
                 :fontSize="fontSize"
+                :areaHeight="areaHeight"
                 @formInput="input"></formTextArea>
 
 
@@ -243,6 +246,10 @@ export default {
                 inputType:'text',
                 //textarea可输入最大字数
                 maxNum:200,
+                //input为date时的最大选择日期
+                max:'',
+                //input为date时的最小选择日期
+                min:'',
                 //最大图片数量
                 maxImg:-1,
                 //图片的宽
@@ -268,6 +275,8 @@ export default {
                 canCancel:false,
                 //是否有展开
                 hasOpen:false,
+                //文本区域高度
+                areaHeight:160,
                 //最大显示字数，hasOpen填了则必需
                 lineNumber:-1,
                 list:[],
@@ -331,6 +340,12 @@ export default {
         selectRadio(){
             return this.itemData.selectRadio!=null?this.itemData.selectRadio:-1;
         },
+        max(){
+            return this.itemData.max?this.itemData.max:'';
+        },
+        min(){
+            return this.itemData.min?this.itemData.min:'';
+        },
         maxNum(){
             return this.itemData.maxNum?this.itemData.maxNum:200;
         },
@@ -348,6 +363,9 @@ export default {
         },
         hasOpen(){
             return this.itemData.hasOpen?this.itemData.hasOpen:false;
+        },
+        areaHeight(){
+            return this.itemData.areaHeight?this.itemData.areaHeight:160;
         },
         list(){
             return this.itemData.list?this.itemData.list:{};

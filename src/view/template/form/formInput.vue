@@ -5,8 +5,8 @@
     <!-- input -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></input>
-        <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></input>
+        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" :placeholder="placeholder"></input>
+        <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" :placeholder="placeholder"></input>
     </formCustom>
 </template>
 
@@ -29,6 +29,8 @@ export default {
         isLeft:     {type: Boolean, default: false},        //是否靠左
         titleWidth: {type: Number, default: 180},           //title宽度
         fontSize:   {type: Number, default: 34},            //文字大小
+        max:        {type: String, default: ''},  //当type属性为date时选择日期的最大时间，格式为yyyy-MM-dd
+        min:        {type: String, default: ''},  //当type属性为date时选择日期的最小时间，格式为yyyy-MM-dd
     },
     watch: {
         textValue(val){
@@ -61,10 +63,25 @@ export default {
                 value:e.value,
                 title:this.title,
             });
+        },
+        toDateString: function(date){
+            if(typeof(date)!='object'){
+                return '';
+            }
+            let day = date.getDate();
+            let month = date.getMonth()+1;
+            let year = date.getYear() + 1900;
+            month = month<10?"0"+month:month;
+            day = day<10?"0"+day:day;
+            return year+'-'+month+'-'+day;
         }
     },
     created(){
-        
+        let today = new Date();
+        let nextDay = new Date();
+        nextDay.setDate(nextDay.getDate()+7);
+        this.max = this.toDateString(nextDay);
+        this.min = this.toDateString(today);
     }
 }
 </script>

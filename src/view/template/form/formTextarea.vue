@@ -4,14 +4,14 @@
 <template>
     <!-- textarea -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize}" :value="title"></text>
-        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'width': titleWidth}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
         <div class="inputNum" slot="below" v-if="!isBelow && maxNum>0">
             <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
             <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
         </div>
         <div slot="below" style="flex-direction: column;margin-right: 16;padding-left: 16">
-            <textarea style="" class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': titleSize, 'lines': lines}" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
+            <textarea class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
             <div class="inputNum" v-if="isBelow && maxNum>0">
                 <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
                 <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
@@ -40,6 +40,7 @@ export default {
         isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
         titleWidth: {type: Number, default: 180},           //title宽度
         fontSize:   {type: Number, default: 34},            //文字大小
+        areaHeight: {type: Number, default: 160},           //文本区域高度
     },
     watch: {
         textValue(val){

@@ -5,8 +5,12 @@
     <div>
         <!-- 图片选择 -->
         <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-            <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-            <div class="group" v-if="!isBelow"><!--  :style="{'justify-content':isLeft?'flex-start':'flex-end'}" -->
+            <div>
+                <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+                <text class="maxPrompt" v-if="maxImg!=99&&!isBelow">{{list.length}}/{{maxImg}}</text>
+            </div>
+            <text class="maxPrompt" v-if="maxImg!=99&&isBelow">{{list.length}}/{{maxImg}}</text>
+            <div class="group" v-if="!isBelow"  style="flex-wrap: wrap;flex: 1;"><!--  :style="{'justify-content':isLeft?'flex-start':'flex-end'}" -->
                 <div class="picBlock" v-for="item,index in list" >
                     <div style="flex-direction: column;" @click="imgClick(index)">
                         <image class="img" :src="item.src" :style="{width:imgWidth, height:imgHeight}"></image>
@@ -17,9 +21,8 @@
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="config.dir+'/images/tmp/upload.png'"></image>
+                    <image class="img" :src="config.dir+'/images/tmp/upload.png'" :style="{width:imgWidth, height:imgHeight}"></image>
                 </div>
-                <text class="maxPrompt" v-if="maxImg!=99">{{list.length}}/{{maxImg}}</text>
             </div>
             <div slot="below" class="belowBox" style="flex-wrap: wrap;flex: 1;" v-if="isBelow">
                 <div class="picBlock" v-for="item,index in list" >
@@ -32,9 +35,8 @@
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="config.dir+'/images/tmp/upload.png'"></image>
+                    <image class="img" :src="config.dir+'/images/tmp/upload.png'" :style="{width:imgWidth, height:imgHeight}"></image>
                 </div>
-                <text class="maxPrompt belowPrompt" v-if="maxImg!=99">{{list.length}}/{{maxImg}}</text>
             </div>
         </formCustom>
     </div>
@@ -139,6 +141,8 @@ export default {
     text-align: right;
     font-size: 28;
     color: #999999;
+    margin-top: 10;
+    margin-bottom: 10;
 }
 .belowBox{
     flex-direction: row;
