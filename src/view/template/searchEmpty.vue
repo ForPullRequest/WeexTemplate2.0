@@ -1,5 +1,5 @@
-<template>
-    <searchT ref="search" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :isCenter="true" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @searchAdapter="getList" @searchAppear="appear" @searchInput="searchInput">
+//customBack为true时可用<template>
+    <searchT ref="search" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :isCenter="true" :noContentImg="noContentImg" :hasSearch="true" :placeholder="placeholder" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @searchBack="searchBack" @searchAdapter="getList" @searchDisappear="searchDisappear" @searchAppear="appear" @searchInput="searchInput" @searchRight="searchRight" @searchTitle="searchTitle">
         <cell v-for="itemData, index in list" :key="itemData">
             <list-item class="itemDiv" @onclick="itemClick(index)" @longpress="longpress(index)">
                 <text class="item" :value="itemData.text"></text>
@@ -22,7 +22,6 @@
 
 <script>
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     components: {
         searchT: require('./searchT.vue'),
@@ -32,8 +31,10 @@ export default{
         pageNo:1,
         totalPage:1,
         list:[],//只用于显示
-        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
-        noContentTxt:'暂无数据',
+        // noContentImg:'../../images/tmp/components/ic_no_content.png',
+        // noContentTxt:'暂无数据',
+        placeholder:"请输入关键字"
+        // backItemImage:"",
     }),
     created(){
         
@@ -85,7 +86,19 @@ export default{
         searchInput(input){
             normal.log('input======='+input.value);
             input.refresh();
-        }
+        },
+        // searchBack(){//customBack为true时可用
+        //     normal.alert("searchBack");
+        // },
+        searchDisappear(){
+
+        },
+        searchRight(){
+            // normal.alert("This is searchRight");
+        },
+        searchTitle(){
+            // normal.alert("This is searchTitle");
+        },
     }
 }
 </script>

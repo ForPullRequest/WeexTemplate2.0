@@ -107,6 +107,25 @@ export default {
         },
         viewWillDisAppear() {
             this.$emit("viewWillDisAppear",{});
+        },
+        isWeb () {
+            const { platform } = weex.config.env;
+            return typeof (window) === 'object' && platform.toLowerCase() === 'web';
+        },
+        isIOS () {
+            const { platform } = weex.config.env;
+            return platform.toLowerCase() === 'ios';
+        },
+        /**
+         * 是否为 iPhone X
+         * @returns {boolean}
+         */
+        isIPhoneX () {
+            const { deviceHeight } = weex.config.env;
+            if (this.isWeb()) {
+                return typeof window !== undefined && window.screen && window.screen.width && window.screen.height && (parseInt(window.screen.width, 10) === 375) && (parseInt(window.screen.height, 10) === 812);
+            }
+            return this.isIOS() && deviceHeight === 2436;
         }
     },
     mounted(){
@@ -125,7 +144,7 @@ export default {
             }
                 break;
             default: {
-                if (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6') {
+                if (weex.config.env.deviceModel === 'iPhone10,3' || weex.config.env.deviceModel === 'iPhone10,6' || this.isIPhoneX()) {
                     //iphoneX
                     this.top    = 88;
                     this.height = 176;

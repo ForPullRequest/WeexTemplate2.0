@@ -25,6 +25,7 @@ export default {
     },
     props:{
         index:      {type: Number, default: 0},
+        tag:        {type: String, default: ''},
         title:      {type: String, default: ''},        //title
         titleColor: {type: String, default: '#5f5f5f'}, //title颜色
         textValue:  {type: String, default: ''},        //text文本
@@ -53,11 +54,13 @@ export default {
                 title:this.title,
                 selected:index,
                 index:this.index,
+                tag:this.tag,
                 model:this.list[index],
             });
             this.$emit('getOutPut', {
                 selected:index,
                 index:this.index,
+                tag:this.tag,
                 output:this.list[index],
             });
         },

@@ -8,6 +8,7 @@
         <!-- text -->
         <formText v-if="type=='text'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -39,12 +40,14 @@
         <!-- input -->
         <formInput v-if="type=='input'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
                 :textValue="textValue"
                 :textColor="textColor"
                 :placeholder="placeholder"
+                :placeholderColor="placeholderColor"
                 :inputType="inputType"
                 :isBelow="isBelow"
                 :isLeft="isLeft" 
@@ -63,6 +66,7 @@
         <!-- textarea -->
         <formTextArea v-if="type=='textarea'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -70,6 +74,7 @@
                 :textColor="textColor"
                 :lines="lines"
                 :placeholder="placeholder"
+                :placeholderColor="placeholderColor"
                 :inputType="inputType"
                 :maxNum="maxNum"
                 :isBelow="isBelow" 
@@ -98,6 +103,7 @@
         <!-- 图片选择 -->
         <formImage v-if="type=='image'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -135,6 +141,7 @@
         <!-- 单选框 -->
         <formRadio v-if="type=='radio'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -162,6 +169,7 @@
         <!-- 复选框 -->
         <formCheckbox v-if="type=='checkbox'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -185,6 +193,7 @@
         <!-- 选择列表 -->
         <formList v-if="type=='dropdown'"
                 :index="index"
+                :tag="tag"
                 :ifRequire="ifRequire"
                 :title="title"
                 :titleColor="titleColor"
@@ -224,6 +233,7 @@ export default {
         'itemData':{
             default:{
                 index:0,
+                tag:'',
                 //dropdown:选择列表 image:图片选择 radio:单选框 checkbox:复选框
                 type:'text',
                 //字体大小
@@ -242,6 +252,8 @@ export default {
                 lines:3,
                 //input占位符文本
                 placeholder:'请输入内容',
+                //input占位符颜色
+                placeholderColor:'',
                 //input类型，日期选择 date
                 inputType:'text',
                 //textarea可输入最大字数
@@ -280,13 +292,16 @@ export default {
                 //最大显示字数，hasOpen填了则必需
                 lineNumber:-1,
                 list:[],
-                model:[],
+                // model:[],
             },
         },
     },
     computed: {
         index(){
             return this.itemData.index!=null?this.itemData.index:0;
+        },
+        tag(){
+            return this.itemData.tag!=null?this.itemData.tag:'tag'+this.index;
         },
         type(){
             return this.itemData.type?this.itemData.type:'text';
@@ -308,10 +323,13 @@ export default {
             return this.itemData.titleWidth?this.itemData.titleWidth:180;
         },
         textColor(){
-            return this.itemData.textColor?this.itemData.textColor:'#999999';
+            return this.itemData.textColor?this.itemData.textColor:'black';
         },
         placeholder(){
             return this.itemData.placeholder?this.itemData.placeholder:'请输入内容';
+        },
+        placeholderColor(){
+            return this.itemData.placeholderColor?this.itemData.placeholderColor:'#999999';
         },
         textValue(){
             return this.itemData.textValue?this.itemData.textValue:'';
@@ -341,10 +359,15 @@ export default {
             return this.itemData.selectRadio!=null?this.itemData.selectRadio:-1;
         },
         max(){
-            return this.itemData.max?this.itemData.max:'';
+            let nextDay = new Date();
+            nextDay.setDate(nextDay.getDate()+7);
+            // this.max = this.toDateString(nextDay);
+            return this.itemData.max?this.itemData.max:this.toDateString(nextDay);
         },
         min(){
-            return this.itemData.min?this.itemData.min:'';
+            let today = new Date();
+            // this.min = this.toDateString(today);
+            return this.itemData.min?this.itemData.min:this.toDateString(today);
         },
         maxNum(){
             return this.itemData.maxNum?this.itemData.maxNum:200;
@@ -386,18 +409,28 @@ export default {
         // output:'',
         // selectRadio:-1,
         selectCheck:[],
-        fontSize:34,
-        numColor:'#999999',
-        open:'展开'
+        // fontSize:34,
+        // numColor:'#999999',
+        open:'展开',
+        myLines:-1,
     }),
     created(){
         if(this.itemData.type=="text"){
-            if(this.itemData.lineNumber>=this.itemData.textValue.length){
-                this.itemData.hasOpen=false;
-            }
+            this.myLines = this.itemData.lines;
         }
     },
     methods:{
+        toDateString: function(date){
+            if(typeof(date)!='object'){
+                return '';
+            }
+            let day = date.getDate();
+            let month = date.getMonth()+1;
+            let year = date.getYear() + 1900;
+            month = month<10?"0"+month:month;
+            day = day<10?"0"+day:day;
+            return year+'-'+month+'-'+day;
+        },
         checkSelect(val){
             this.$emit('checkSelect',val);
         },
@@ -441,29 +474,32 @@ export default {
             this.$emit('textClick',e);
         },
         clickOpen(e){
-            if(this.open == '展开'){
-                this.open = '收起';
-            } else {
-                this.open = '展开';
+            if(this.itemData.lines!= -1){
+                this.itemData.lines = -1;
+            }else{
+                this.itemData.lines = this.myLines;
             }
-            
-            this.$emit('clickOpen',e);
         },
         input(e){
             // this.output = e.value;
             this.itemData.textValue=e.value;
             // this.getOutPut();
-            if(this.textValue.length>this.maxNum){
-                this.numColor='red';
-            }else{
-                this.numColor='#999999';
-            }
+            // if(this.textValue.length>this.maxNum){
+            //     this.numColor='red';
+            // }else{
+            //     this.numColor='#999999';
+            // }
             this.$emit("formInput",e);
         },
         imgClick(img) {
             let showPic = function(){
-                normal.push(config.dir + '/view/template/showPic',{imgUrl:img.item.src});
-            }
+                // normal.push(config.dir + '/view/template/showPic',{imgUrl:img.item.src});
+                let arr = [];
+                for (var i = 0; i < this.itemData.list.length; i++) {
+                    arr.push(this.itemData.list[i].src);
+                }
+                normal.previewImage(arr[img.index], arr)
+            }.bind(this);
             img.showPic = showPic;
             this.$emit('imgClick', img);
         },

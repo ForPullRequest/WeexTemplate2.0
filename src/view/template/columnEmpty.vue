@@ -1,5 +1,5 @@
 <template>
-    <columnT ref="column" title="title" :items="items" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" borderLeftWidthCol="4" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @columnAdapter="getList" @columnAppear="appear" @columnPage="columnPage">
+    <columnT ref="column" title="title" :barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :items="items" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" :customBack="false" borderLeftWidthCol="4" leftColumnWidthCol="250" :selectColorCol="selectColorCol" :unSelectColorCol="unSelectColorCol" titleSizeCol="36" :selectTitleColorCol="selectTitleColorCol" :unSelectTitleColorCol="unSelectTitleColorCol" :borderLeftColorCol="borderLeftColorCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @columnAdapter="getList" @columnAppear="appear" @columnDisappear="columnDisappear" @columnPage="columnPage" @columnBack="columnBack" @columnRight="columnRight" @columnTitle="columnTitle">
         <cell v-for="itemData, index in list" :key="itemData">
             <list-item class="itemDiv" @onclick="itemClick(index)">
                 <text class="item">{{itemData.text}}</text>
@@ -22,7 +22,6 @@
 
 <script>
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     components: {
         columnT: require('./columnT.vue'),
@@ -30,9 +29,9 @@ export default{
     },
     data:()=>({
         pageNo:1,
-        totalPage:1,
-        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
-        noContentTxt:'暂无数据',
+        // noContentImg:'../../images/tmp/components/ic_no_content.png',
+        // noContentTxt:'暂无数据',
+        // backItemImage:'',
         //cache数据集
         items:[{
             name: "tab1",
@@ -52,6 +51,11 @@ export default{
         list:[],
         selectIndex:0,
         isCache:false,
+        selectColorCol:'#ffffff',
+        unSelectColorCol:'#f5f5f5',
+        selectTitleColorCol:'#333333',
+        unSelectTitleColorCol:'#8f8f8f',
+        borderLeftColorCol:'#1c98fc',
     }),
     created(){
         
@@ -131,7 +135,19 @@ export default{
                 //结束
                 columnT.end();
             }.bind(this), 1000);
-        }
+        },
+        columnDisappear(){
+
+        },
+        columnRight(){
+            // normal.alert("This is columnRight");
+        },
+        columnTitle(){
+            // normal.alert("This is columnTitle");
+        },
+        // columnBack(){//customBack为true时可用
+        //     normal.alert("columnBack");
+        // },
     }
 }
 </script>

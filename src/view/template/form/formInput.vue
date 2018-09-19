@@ -5,8 +5,8 @@
     <!-- input -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" :placeholder="placeholder"></input>
-        <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" :placeholder="placeholder"></input>
+        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"></input>
+        <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"></input>
     </formCustom>
 </template>
 
@@ -23,6 +23,7 @@ export default {
         textValue:  {type: String, default: ''},            //text文本
         textColor:  {type: String, default: '#999999'},     //text颜色
         placeholder:{type: String, default: '请输入内容'},  //input占位符文本
+        placeholderColor:{type: String, default: ''},       //placeholderColor默认颜色
         inputType:  {type: String, default: 'text'},        //input类型，日期选择 date
         ifRequire:  {type: Boolean, default: false},        //是否必填
         isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
@@ -33,9 +34,14 @@ export default {
         min:        {type: String, default: ''},  //当type属性为date时选择日期的最小时间，格式为yyyy-MM-dd
     },
     watch: {
-        textValue(val){
+        // textValue(val){
             // this.getOutPut();
-        }
+            // if(this.textValue.length>this.maxNum){
+            //     this.numColor='red';
+            // }else{
+            //     this.numColor='#999999';
+            // }
+        // }
     },
     data:()=> ({
         output:'',
@@ -51,6 +57,7 @@ export default {
         //     });
         // },
         input(e){
+            console.log("input22 ====================", e);
             this.output = e.value;
             this.textValue=e.value;
             // this.getOutPut();
@@ -64,25 +71,25 @@ export default {
                 title:this.title,
             });
         },
-        toDateString: function(date){
-            if(typeof(date)!='object'){
-                return '';
+        onchange(e) {
+            if ((this.inputType=="time" || this.inputType=="date") && weex.config.env.platform.toLowerCase()=="ios") {
+                this.output = e.value;
+                this.textValue=e.value;
+                // this.getOutPut();
+                if(this.textValue.length>this.maxNum){
+                    this.numColor='red';
+                }else{
+                    this.numColor='#999999';
+                }
+                this.$emit("formInput",{
+                    value:e.value,
+                    title:this.title,
+                });
             }
-            let day = date.getDate();
-            let month = date.getMonth()+1;
-            let year = date.getYear() + 1900;
-            month = month<10?"0"+month:month;
-            day = day<10?"0"+day:day;
-            return year+'-'+month+'-'+day;
-        }
+        },
     },
     created(){
-        let today = new Date();
-        let nextDay = new Date();
-        nextDay.setDate(nextDay.getDate()+7);
-        this.max = this.toDateString(nextDay);
-        this.min = this.toDateString(today);
-    }
+    },
 }
 </script>
 

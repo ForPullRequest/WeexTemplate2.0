@@ -21,6 +21,7 @@ export default {
     },
     props:{
         index:      {type: Number, default: 0},
+        tag:        {type: String, default: ''},
         title:      {type: String, default: ''},            //title
         titleColor: {type: String, default: '#5f5f5f'},     //title颜色
         isCheck:    {type: String, default: ''},            //选中img
@@ -54,11 +55,13 @@ export default {
             this.$emit('checkSelect', {
                 selected:val,
                 index:this.index,
+                tag:this.tag,
                 check:check,
             });
             this.$emit('getOutPut', {
                 selected:val,
                 index:this.index,
+                tag:this.tag,
                 output:check,
             });
         },

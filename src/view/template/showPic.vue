@@ -1,5 +1,5 @@
 <template>
-    <base :title="title" :isShow="isShow" @baseAppear="appear">
+    <base :title="title" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back">
         <zoom-img class="img" :style="{width:myWidth,height:myHeight,}" :src='imgUrl'></zoom-img>
     </base>
 </template>
@@ -26,6 +26,10 @@ export default{
     components: {
         base: require('./base.vue'),
     },
+    props:{
+        //是否自定义返回事件
+        customBack:     {default: false},
+    },
     data:()=>({
         config,
         isShow:true,
@@ -41,6 +45,15 @@ export default{
         // normal.alert(weex.config.env.deviceHeight);
     },
     methods:{
+        //继承自base
+        back(){
+            if(this.customBack){
+                //页面自定义退出事件
+                this.$emit('showPicBack',{});
+            }else{
+                normal.back();
+            }
+        },
         appear(){
 
         },

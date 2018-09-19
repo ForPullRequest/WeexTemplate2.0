@@ -1,5 +1,5 @@
 <template>
-    <sheetT ref="list" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :maxShowNum="5" :items="items" @sheetAdapter="getList" @baseAppear="appear" @actionSheet="actionSheet">
+    <sheetT ref="list" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :maxShowNum="5" :selected="selected" :sheetHeight="sheetHeight" :sheetItemHeight="sheetItemHeight" :items="items" :sheetBorderRadius="sheetBorderRadius" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @sheetBack="sheetBack" @sheetAdapter="getList" @sheetAppear="appear" @sheetDisappear="sheetDisappear" @itemClick="itemClick" @sheetRight="sheetRight" @sheetTitle="sheetTitle">
         <cell v-for="item, index in list" >
             <list-item class="itemDiv" :hasTouchStyle="true" @onclick="itemClick(index)">
             </list-item>
@@ -25,6 +25,13 @@ export default{
     data:()=>({
         pageNo:1,
         totalPage:1,
+        sheetBorderRadius:18,
+        sheetHeight:580,
+        sheetItemHeight:100,
+        selected:[0,0],
+        // noContentImg:'../../images/tmp/components/ic_no_content.png',
+        // noContentTxt:'暂无数据',
+        // backItemImage:"",
         list:[],
         items:[{
             tag:'status',
@@ -70,8 +77,20 @@ export default{
             }
             sheetT.end();
         },
-        actionSheet(sheet){
-            normal.toast(sheet);
+        itemClick(item){
+            normal.alert(item);
+        },
+        // sheetBack(){//customBack为true时可用
+        //     normal.alert("sheetBack");
+        // },
+        sheetDisappear(){
+
+        },
+        sheetRight(){
+            // normal.alert("This is sheetRight");
+        },
+        sheetTitle(){
+            // normal.alert("This is sheetTitle");
         }
     }
 }

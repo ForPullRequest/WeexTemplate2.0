@@ -87,6 +87,10 @@ export default {
                         src:'listT',
                         demoSrc:'listEmpty'
                     },{
+                        text:'scroller【推荐使用】',
+                        src:'scrollerT',
+                        demoSrc:'scrollerEmpty'
+                    },{
                         text:'tabList【推荐使用】',
                         src:'tabListT',
                         demoSrc:'tabListEmpty'

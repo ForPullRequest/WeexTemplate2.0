@@ -5,13 +5,13 @@
     <!-- textarea -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" v-if="!isBelow" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
+        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" v-if="!isBelow" :type="inputType" :value="textValue" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
         <div class="inputNum" slot="below" v-if="!isBelow && maxNum>0">
             <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
             <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
         </div>
         <div slot="below" style="flex-direction: column;margin-right: 16;padding-left: 16">
-            <textarea class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" :type="inputType" :value="textValue" @input="input" :placeholder="placeholder"></textarea>
+            <textarea class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" :type="inputType" :value="textValue" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
             <div class="inputNum" v-if="isBelow && maxNum>0">
                 <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
                 <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
@@ -34,6 +34,7 @@ export default {
         textColor:  {type: String, default: '#999999'},     //text颜色
         lines:      {type: String, default: 3},             //类型为text时文本内容最大行数
         placeholder:{type: String, default: '请输入内容'},  //input占位符文本
+        placeholderColor:{type: String, default: ''},       //placeholderColor默认颜色
         inputType:  {type: String, default: 'text'},        //input类型，日期选择 date
         maxNum:     {type: Number, default: 200},           //textarea可输入最大字数
         ifRequire:  {type: Boolean, default: false},        //是否必填
@@ -45,6 +46,11 @@ export default {
     watch: {
         textValue(val){
             // this.getOutPut();
+            if(this.textValue.length>this.maxNum){
+                this.numColor='red';
+            }else{
+                this.numColor='#999999';
+            }
         }
     },
     data:()=> ({
@@ -63,16 +69,11 @@ export default {
             this.output = e.value;
             this.textValue=e.value;
             // this.getOutPut();
-            if(this.textValue.length>this.maxNum){
-                this.numColor='red';
-            }else{
-                this.numColor='#999999';
-            }
             this.$emit("formInput",{
                 value:e.value,
                 title:this.title,
             });
-        }
+        },
     },
     created(){
     

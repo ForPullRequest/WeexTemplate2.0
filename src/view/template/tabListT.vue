@@ -3,7 +3,7 @@
     是多个可切换标签的单list页面的模板
  -->
 <template>
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 左侧类型的tab 可以滚动 -->
         <div style="flex-direction: row;" v-if="!isCenter">
             <tabpage :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></tabpage>
@@ -64,10 +64,15 @@ export default{
         noContentTxt:   {default:'暂无数据'},
 
         //第三部分继承自tabpage
+        //tabpage的颜色
         itemViewColor:      {type: String, default: '#FAFAFA'},
+        //tabpage的高度
         itemViewHeight:     {type: String, default: '96'},
+        //tabpage的字体大小
         itemTextFont:       {type: String, default: '34'},
+        //tabpage的字体颜色
         itemNormolColor:    {type: String, default: '#000000'},
+        //tabpage被选中时的字体颜色
         itemSelectColor:    {type: String, default: '#1c97fc'},
         //此处数据格式必须为 [{name: "value",isSelect: true/false,其他自定义属性}]
         items:              {type: Array,  default: []},

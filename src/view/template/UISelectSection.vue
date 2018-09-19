@@ -1,14 +1,17 @@
 <template>
     <div class="dataDiv" onclick="empty" append = "node">
-        <div class="upView" v-if="false">
+        <!-- <div class="upView" v-if="false">
             <text class="title">{{tag}}</text>
             <div v-if="false" class="cancelDiv" @click="cancel">
                 <image class="cancelImg" :src="config.dir+'/images/tmp/ic_close.png'"></image>
             </div>
-        </div>
+        </div> -->
         <scroller :style="{height: scrollerHeight}">
             <div :style="{height: itemHeight}" v-for="item, index in list" :key="item">
-                <text class="text" @click="itemClick(index)">{{item.text}}</text>
+                <div style="flex-direction: row" @click="itemClick(index)">
+                    <text class="text" >{{item.text}}</text>
+                    <text class="selectText" v-if="index==selectedIndex">√</text>
+                </div>
                 <div class="line"></div>
             </div>
         </scroller>
@@ -61,19 +64,33 @@
     text-overflow: ellipsis;
     font-size: 28;
     color:#41484d;
+    flex: 1;
+    lines:1;
+}
+.selectText{
+    padding-left: 40;
+    padding-right: 40;
+    padding-top: 30;
+    padding-bottom: 30;
+    text-overflow: ellipsis;
+    font-size: 28;
+    color:#41484d;
     lines:1;
 }
 </style>
 <script>
 const normal = require('./normal.js').normal;
-import config from './config.js';
+// import config from './config.js';
 export default {
     data:()=> ({
-        config,
+        // config,
         list:[],
         tag:'',
     }),
     props:{
+        selectedIndex:{
+            default:0
+        },
         tag:{
             default:''
         },
@@ -95,10 +112,11 @@ export default {
 
         },
         cancel:function(){
-            normal.notify('cancelModal', {});
+            // normal.notify('cancelModal', {});
         },
         itemClick(index) {
-            normal.notify('cancelModal', {tag:this.tag, item:this.list[index], index:index});
+            this.$emit("itemClick",{tag:this.tag, text:this.list[index].text, index:index});
+            // normal.notify('cancelModal', {tag:this.tag, item:this.list[index], index:index});
             // modal.toast({message:JSON.stringify(this.list[index])});
         },
     }

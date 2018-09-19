@@ -1,1 +1,1 @@
-exports.dir = '/YC';
+exports.dir = '/index';

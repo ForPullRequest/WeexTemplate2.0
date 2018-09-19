@@ -4,9 +4,9 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 搜索栏 -->
-        <div>
+        <div v-if="hasSearch">
             <!-- show -->
             <div class="searchWrapper" v-if="!isSearch">
                 <div class="searchContent" @click="showSearch">
@@ -135,6 +135,8 @@ export default{
         //第三部分来自search
         //input的类型
         placeholder:    {default: '请输入'},
+        //是否存在搜索栏
+        hasSearch:      {default: true},
     },
     components: {
         base: require('./base.vue'),

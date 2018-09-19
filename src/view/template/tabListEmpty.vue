@@ -1,5 +1,5 @@
 <template>
-    <tabListT ref="tabList" title="title" :items="tabs" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" :isCenter="true" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @tabListAdapter="getList" @tabListAppear="appear" @tabListPage="tabListPage">
+    <tabListT ref="tabList" title="title" barTitleColor="white" :items="tabs" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" :isCenter="true" :itemViewColor="itemViewColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @tabListBack="tabListBack" @tabListAdapter="getList" @tabListAppear="appear" @tabListDisappear="tabListDisappear" @tabListPage="tabListPage" @tabListRight="tabListRight" @tabListTitle="tabListTitle">
         <cell v-for="itemData, index in list" :key="itemData">
             <list-item class="itemDiv" @onclick="itemClick(index)" @longpress="longpress(index)">
                 <text class="item" :value="itemData.text"></text>
@@ -22,14 +22,19 @@
 
 <script>
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     components: {
         tabListT: require('./tabListT.vue'),
     },
     data:()=>({
-        noContentImg:config.dir+'/images/tmp/components/ic_no_content.png',
-        noContentTxt:'暂无数据',
+        itemViewColor:"#FAFAFA",
+        itemViewHeight:96,
+        itemTextFont:34,
+        itemNormolColor:"#000000",
+        itemSelectColor:"#1c97fc",
+        // noContentImg:'../../images/tmp/components/ic_no_content.png',
+        // noContentTxt:'暂无数据',
+        // backItemImage:"",
         tabs:[{
             name: "tab1",
             isSelect: true,
@@ -41,16 +46,16 @@ export default{
             name: "tab1",
             isSelect: true,
             list: [],
-            pageNo: 1,
-            pageSize: 10,
-            totalPage: 1,
+            pageNo: 1,//当前页码
+            pageSize: 10,//当前页显示数据的条数
+            totalPage: 1,//总页数
         },{
             name: "tab2",
             isSelect: false,
             list: [],
-            pageNo: 1,
-            pageSize: 10,
-            totalPage: 1,
+            pageNo: 1,//当前页码
+            pageSize: 10,//当前页显示数据的条数
+            totalPage: 1,//总页数
         }],
         list:[],//只用于显示
         selectIndex:0,//当前选择的tab 为了HasMore
@@ -126,6 +131,18 @@ export default{
                 //结束
                 tabListT.end();
             }.bind(this), 1000);
+        },
+        // tabListBack(){//customBack为true时可用
+        //     normal.alert("tabListBack");
+        // },
+        tabListDisappear(){
+
+        },
+        tabListRight(){
+            // normal.alert("This is tabListRight");
+        },
+        tabListTitle(){
+            // normal.alert("This is tabListTitle");
         }
     }
 }

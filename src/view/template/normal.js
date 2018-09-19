@@ -205,14 +205,48 @@ exports.normal = {
         });
     },
     /**
+     * 返回到当前模块的首页
+     */ 
+    backToMain: function() {
+        let pages           = navigator.getCurrentPagesSync(); //{"route":"http://192.168.23.156:8081/dist/YC/index.js","pagetype":"weex"}
+        let mainPage        = "/YC/index.js";
+        let mainPageIndex   = null;
+        for (let index in pages) {
+            let temp = pages[index];
+            if (temp.route.slice(-mainPage.length) == mainPage) {
+                mainPageIndex = index;
+                break;
+            }
+        }
+        navigator.pop({ delta: parseInt((pages.length-(mainPageIndex+1))) });
+    },
+    killTransitionPage: function(exceptPage) {
+        let pages           = navigator.getCurrentPagesSync(); //{"route":"http://192.168.23.156:8081/dist/YC/index.js","pagetype":"weex"}
+        let mainPage        = "/YC/index.js";
+        let mainPages       = [];
+        for (let index in pages) {
+            let temp = pages[index];
+            mainPages.push(temp.route);
+            if (temp.route.slice(-mainPage.length) == mainPage) {
+                break;
+            }
+        }
+        if (exceptPage) {
+            mainPages.push(exceptPage);
+        }
+        navigator.killAllPageExcept({
+            pages:mainPages
+        })
+    },
+    /**
      * 返回到哪一页
      * @param page  页码
      */
-    backToPage: function (page) {
-        navigator.pop({
-            delta:1
-        });
-    },
+    // backToPage: function (page) {
+    //     navigator.pop({
+    //         delta:1
+    //     });
+    // },
     /**
      * 返回多少页
      * @param pages 返回的页数
@@ -237,8 +271,9 @@ exports.normal = {
      * @param complete 完成回调
     */
     redirectTo: function(url, option, success, fail, complete){
+        var src = url.src ? url.src : url;
         navigator.redirectTo({
-            url:url,
+            url:src,
             option:option,
             success: function(res){
                 if(success){
@@ -306,7 +341,7 @@ exports.normal = {
         image.chooseImage({
             count: num,
             sizeType: option.sizeType,
-            sourceType: option.sourceType,
+            sourceType: option.sourceType?option.sourceType:['album'],
             filePaths: option.filePaths,
             success: function(res){
                 if(success){
@@ -344,6 +379,28 @@ exports.normal = {
                 }
             }
         });
+    },
+    previewImage: function(current, urls, success, fail, complete){
+        image.previewImage({
+            current:current,
+            urls:urls,
+            success: function(res){
+                if(success){
+                    success(res);
+                }
+            },
+            fail: function(error){
+                if(fail){
+                    fail(error);
+                }
+            },
+            complete: function(res){
+                if(complete){
+                    complete(res);
+                }
+            }
+        });
+
     },
 
 /* image */

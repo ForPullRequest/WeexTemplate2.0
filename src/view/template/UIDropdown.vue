@@ -71,8 +71,8 @@ module.exports = {
         return {
             mWidth: 750,
             selectedIndex: '-1',
-            headerColor: '#dfdfdf',
-            headerHeight: 90,
+            // headerColor: '#dfdfdf',
+            // headerHeight: 90,
             isMaskShow: false,
             itemHeight: 90,
             itemColor: 'white',
@@ -85,11 +85,11 @@ module.exports = {
                 {id: '1', name: 'Doing'},
                 {id: '2', name: 'Done'}
             ]}, 
-        tag: {default : ''}, 
+        tag: {default : ''},                            //必需，为接口中该值的名称
         // showNum: {default : 5},
-        textSize: {default : 32}, 
-        textColor: {default : '#000000'},
-        selectedTextColor: {default : '#0088FB'},
+        textSize: {default : 32},                       //字体大小
+        textColor: {default : '#000000'},               //字体颜色
+        selectedTextColor: {default : '#0088FB'},       //选择的字体颜色
         iconSelect: {default : ''},//TODO
     },
     created(){
@@ -132,9 +132,6 @@ module.exports = {
             return this.items[this.selectedIndex].name;
         },
 
-        getSelectedId() {
-            return this.selectedIndex;
-        },
         getSelectedId() {
             return this.selectedIndex;
         },

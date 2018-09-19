@@ -6,7 +6,7 @@
     <formCustom style="justify-content: center;" :ifRequire=ifRequire :titleSize=fontSize>
         <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
         <div class="textDiv" v-if="!isBelow" @click="textClick">
-            <text class="text" :style="{color:textColor,'text-align':isLeft?'left':'right','lines':lines, 'font-size': fontSize}" :type="inputType" :value="textValue"></text>
+            <text class="text" :style="{color:textColor,'text-align':isLeft?'left':'right','lines':lines, 'font-size': fontSize}" :value="textValue"></text>
         </div>
         <div class="padding" slot="below" v-if="!isBelow&&hasOpen" @appear="appear">
             <div class="open" @click="clickOpen">
@@ -15,7 +15,7 @@
         </div>
         <!-- below -->
         <div class="textDiv padding" slot="below" v-if="isBelow" @appear="appear">
-            <text class="text" :style="{color:textColor,'lines':lines, 'font-size': fontSize}" :type="inputType" :value="textValue"></text>
+            <text class="text" :style="{color:textColor,'lines':lines, 'font-size': fontSize}" :value="textValue"></text>
             <div class="open" @click="clickOpen">
                 <text :style="{color:'#2F7DCD', 'font-size': fontSize}">{{open}}</text>
             </div>
@@ -31,17 +31,17 @@ export default {
     },
     props:{
         index:      {type: Number, default: 0},
-        title:      {type: String, default: ''},
-        titleColor: {type: String, default: '#5f5f5f'},
-        textValue:  {type: String, default: ''},
-        textColor:  {type: String, default: '#999999'},
-        lines:      {type: Number, default: 3},
-        inputType:  {type: String, default: 'text'},
-        ifRequire:  {type: Boolean, default: false},
-        isLeft:     {type: Boolean, default: false},
-        hasOpen:    {type: Boolean, default: false},
-        lineNumber: {type: Number, default: -1},
-        titleWidth: {type: Number, default: 180},
+        title:      {type: String, default: ''},            //标题
+        titleColor: {type: String, default: '#5f5f5f'},     //标题颜色
+        textValue:  {type: String, default: ''},            //内容
+        textColor:  {type: String, default: '#999999'},     //内容字体颜色
+        lines:      {type: Number, default: 3},             //内容最大行数，超过会显示"..."
+        // inputType:  {type: String, default: 'text'},
+        ifRequire:  {type: Boolean, default: false},        //是否必填（显示星号）
+        isLeft:     {type: Boolean, default: false},        //是否靠左
+        hasOpen:    {type: Boolean, default: false},        //是否有展开按钮
+        lineNumber: {type: Number, default: -1},            //最大显示字数，hasOpen填了必需
+        titleWidth: {type: Number, default: 180},           //标题宽度
         fontSize:   {type: Number, default: 34},            //文字大小
         isBelow:    {type: Boolean, default: false},        //false：输入框在右侧  ture： 输入框在下方
     },
@@ -69,7 +69,7 @@ export default {
             });
         },
         appear(){
-            if(this.lineNumber>=this.textValue.length){
+            if(this.lineNumber*this.lines>=this.textValue.length){
                 this.hasOpen=false;
             }
         },

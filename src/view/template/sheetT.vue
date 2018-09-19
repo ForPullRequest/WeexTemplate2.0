@@ -4,20 +4,22 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <div class="under-line">
-            <div style="flex-direction: row;flex: 1;" v-for="item,index in items">
-                <text class = "sheetTitle" @click="sheetClick(item,index)">{{item.text}}</text><text class="arrow"> ▼</text>
-                <text class = "line"></text>
+            <div style="flex: 1;" v-for="item,index in items">
+                <div style="flex-direction: row;flex: 1" @click="sheetClick(item,index)">
+                    <text class = "sheetTitle" >{{item.text}}</text><text class="arrow"> ▼</text>
+                    <text class = "line"></text>
+                </div>
             </div>
         </div>
         <div style="flex: 1;">
-            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" @mload="load" @mrefresh="refresh">
+            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <slot></slot>
             </tsl-refresh-list>
             <sheet :showActionSheet="showSelect" :asWidth="sheetWidth" :asHeight="sheetHeight" :asModel="sheetModel" borderWidth="1" borderRadius="sheetBorderRadius" @touchBg="actionSheet">
                 <!-- <slot name="section"></slot> -->
-                <select-section :tag="tag" :list="sheetList" :itemHeight="sheetItemHeight" :scrollerHeight="sheetHeight"></select-section>
+                <select-section :tag="tag" :list="sheetList" :itemHeight="sheetItemHeight" :scrollerHeight="sheetHeight" :selectedIndex="selectedIndex" @itemClick="itemClick"></select-section>
             </sheet>
         </div>
     </base>
@@ -55,6 +57,10 @@ export default {
         hasRefresh:     {default: true},
         //是否启用加载控件
         hasLoad:        {default: true},
+        //无数据图片
+        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
+        //无数据文字
+        noContentTxt:   {default: '暂无数据'},
 
         //第三部分来自自身
         //sheet显示的位置 top bottom left right
@@ -67,7 +73,10 @@ export default {
         sheetHeight:       {default: 580},
         //sheet单项的高度
         sheetItemHeight:   {default: 100},
+        //sheet内容
         items:             {default: []},
+        //sheetSelection中√的位置
+        selected:          {default:[]},
     },
     components: {
         base: require('./base.vue'),
@@ -82,16 +91,20 @@ export default {
         tag:'',//内部
         sheetWidth:750,//定死
         sheetIndex:0,//内部
+        selectedIndex:0,
     }),
     created(){
-        normal.registerAlert('cancelModal', function(e){
-            this.actionSheet();
-            this.$emit('actionSheet',{tag:e.tag,index:e.index});
-            //e.tag用来区别是哪个sheet
-            //e.index用来区别点击了哪一项
-            this.sheetFinish(e.tag, e.index);
-            this.refresh();
-        }.bind(this));
+        // normal.registerAlert('cancelModal', function(e){
+        //     this.actionSheet();
+        //     this.$emit('actionSheet',{tag:e.tag,index:e.index});
+        //     //e.tag用来区别是哪个sheet
+        //     //e.index用来区别点击了哪一项
+        //     this.sheetFinish(e.tag, e.index);
+        //     this.refresh();
+        // }.bind(this));
+
+        for(var i=0;i<this.items.length;i++)
+            this.items[i].text=this.items[i].list[this.selected[i]].text;
     },
     methods: {
         //继承自base
@@ -136,11 +149,18 @@ export default {
                 this.sheetHeight = this.maxShowNum * this.sheetItemHeight;
             }else{
                 this.sheetHeight = this.sheetList.length * this.sheetItemHeight;
-            }
+            };
+            this.selectedIndex=this.selected[index];
             this.actionSheet();
         },
         actionSheet() {
             this.showSelect = !this.showSelect;
+        },
+        itemClick(item){
+            this.items[this.sheetIndex].text=item.text;
+            this.selected[this.sheetIndex]=item.index;
+            this.actionSheet();
+            this.$emit("itemClick",item);
         },
         //继承自list
         refresh() {
