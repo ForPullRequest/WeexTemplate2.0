@@ -4,7 +4,7 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :contentBackGroundColor="contentBackGroundColor" :barBackGroundColor="barBackGroundColor" :isIndex="isIndex" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <scroller class="scroller" ref="mscroller">
             <!-- 通过slot将item布局外放 -->
             <slot></slot>
@@ -28,6 +28,7 @@
 }
 </style>
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 
@@ -38,22 +39,28 @@ export default{
         title:          {default: 'scroller'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
+        //主体背景色
+        contentBackGroundColor: {default: '#f6f6f6'},
         //是否自定义返回事件 配合事件scrollerBack
         customBack:     {default: false},
         //用于在iOS中进行appear问题的修复
         isIndex:        {default: false},
+        //是否显示nav
+        isShow:         {default: true},
     },
     components: {
         base: require('./base.vue'),
     },
     data:()=>({
-
+        imageLoad,
     }),
     created(){
 

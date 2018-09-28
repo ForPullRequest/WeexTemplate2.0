@@ -1,5 +1,5 @@
 <template>
-    <listT ref="list" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :customBack="false" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @listBack="listBack" @listAdapter="getList" @listAppear="appear" @listDisappear="listDisappear" @listRight="listRight" @listTitle="listTitle">
+    <listT ref="list" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :customBack="false" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :isShow="isShow" @listBack="listBack" @listAdapter="getList" @listAppear="appear" @listDisappear="listDisappear" @listRight="listRight" @listTitle="listTitle">
         <cell v-for="item, index in list" >
             <list-item class="itemDiv" :hasTouchStyle="true" @onclick="itemClick(index)">
             </list-item>
@@ -26,6 +26,7 @@ export default{
         totalPage:1,//总页数
         pageSize:10,//当前页显示数据的条数
         list:[],
+        isShow:true,
         // noContentImg:'../../images/tmp/components/ic_no_content.png',
         // noContentTxt:'暂无数据',
         // backItemImage:'',

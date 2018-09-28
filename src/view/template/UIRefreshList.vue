@@ -36,6 +36,7 @@
 }
 </style>
 <script>
+import {imageLoad} from './imageUtil.js';
 const animation = weex.requireModule('animation');
 import config from './config.js';
 module.exports = {
@@ -53,7 +54,7 @@ module.exports = {
             default:true
         },
         noContentImg:{
-            default:config.dir+'/images/tmp/components/ic_no_content.png'
+            default:imageLoad('components/ic_no_content.png',true)
         },
         noContentTxt:{
             default:'暂无数据'
@@ -64,6 +65,7 @@ module.exports = {
     },
     data(){
         return {
+            imageLoad,
             refreshliststatus: 0,
             loadliststatus: false,
         }

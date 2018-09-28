@@ -17,11 +17,11 @@
                         <text style="font-size: 28;lines:2;text-overflow: ellipsis;" v-if="item.text">{{item.text}}</text>
                     </div>
                     <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
-                        <image class="img-cancel" :src="config.dir+'/images/tmp/components/erase-normal.png'"></image>
+                        <image class="img-cancel" :src="imageLoad('components/erase-normal.png',true)"></image>
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="config.dir+'/images/tmp/upload.png'" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <image class="img" :src="imageLoad('upload.png',true)" :style="{width:imgWidth, height:imgHeight}"></image>
                 </div>
             </div>
             <div slot="below" class="belowBox" style="flex-wrap: wrap;flex: 1;" v-if="isBelow">
@@ -31,11 +31,11 @@
                         <text style="font-size: 28;lines:2;text-overflow: ellipsis;max-width: 100;" v-if="item.text">{{item.text}}</text>
                     </div>
                     <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
-                        <image class="img-cancel" :src="config.dir+'/images/tmp/components/erase-normal.png'"></image>
+                        <image class="img-cancel" :src="imageLoad('components/erase-normal.png',true)"></image>
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="config.dir+'/images/tmp/upload.png'" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <image class="img" :src="imageLoad('upload.png',true)" :style="{width:imgWidth, height:imgHeight}"></image>
                 </div>
             </div>
         </formCustom>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import {imageLoad} from '../imageUtil.js';
 import formCustom from '../formCustom.vue';
 import config from '../config.js';
 export default {
@@ -70,6 +71,7 @@ export default {
         }
     },
     data:()=> ({
+        imageLoad,
         config,
         output:'',
         numColor:'#999999',

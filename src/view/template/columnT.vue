@@ -1,6 +1,6 @@
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" :isShow="isShow" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <columnview :selectColor="selectColorCol" :unSelectColor="unSelectColorCol" :titleSize="titleSizeCol" :selectTitleColor="selectTitleColorCol" :unSelectTitleColor="unSelectTitleColorCol" :borderLeftWidth="borderLeftWidthCol" :borderLeftColor="borderLeftColorCol" :items="items" :leftColumnWidth="leftColumnWidthCol" @touchPage="touchPage">
             <!-- myWidth必须要填 为了iOS中的显示问题 -->
             <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :myWidth="750-leftColumnWidthCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
@@ -60,6 +60,7 @@
 </style>
 
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 export default{
@@ -70,7 +71,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -90,7 +91,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 
@@ -113,10 +114,13 @@ export default{
         borderLeftWidthCol:    { default: '1' },
         //已选标记颜色
         borderLeftColorCol:    { default: '#1c98fc' },
+        //是否显示nav
+        isShow:         {default: true},
     },
     data:()=> ({
         // //主列表数据集
         // list:[],
+        imageLoad,
         selectIndex:0,//columnView的index
         lastIndex:0,
         isRefresh:false,

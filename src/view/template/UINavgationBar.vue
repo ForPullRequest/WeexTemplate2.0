@@ -24,7 +24,7 @@
 <style scoped>
     .container {
         flex-direction: row;
-        border-bottom-color: #314D87;
+        border-bottom-color: #e2e2e2;
         border-bottom-width: 2px;
     }
     .left_item {
@@ -38,7 +38,7 @@
     .right_item {
         flex-direction: row;
         flex: 0.2;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
     }
     .center_title {
@@ -48,8 +48,8 @@
     }
     .back_image {
         margin-left: 30px;
-        height: 40px;
-        width: 40px
+        height: 44px;
+        width: 44px
     }
     .right_text {
         font-size: 28px;
@@ -59,8 +59,8 @@
     }
     .right_image {
         margin-right: 30px;
-        height: 40px;
-        width: 40px;
+        height: 44px;
+        width: 44px;
     }
     .content {
         flex: 1;
@@ -68,6 +68,7 @@
 </style>
 
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 export default {
@@ -77,7 +78,7 @@ export default {
     props: {
         BRPageId                : {default: ''},                    //博睿监控PageId
         BRPageName              : {default: ''},                    //博睿监控PageName
-        backItemImage           : {default: config.dir+'/images/tmp/back.png'},
+        backItemImage           : {default: imageLoad('back.png',true)},
         rightItemText           : {default: ''},
         rightItemImage          : {default: ''},//ico_menu.png
         contentBackGroundColor  : {default: '#f6f6f6'},
@@ -88,6 +89,7 @@ export default {
         isShow                  : {default: true},
     },
     data:()=>({
+        imageLoad,
         height                  : 112,
         top                     : 40,
         bottom                  : 0

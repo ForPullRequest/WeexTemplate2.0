@@ -3,7 +3,7 @@
     也可以参照base进行修改建立另外的base样式
  -->
 <template>
-    <nav :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :contentBackGroundColor="contentBackGroundColor" barBackGroundColor="#314D87" :isIndex="isIndex" :isShow="isShow" @viewWillAppear="appear" @backItemAction="back" @titleAction="titleClick" @rightItemAction="right" @viewWillDisAppear="disappear">
+    <nav :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :contentBackGroundColor="contentBackGroundColor" :barBackGroundColor="barBackGroundColor" :isIndex="isIndex" :isShow="isShow" @viewWillAppear="appear" @backItemAction="back" @titleAction="titleClick" @rightItemAction="right" @viewWillDisAppear="disappear">
         <slot></slot>
     </nav>
 </template>
@@ -40,6 +40,7 @@
 </style>
 
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 export default {
@@ -48,8 +49,10 @@ export default {
         title:          {default: 'base'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -67,7 +70,7 @@ export default {
         nav: require('./UINavgationBar.vue'),
     },
     data:()=> ({
-
+        imageLoad,
     }),
     created(){
 

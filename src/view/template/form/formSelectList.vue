@@ -8,7 +8,7 @@
             <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
             <div class="dropdowm-title" @click="dropDown" :style="{'justify-content':isLeft?'flex-start':'flex-end'}">
                 <text class="dropdown-text" :style="{color:titleColor, 'font-size': fontSize}">{{textValue}}</text>
-                <image class="icon-arrow" ref="arrowImg" :src="config.dir+'/images/tmp/arrow.png'"></image>
+                <image class="icon-arrow" ref="arrowImg" :src="imageLoad('arrow.png',true)"></image>
             </div>
             <dropdown slot="below" ref="dropdownList" :items="list" :textColor="titleColor" class="dropdowm-list" tag="tag" @dd_itemClick="itemClick"></dropdown>
         </formCustom>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import {imageLoad} from '../imageUtil.js';
 import formCustom from '../formCustom.vue';
 import config from '../config.js';
 export default {
@@ -41,6 +42,7 @@ export default {
         }
     },
     data:()=> ({
+        imageLoad,
         config,
         output:'',
         selectCheck:[],

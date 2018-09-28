@@ -57,6 +57,7 @@
 }
 </style>
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 // import config from './config.js';
 export default{
@@ -65,6 +66,7 @@ export default{
         formT: require('./formT.vue'),
     },
     data:()=>({
+        imageLoad,
         list:[],
         data:[],
     }),
@@ -231,10 +233,10 @@ export default{
                             imgWidth:100,//图片的宽
                             imgHeight:100,//图片的高
                             list:[{//要显示的图片行表
-                                src:'../../images/tmp/ic_immune.png',
+                                src:imageLoad('ic_immune.png',true),
                                 title:"标题1"
                             },{
-                                src:'../../images/tmp/ic_image.png',
+                                src:imageLoad('ic_image.png',true),
                                 title:"标题2"
                             }],
                             fontSize:34,//字体大小，默认34
@@ -253,10 +255,10 @@ export default{
                             imgWidth:100,//图片的宽
                             imgHeight:100,//图片的高
                             list:[{//要显示的图片行表
-                                src:'../../images/tmp/ic_immune.png',
+                                src:imageLoad('ic_immune.png',true),
                                 title:"标题1"
                             },{
-                                src:'../../images/tmp/ic_image.png',
+                                src:imageLoad('ic_image.png',true),
                                 title:"标题2"
                             }],
                             fontSize:34,//字体大小，默认34
@@ -268,8 +270,8 @@ export default{
                             title:'性别:',//该行的标题
                             titleColor:'#5f5f5f',//标题颜色
                             titleWidth:'',//标题宽，默认180
-                            isCheck:'../../images/tmp/ico-radio-selected.png',//选中的图片
-                            unCheck:'../../images/tmp/ico-radio-selected-gray.png',//未选中图片
+                            isCheck:imageLoad('ico-radio-selected.png',true),//选中的图片
+                            unCheck:imageLoad('ico-radio-selected-gray.png',true),//未选中图片
                             selectRadio:'0',//默认选中第一个选项时需要写为'0'
                             ifRequire:true,//是否必填（显示星号）
                             isLeft:false,//是否靠左
@@ -283,8 +285,8 @@ export default{
                             title:'复选:',//该行的标题
                             titleColor:'#5f5f5f',//标题颜色
                             titleWidth:'',//标题宽，默认180
-                            isCheck:'../../images/tmp/star_select.png',//选中的图片
-                            unCheck:'../../images/tmp/star.png',//未选中图片
+                            isCheck:imageLoad('star_select.png',true),//选中的图片
+                            unCheck:imageLoad('star.png',true),//未选中图片
                             ifRequire:true,//是否必填（显示星号）
                             isLeft:false,//是否靠左
                             //title为选项名，selected为是否选中

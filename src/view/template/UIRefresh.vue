@@ -6,9 +6,9 @@
              :display="mRefreshStatus?'show':'hide'"
              ref = "refresh"
              class="refresh">
-        <image ref="imgs" v-if="mRefreshStatus" :src="config.dir+'/images/tmp/components/loading.gif'"
+        <image ref="imgs" v-if="mRefreshStatus" :src="imageLoad('components/loading.gif',true)"
                class="refresh-icon"></image>
-        <image ref="imgs" v-if="!mRefreshStatus" :src="config.dir+'/images/tmp/components/page-next'"
+        <image ref="imgs" v-if="!mRefreshStatus" :src="imageLoad('components/page-next',true)"
                class="direction-icon"></image>
         <div class="refresh-div">
             <text class="refresh-text-1">{{refreshTitle}}</text>
@@ -37,11 +37,13 @@
     }
 </style>
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 const animation = weex.requireModule('animation');
 import config from './config.js';
 module.exports = {
     data:()=> ({
+        imageLoad,
         config,
         mRefreshStatus: false,//刷新控件是否显示
         status:1,//refresh状态: 1:下拉以刷新 2:松开立即刷新 3:正在加载 4:加载完毕

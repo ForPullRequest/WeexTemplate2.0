@@ -9,7 +9,8 @@
 */
 
 
-import { modal, navigator, image, cache } from "tesla-native-js"
+import { modal, navigator, image, cache, utility } from "tesla-native-js"
+import { imageLoad } from "./imageUtil.js"
 /* im, toast, bragent, contact, container, file, patch 还没 */
 /*
  * 使用新的navigator.push
@@ -596,6 +597,15 @@ exports.normal = {
     },
 
 /* cache */
+
+/* utility */
+
+    md5StringSync: function(str){
+        return utility.md5StringSync(str);
+    },
+
+/* utility */
+
     debounce: function(fn, delay) {
         // 维护一个 timer
 
@@ -609,6 +619,9 @@ exports.normal = {
                 fn.apply(context, args);
             }, delay);
         }
+    },
+    imageLoad: function(src){
+        return imageLoad(src);
     }
 }
 var timer = null;

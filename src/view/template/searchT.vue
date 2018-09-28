@@ -4,13 +4,13 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barBackGroundColor="barBackGroundColor" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 搜索栏 -->
         <div v-if="hasSearch">
             <!-- show -->
             <div class="searchWrapper" v-if="!isSearch">
                 <div class="searchContent" @click="showSearch">
-                    <image :src="config.dir+'/images/ico_search_bar.png'" style="height: 36px;width: 36px" ></image>
+                    <image :src="imageLoad('ic_search.png',true)" style="height: 36px;width: 36px" ></image>
                     <text class="searchText">搜索</text>
                 </div>
             </div>
@@ -18,11 +18,11 @@
             <div class="searchWrapper" v-if="isSearch">
                 <div class="inputContent">
                     <div style="margin-left: 16;margin-right: 8;">
-                        <image :src="config.dir+'/images/ico_search_bar.png'" style="height: 36px;width: 36px;" ></image>
+                        <image :src="imageLoad('ic_search.png',true)" style="height: 36px;width: 36px;" ></image>
                     </div>
                     <input ref="searchInput" class="input" :type="inputType" :value="keyword" @input="input" :placeholder="placeholder"></input>
                     <div style="margin-right: 16;margin-left: 16;" @click="eraser">
-                        <image :src="config.dir+'/images/tmp/components/erase-normal.png'" style="width:28;height: 28;"></image>
+                        <image :src="imageLoad('components/erase-normal.png',true)" style="width:28;height: 28;"></image>
                     </div>
                 </div>
                 <div class="cancelDiv" @click="hideSearch">
@@ -30,6 +30,7 @@
                 </div>
             </div>
         </div>
+        <slot name="middle"></slot>
         <div style="flex: 1">
             <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <!-- 通过slot将item布局外放 -->
@@ -98,6 +99,7 @@
 </style>
 
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 export default{
@@ -107,8 +109,10 @@ export default{
         title:          {default: 'search'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -128,7 +132,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
         //无数据文字
         noContentTxt:   {default: '暂无数据'},
 
@@ -144,6 +148,7 @@ export default{
         'list-item': require('./UIListItem.vue'),
     },
     data:()=>({
+        imageLoad,
         config,
         // selectIndex:0,
         // lastIndex:0,

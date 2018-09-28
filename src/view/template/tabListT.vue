@@ -29,6 +29,7 @@
 </style>
 
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 export default{
@@ -39,7 +40,7 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -59,7 +60,7 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 
@@ -89,6 +90,7 @@ export default{
         'list-item': require('./UIListItem.vue'),
     },
     data:()=>({
+        imageLoad,
         selectIndex:0,
         lastIndex:0,
         isRefresh:false,

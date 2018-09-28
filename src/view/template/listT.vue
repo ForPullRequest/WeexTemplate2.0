@@ -4,7 +4,7 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barBackGroundColor="barBackGroundColor" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isShow="isShow" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
             <!-- 通过slot将item布局外放 -->
             <slot></slot>
@@ -28,6 +28,7 @@
 }
 </style>
 <script>
+import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
 import config from './config.js';
 
@@ -36,10 +37,12 @@ export default{
         //第一部分继承自base
         //页面的标题
         title:          {default: 'list'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: config.dir+'/images/tmp/back.png'},
+        backItemImage:  {default: imageLoad('back.png',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
         //标题栏的右侧图片
@@ -59,16 +62,18 @@ export default{
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: config.dir+'/images/tmp/components/ic_no_content.png'},
+        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
+        //是否显示nav
+        isShow:         {default: true},
     },
     components: {
         'tsl-refresh-list': require('./UIRefreshList.vue'),
         base: require('./base.vue'),
     },
     data:()=>({
-
+        imageLoad,
     }),
     created(){
 
