@@ -4,7 +4,7 @@ var imageLoad = function(name, isTemplateRes) {
     if (!isTemplateRes) {
         return dir + '/images/' + name;
     }else{
-        return dir + '/view/template/images/' + name;
+        return dir + '/images/tmp/' + name;
     }
 }
 
