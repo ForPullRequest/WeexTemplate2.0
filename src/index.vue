@@ -1,278 +1,178 @@
 <template>
-    <listT backItemImage="./images/tmp/back.png" ref="list" :title="getTitle()" :hasData="true" :hasRefresh="false" :hasLoad="false" :hasMore="pageNo >= totalPage" @listAdapter="getList" @listAppear="appear">
-        <cell>
-            <div class="column topDiv">
-                <image class="topBack absolute" src="./images/ic_index_back.png" ></image>
-                <div class="row">
-                    <image src="./images/ic_index_bell.png" class="bell"></image>
-                    <text class="text32 fontWhite">待办工作</text>
-                </div>
-                <div class="row" style="width: 396">
-                    <div v-if="isPro" class="column waitDiv flex">
-                        <div class="asCenter">
-                            <text class="text78 fontWhite">{{waitNum>999?'999+':waitNum}}</text>
-                        </div>
-                        <div class="waitTxtDiv asCenter">
-                            <text class="text28 fontWhite waitTxt">我会诊的 ></text>
-                        </div>
-                    </div>
-                    <div class="column waitDiv flex" style="margin-left: 44;">
-                        <div class="asCenter">
-                            <text class="text78 fontWhite">{{launchNum>999?'999+':launchNum}}</text>
-                        </div>
-                        <div class="waitTxtDiv asCenter">
-                            <text class="text28 fontWhite waitTxt">我发起的 ></text>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </cell>
-        <cell v-for="item, index in list">
-            <div class="itemDiv white" @click="itemClick(index)">
-                <div class="padding20 aiCenter row">
-                    <div style="background-color: #457ecf;width: 6;height: 30;border-radius: 10;margin-right: 12;"></div>
-                    <text class="text32 fontBlack">{{item.tab}}</text>
-                </div>
-                <div class="row padding20">
-                    <div class="column width200 aiCenter" @click="childClick(index,cIndex)" v-for="child,cIndex in item.child">
-                        <image :style="{width:(item.tab=='申请未完成'?'60':'110'),height:(item.tab=='申请未完成'?'60':'110')}" :src="child.icon"></image>
-                        <text class="text32 fontBlack marginTop16 lines1">{{child.name}}</text>
-                    </div>
-                </div>
-            </div>
-        </cell>
-    </listT>
+    <div class="container">
+        <image :src="welcome" class="image" @load="animationStart" ></image>
+        <div class="mask" :style="{opacity: o}"></div>
+        <svAlert :isShow="sShow" @sure="sSure"></svAlert>
+        <!-- <dvAlert :isShow="dShow" @sure="dSure" @cancel="dCancel"></dvAlert> -->
+    </div>
 </template>
 
 <style scoped>
-.lines1{
-    lines: 1;
-    text-overflow: ellipsis;
-}
-.white{
-    background-color: white;
-}
-.flex{
+.container {
+    width: 750px;
     flex: 1;
 }
-.width200{
-    width: 200;
-}
-.img{
-    width: 110;
-    height: 110;
-}
-.imgSmall{
-    width: 60;
-    height: 60;
-}
-.padding20{
-    padding: 20;
-}
-.marginTop16{
-    margin-top: 16;
-}
-.text78{
-    font-size: 78;
-}
-.text28{
-    font-size: 28;
-}
-.text32{
-    font-size: 32;
-}
-.row{
-    flex-direction: row;
-}
-.column{
-    flex-direction: column;
-}
-.jcCenter{
-    justify-content: center;
-}
-.aiCenter{
-    align-items: center;
-}
-.asCenter{
-    align-self: center;
-}
-.itemDiv{
-    margin-top: 40;
-}
-.fontWhite{
-    color: white;
-}
-.fontBlack{
-    color: #333333;
-}
-.topDiv{
-    /*background-color: #0070F4;*/
-    width: 696;
-    height: 340;
-    border-radius: 12;
-    margin-top: 40;
-    margin-left: 30;
-    margin-right: 30;
-    padding-top: 24;
-    padding-left: 16;
-}
-.topBack{
-    width: 696;
-    height: 340;
-    border-radius: 12;
-}
-.absolute{
+.mask {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
+    bottom: 0;
     right: 0;
+    background-color: white;
 }
-.bell{
-    width: 40;
-    height: 40;
-    margin-right: 12;
-}
-.waitDiv{
-    margin-top: 50;
-}
-.waitTxtDiv{
-    width: 176;
-    border-radius: 100;
-    border-color: #4286e9;
-    border-width: 3;
-    background-color: #367ce9;
-    margin-top: 16;
-    padding-top: 6;
-    padding-bottom: 6;
-    padding-left: 20;
-    padding-right: 20;
-}
-.waitTxt{
+.image {
+    width: 750px;
+    flex: 1;
+    background-color: #99a9bf;
+    opacity: 0.75;
 }
 </style>
 
 <script>
-const normal = require('./view/template/normal.js').normal;
-import { push } from "tesla-native-js"
-// import keys  from '../js/keys.js';
-import myCache  from "./js/cache/myCache.js";
-import business  from './business.js';
-export default{
+    import hotfix from './js/hotfix'
+    import { navigator, cache, im }   from "tesla-native-js"//, hotfix
+    import netUtil                    from './js/net/base_net.js';
+    import {initBR, brKeys, brEvent}  from './js/BR/BRConfig.js';
+    import userInfo                   from './js/cache/userInfo.js';
+    import alertUtil                  from "./js/utils/alertUtils.js";
+    var    modal                         = weex.requireModule('modal')
+    // import versionManager             from './js/version/versionManager.js';
+    import svAlert                    from './js/version/singleVersionAlert.vue';
+    // import dvAlert                    from './js/version/doubleVersionAlert.vue';
+    const  configUtil                 =   weex.requireModule("tsl-utility");
+    const environment                 = configUtil.getTSLConfigPlistWithKey("Environment");           //当前请求地址的环境
+    const environments                = configUtil.getTSLConfigPlistWithKey("EnvironmentSettings");   //当前所有的环境
+    const currentEnvironment          = environments[environment];                                    //当前使用的环境
+    const configVersion               = currentEnvironment.JSVersion;                                 //版本
+    const jsAppId                     = configVersion.TeslaAppId;                                     //当前应用index的热更新id
+
+export default {
+    data() {
+        return {
+            o: 1,
+            // welcome: "./images/welcome.png",
+            welcome: configUtil.getTSLConfigPlistWithKey("welcomeSrc"),
+            info: {},
+            neworganization: {},
+
+            sShow: false,   //但按钮控制
+            dShow: false,   //双按钮控制
+            versionData: "",
+            storeUrl:'',
+        };
+    },
     components: {
-        listT: require('./view/template/listT.vue'),
-        // 'list-item': require('./template/UIListItem.vue'),
+        svAlert//, dvAlert
     },
-    data:()=>({
-        isPro:true,//是否专家
-        source:'',//病理影像会诊
-        hasRegisted:false,
-        config:{
-            url: '',
-            imurl: '',
-            visiturl: '',
-            diagnoseurl: '',
+    mounted() {
+        console.log("===========");
+        // this.animationStart();  //图片显示动画放到图片加载完成之后 @load
+    },
+    created() {
+        initBR(); //初始化博睿监控
+    },
+    methods: {
+        sSure() {
+            //跳转到App Store并退出应用
+            configUtil.openUrl(this.storeUrl);
+            navigator.exit();
         },
-        pageNo:1,
-        totalPage:1,
-        waitNum:0,
-        launchNum:0,
-        list:[],
-    }),
-    created(){
-        this.setList();
-        //test
-        this.source = 'bl';
-        this.setAmount(true, 5)
-        this.setAmount(false, 500)
-        // normal.alert('token:'+this.token+'=====config:'+this.config);
-        myCache.saveAppcode(this.appcode);
-        myCache.saveAppid(this.appcode);
-        myCache.saveUrl(this.config);
-    },
-    mounted(){
-        myCache.saveToken(this.token, function(){
-            //开始网络请求
-        }.bind(this));
-    },
-    methods:{
-        appear() {
-            this.$refs.list.refresh();
+        animationStart: function () {
+            setTimeout(() => {
+                this.o -= 0.05;
+                if (this.o < 0) {
+                    this.o = 0;
+                    //是否自定义进入商店逻辑
+                    //test
+                    hotfix.config.clockHour = -1;
+                    hotfix.config.isCustomStore = true;
+                    hotfix.start(jsAppId, 'index', function(suc){
+                        switch(suc.sucCode){
+                            //检查时钟
+                            case hotfix.sucCode.NUM_SUCCESS_CLOCK:
+                            //成功更新
+                            case hotfix.sucCode.NUM_SUCCESS_UPDATE:
+                            //无需更新
+                            case hotfix.sucCode.NUM_SUCCESS_NO_NEED:{
+                                //正常进入
+                                this.checkUserStatus();
+                                break;
+                            }
+                            //到应用市场
+                            case hotfix.sucCode.NUM_SUCCESS_GOTO_STORE:{
+                                this.sShow = true;
+                                this.storeUrl = suc.storeUrl;
+                                break;
+                            }
+                        }
+                    }.bind(this), function(fail){
+                        switch(fail.failCode){
+                            //没有suc或者fail
+                            case hotfix.failCode.NUM_FAIL_NO_CALLBACK:
+                            //getPackageState出错
+                            case hotfix.failCode.NUM_FAIL_GET_PACKAGE_STATE:
+                            //请求出错
+                            case hotfix.failCode.NUM_FAIL_REQUEST:
+                            //JSON.parse出错
+                            case hotfix.failCode.NUM_FAIL_JSON_PARSE:
+                            //下载文件出错
+                            case hotfix.failCode.NUM_FAIL_DOWNLOAD_FILE:
+                            //跳转商店地址为空
+                            case hotfix.failCode.NUM_FAIL_STORE_NULL:
+                            //更新解压缩出错
+                            case hotfix.failCode.NUM_FAIL_UPDATE_PACKAGE:{
+                                //正常进入
+                                this.checkUserStatus();
+                                break;
+                            }
+                        }
+                    }.bind(this));
+                } else {
+                    this.animationStart();
+                }
+            }, 80);
         },
-        setList(){
-            let apply = {
-                    tab:'申请未完成',
-                    child:[{
-                        name:'立即申请',
-                        icon:'./images/ic_index_start.png',
-                        src:'',//./view/commonSelectPro/index
-                    },{
-                        name:'草稿',
-                        icon:'./images/ic_index_list.png',
-                        src:'',//./view/hzApply/index
-                    },{
-                        name:'待支付',
-                        icon:'./images/ic_index_list.png',
-                        src:'',
-                    }]
-                };
-            let mine = {
-                    tab:'我的',
-                    child:[{
-                        name:'我会诊的',
-                        icon:'./images/ic_index_record.png',
-                        src:'./view/commonMain/index',
-                        model:{isMyApply:false},
-                    },{
-                        name:'我发起的',
-                        icon:'./images/ic_index_plan.png',
-                        src:'./view/commonMain/index',
-                        model:{isMyApply:true},
-                    },]
-                };
-            let mineDoc = {
-                    tab:'我的',
-                    child:[{
-                        name:'我发起的',
-                        icon:'./images/ic_index_plan.png',
-                        src:'./view/commonMain/index',
-                        model:{isMyApply:true},
-                    },]
-                };
-            if(this.isPro){
-                this.list.push(mine);
-                this.list.push(apply);
-            }else{
-                this.list.push(apply);
-                this.list.push(mineDoc);
+        checkUserStatus: function () {
+            this.info = userInfo.get();
+            this.neworganization = userInfo.getNewOrganiz();
+
+            console.log("1登录的信息为: ", this.info);
+            console.log("2登录的信息为: ", this.neworganization);
+            if (this.info && this.info.Token && this.neworganization != "") {
+                //已登录
+                if (this.neworganization) {
+                    this.changeUnion();
+                } else {
+                    // navigator.redirectTo({ url: "view/login" });
+                }
+            } else {
+                //未登录
+                // navigator.redirectTo({ url: "view/login" });
             }
         },
-        setAmount(isDraft, num){
-            let name = isDraft
-            ? '草稿(' + (num > 99 ? '99+' : num) + ')'
-            : '待支付(' + (num > 99 ? '99+' : num) + ')';
-            let indexList = this.isPro ? 1 : 0;
-            let indexChild = isDraft ? 1 : 2;
-            this.list[indexList].child[indexChild].name = name;
-        },
-        getTitle(){
-            if(this.source=='bl'){
-                return '远程病理';
-            }else if(this.source=='yx'){
-                return '远程影像';
-            }else if(this.source=='hz'){
-                return '远程会诊';
-            }
-        },
-        getList(listT) {
-            if(this.hasRegisted){
-                //获取页面数据
-            }
-            listT.end();
-        },
-        childClick(index,cIndex) {
-            
+        changeUnion: function() {
+            brEvent(brKeys.login);
+            var unionid = this.neworganization.union_id;
+            var hosid = this.neworganization.HospitalId;
+            var sectionid = this.neworganization.SectionId;
+            var docid = this.neworganization.DoctorId;
+
+            netUtil.request({
+                method: "post",
+                backAll: true,
+                url: netUtil.api.CHANGE_UNION + "?unionid=" + unionid + "&hosid=" + hosid + "&sectionid=" + sectionid + "&doctorid=" + docid,
+                contentType: "application/json",
+                params: {},
+                success: res => {
+                    // navigator.redirectTo({ url: "view/main" });
+                },
+                fail: error => {
+                    console.log("error: ", error);
+                    // navigator.redirectTo({ url: "view/login" });
+                }
+          });
         }
     }
 }
 </script>
+
