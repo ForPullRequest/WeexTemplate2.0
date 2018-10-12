@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div v-for="(checkbox,index) in  checkboxs" :index="index" class="div-container" @click="onCheckboxSelect">
-            <image class="div-image" v-if="checkbox.selected" :src="selectImg"></image>
-            <image  class="div-image" v-if="!checkbox.selected" :src="unselectImg"></image>
+            <image :style="{width:imgWidth+'px', height:imgHeight+'px'}" v-if="checkbox.selected" :src="selectImg"></image>
+            <image :style="{width:imgWidth+'px', height:imgHeight+'px'}" v-if="!checkbox.selected" :src="unselectImg"></image>
             <text class="radio-text" :style="{'font-size': textSize}">{{checkbox.title}}</text>
         </div>
         <slot></slot>
@@ -47,6 +47,12 @@ module.exports = {
         },
         textSize:{
             default: 34,
+        },
+        imgWidth:{
+            default: 40,
+        },
+        imgHeight:{
+            default: 40,
         }
     },
     data(){

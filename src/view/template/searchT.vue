@@ -30,12 +30,13 @@
                 </div>
             </div>
         </div>
-        <slot name="middle"></slot>
         <div style="flex: 1">
+            <slot name="middle"></slot>
             <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <!-- 通过slot将item布局外放 -->
                 <slot></slot>
             </tsl-refresh-list>
+            <slot name="bottom"></slot>
         </div>
     </base>
 <!-- </div> -->

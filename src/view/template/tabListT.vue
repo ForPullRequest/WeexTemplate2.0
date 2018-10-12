@@ -3,7 +3,7 @@
     是多个可切换标签的单list页面的模板
  -->
 <template>
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :barBackGroundColor="barBackGroundColor" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 左侧类型的tab 可以滚动 -->
         <div style="flex-direction: row;" v-if="!isCenter">
             <tabpage :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></tabpage>
@@ -17,6 +17,7 @@
                 <!-- 通过slot将item布局外放 -->
                 <slot></slot>
             </tsl-refresh-list>
+            <slot name="bottom"></slot>
         </div>
     </base>
 </template>
@@ -37,6 +38,8 @@ export default{
         //第一部分继承自base
         //页面的标题
         title:          {default: 'tabList'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片

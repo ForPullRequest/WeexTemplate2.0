@@ -42,13 +42,15 @@ export default{
 
         },
         getList(listT) {
+            let pageNo = 0;
             if(listT.isRefresh){
                 //刷新
-                this.pageNo = 1;
+                pageNo = 1;
             }else{
                 //加载更多
-                this.pageNo++;
+                pageNo++;
             }
+            this.pageNo = pageNo;
             listT.end();
         },
         // listBack(){//customBack为true时可用

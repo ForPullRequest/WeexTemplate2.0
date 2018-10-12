@@ -451,7 +451,11 @@ exports.normal = {
         return cache.setStorageSync(name, tar);
     },
     get: function(name, success){
-        this.getStorage(name, success);
+        if (success){
+            this.getStorage(name, success);
+        } else {
+            return this.getStorageSync(name);
+        }
     },
     /*
      * 从本地缓存中异步获取指定 key 对应的内容
