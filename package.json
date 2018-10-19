@@ -37,7 +37,7 @@
     "serve": "^10.0.2",
     "sha256": "^0.2.0",
     "tesla-mui": "^0.0.8",
-    "tesla-native-js": "^1.0.3-beta29",
+    "tesla-native-js": "^1.0.3-beta31",
     "vue": "^2.5.11",
     "weex-ui": "^0.6.3-beta1",
     "weex-vue-render": "^1.0.17"

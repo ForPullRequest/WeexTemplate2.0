@@ -62,7 +62,9 @@ var config = {
     //是否自定义进入商店逻辑
     isCustomStore: false,
     //可配置的检查时钟 （每隔clockHour检查一次）
-    clockHour: 24,
+    clockHour: -1,
+    //是否能够展示数据准备中的进度
+    showProgress: false,
 }
 
 var period = function(){
@@ -304,10 +306,12 @@ var downloadFile = function(url, success, fail){
         },
         complete:function(res){}
     })
-    downloadTask.onProgressUpdate((res)=>{
-        console.log('下载进度'+res.progress)
-        showLoading('下载中' + res.progress + '%');
-    });
+    if(config.showProgress==true){
+        downloadTask.onProgressUpdate((res)=>{
+            console.log('下载进度'+res.progress)
+            showLoading('下载中' + res.progress + '%');
+        }); 
+    }
 }
 
 var getPackageState = function(moduleName, success, fail){
