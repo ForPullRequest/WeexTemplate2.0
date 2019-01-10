@@ -1,6 +1,6 @@
 <template>
-    <columnT ref="column" title="title" :barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :items="items" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" :customBack="false" borderLeftWidthCol="4" leftColumnWidthCol="250" :selectColorCol="selectColorCol" :unSelectColorCol="unSelectColorCol" titleSizeCol="36" :selectTitleColorCol="selectTitleColorCol" :unSelectTitleColorCol="unSelectTitleColorCol" :borderLeftColorCol="borderLeftColorCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :isShow="true" @columnAdapter="getList" @columnAppear="appear" @columnDisappear="columnDisappear" @columnPage="columnPage" @columnBack="columnBack" @columnRight="columnRight" @columnTitle="columnTitle">
-        <cell v-for="itemData, index in list" :key="itemData">
+    <columnT ref="column" title="title" :barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemColor="#666666" rightItemImage="" :isIndex="false" :items="items" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasEnd="gethasEnd()" :customBack="false" borderLeftWidthCol="4" leftColumnWidthCol="250" :selectColorCol="selectColorCol" :unSelectColorCol="unSelectColorCol" titleSizeCol="36" :selectTitleColorCol="selectTitleColorCol" :unSelectTitleColorCol="unSelectTitleColorCol" :borderLeftColorCol="borderLeftColorCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :isShow="true" @columnAdapter="getList" @columnAppear="appear" @columnDisappear="columnDisappear" @columnPage="columnPage" @columnBack="columnBack" @columnRight="columnRight" @columnTitle="columnTitle">
+        <cell v-for="(itemData, index) in list" :key="index">
             <list-item class="itemDiv" @onclick="itemClick(index)">
                 <text class="item">{{itemData.text}}</text>
             </list-item>
@@ -16,7 +16,7 @@
 .item {
     height: 88px;
     align-items: center;
-    font-size: 32
+    font-size: 32px;
 }
 </style>
 
@@ -64,7 +64,7 @@ export default{
         appear() {
             this.getDeptList();
         },
-        getHasMore() {
+        gethasEnd() {
             return this.items[this.selectIndex].pageNo >= this.items[this.selectIndex].totalPage
         },
         itemClick(index) {

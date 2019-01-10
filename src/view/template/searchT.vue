@@ -4,25 +4,25 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barBackGroundColor="barBackGroundColor" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <baseT :backItemImage="backItemImage" :barBackGroundColor="barBackGroundColor" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemColor="rightItemColor" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 搜索栏 -->
         <div v-if="hasSearch">
             <!-- show -->
             <div class="searchWrapper" v-if="!isSearch">
                 <div class="searchContent" @click="showSearch">
-                    <image :src="imageLoad('ic_search.png',true)" style="height: 36px;width: 36px" ></image>
+                    <image :src="imageLoad('search',true)" style="height: 36px;width: 36px" ></image>
                     <text class="searchText">搜索</text>
                 </div>
             </div>
             <!-- input -->
             <div class="searchWrapper" v-if="isSearch">
                 <div class="inputContent">
-                    <div style="margin-left: 16;margin-right: 8;">
-                        <image :src="imageLoad('ic_search.png',true)" style="height: 36px;width: 36px;" ></image>
+                    <div style="margin-left: 16px;margin-right: 8px;">
+                        <image :src="imageLoad('search',true)" style="height: 36px;width: 36px;" ></image>
                     </div>
-                    <input ref="searchInput" class="input" :type="inputType" :value="keyword" @input="input" :placeholder="placeholder"></input>
-                    <div style="margin-right: 16;margin-left: 16;" @click="eraser">
-                        <image :src="imageLoad('components/erase-normal.png',true)" style="width:28;height: 28;"></image>
+                    <input ref="searchInput" class="input" :type="inputType" v-model="keyword" @input="input" :placeholder="placeholder"></input>
+                    <div style="margin-right: 16px;margin-left: 16px;" @click="eraser">
+                        <image :src="imageLoad('erase',true)" style="width:28px;height: 28px;"></image>
                     </div>
                 </div>
                 <div class="cancelDiv" @click="hideSearch">
@@ -32,13 +32,13 @@
         </div>
         <div style="flex: 1">
             <slot name="middle"></slot>
-            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
+            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasEnd="hasEnd" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <!-- 通过slot将item布局外放 -->
                 <slot></slot>
             </tsl-refresh-list>
             <slot name="bottom"></slot>
         </div>
-    </base>
+    </baseT>
 <!-- </div> -->
 </template>
 
@@ -48,7 +48,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     flex: 1;
-    font-size: 28;
+    font-size: 28px;
     color: black;
 }
 .searchWrapper {
@@ -80,14 +80,14 @@
     justify-content: center;
 }
 .cancelDiv{
-    padding-left: 16;
-    padding-top: 16;
-    padding-bottom: 12;
+    padding-left: 16px;
+    padding-top: 16px;
+    padding-bottom: 12px;
     justify-content: center;
 }
 .cancelText{
     color: #467DB9;
-    font-size: 34;
+    font-size: 34px;
 }
 .searchText {
     color: #9B9B9B;
@@ -102,7 +102,6 @@
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
@@ -113,9 +112,11 @@ export default{
         //页面的标题背景颜色
         barBackGroundColor:  {default: '#314D87'},
         //标题栏的返回图片
-        backItemImage:  {default: imageLoad('back.png',true)},
+        backItemImage:  {default: imageLoad('back',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
+        //标题栏的右侧文字颜色
+        rightItemColor: {default: ''},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
         //是否自定义返回事件
@@ -127,13 +128,13 @@ export default{
         //用来控制“无数据页面”的显示和隐藏 通常为list.length!=0 因为listT不直接与list接触 所以由外部给
         hasData:        {default: 0},
         //用来控制是否能进行load操作 通常为pageNo >= totalPage（pageNo为当前的页码 totalPage为当前list的总页数）
-        hasMore:        {default: true},
+        hasEnd:         {default: true},
         //是否启用刷新控件
         hasRefresh:     {default: true},
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
+        noContentImg:   {default: imageLoad('noContent',true)},
         //无数据文字
         noContentTxt:   {default: '暂无数据'},
 
@@ -144,13 +145,12 @@ export default{
         hasSearch:      {default: true},
     },
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
         'tsl-refresh-list': require('./UIRefreshList.vue'),
         'list-item': require('./UIListItem.vue'),
     },
     data:()=>({
         imageLoad,
-        config,
         // selectIndex:0,
         // lastIndex:0,
         isRefresh:false,
@@ -167,7 +167,7 @@ export default{
                 //页面自定义退出事件
                 this.$emit('searchBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear() {
@@ -219,6 +219,9 @@ export default{
                 this.$refs.searchInput.focus();
             }.bind(this), 200);
             this.isSearch = true;
+            this.$emit("searchShow",{
+                isSearch: this.isSearch
+            });
         },
         hideSearch(){
             // this.$refs.searchInput.blur();

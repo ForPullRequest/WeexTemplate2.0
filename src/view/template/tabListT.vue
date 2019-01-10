@@ -3,23 +3,23 @@
     是多个可切换标签的单list页面的模板
  -->
 <template>
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :barBackGroundColor="barBackGroundColor" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <baseT :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :barBackGroundColor="barBackGroundColor" :rightItemText="rightItemText" :rightItemColor="rightItemColor" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <!-- 左侧类型的tab 可以滚动 -->
         <div style="flex-direction: row;" v-if="!isCenter">
             <tabpage :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></tabpage>
         </div>
         <!-- 中间类型的tab 不能滚动 -->
-        <div style="flex-direction: row;width: 750;justify-content: center;" v-if="isCenter">
-            <centerTabpage style="width: 750;" :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></centerTabpage>
+        <div style="flex-direction: row;width: 750px;justify-content: center;" v-if="isCenter">
+            <centerTabpage style="width: 750px;" :itemViewColor="itemViewColor" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :items="items" @touchPage="touchPage"></centerTabpage>
         </div>
-        <div style="flex: 1;border-top-color: #d4d4d4;border-top-width: 2;">
-            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
+        <div style="flex: 1;border-top-color: #d4d4d4;border-top-width: 2px;">
+            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasEnd="hasEnd" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <!-- 通过slot将item布局外放 -->
                 <slot></slot>
             </tsl-refresh-list>
             <slot name="bottom"></slot>
         </div>
-    </base>
+    </baseT>
 </template>
 
 <style scoped>
@@ -32,7 +32,6 @@
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
@@ -43,9 +42,11 @@ export default{
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: imageLoad('back.png',true)},
+        backItemImage:  {default: imageLoad('back',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
+        //标题栏的右侧文字颜色
+        rightItemColor: {default: '#666666'},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
         //是否自定义返回事件
@@ -57,13 +58,13 @@ export default{
         //用来控制“无数据页面”的显示和隐藏 通常为list.length!=0 因为listT不直接与list接触 所以由外部给
         hasData:        {default: 0},
         //用来控制是否能进行load操作 通常为pageNo >= totalPage（pageNo为当前的页码 totalPage为当前list的总页数）
-        hasMore:        {default: true},
+        hasEnd:         {default: true},
         //是否启用刷新控件
         hasRefresh:     {default: true},
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
+        noContentImg:   {default: imageLoad('noContent',true)},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 
@@ -86,7 +87,7 @@ export default{
         isCenter:        {default: false},
     },
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
         tabpage: require('./UITabPage.vue'),
         centerTabpage: require('./UICenterTabPage.vue'),
         'tsl-refresh-list': require('./UIRefreshList.vue'),
@@ -108,7 +109,7 @@ export default{
                 //页面自定义退出事件
                 this.$emit('tabListBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear() {

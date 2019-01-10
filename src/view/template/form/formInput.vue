@@ -4,9 +4,24 @@
 <template>
     <!-- input -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" v-if="!isBelow" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"></input>
-        <input slot="below" class="input" v-if="isBelow" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize}" :type="inputType" :value="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"></input>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}" >{{title}}</text>
+        <!-- :type 导致px2rem失效, 使用多个input代替 -->
+        <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" v-if="(!isBelow)&&inputType=='text'"  v-model="textValue"
+         type="text" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+         <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" v-if="(!isBelow)&&inputType=='date'"  v-model="textValue"
+         type="date" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+         <input class="input" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" v-if="(!isBelow)&&inputType=='number'"  v-model="textValue"
+         type="number" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+
+        <input slot="below" class="input" v-if="isBelow&&inputType=='text'" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" 
+        type="text" v-model="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+        <input slot="below" class="input"  v-if="isBelow&&inputType=='date'" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" 
+        type="date" v-model="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+        <input slot="below" class="input"  v-if="isBelow&&inputType=='number'" :style="{color:textColor,'text-align':isLeft?'left':'right', 'font-size': fontSize+'px'}" 
+        type="number" v-model="textValue" :max="max" :min="min" @input="input" @change="onchange" :placeholder="placeholder" :placeholder-color="placeholderColor"/>
+    
+    
+    
     </formCustom>
 </template>
 
@@ -33,6 +48,9 @@ export default {
         max:        {type: String, default: ''},  //当type属性为date时选择日期的最大时间，格式为yyyy-MM-dd
         min:        {type: String, default: ''},  //当type属性为date时选择日期的最小时间，格式为yyyy-MM-dd
     },
+    computed:{
+
+    },
     watch: {
         // textValue(val){
             // this.getOutPut();
@@ -57,7 +75,6 @@ export default {
         //     });
         // },
         input(e){
-            console.log("input22 ====================", e);
             this.output = e.value;
             this.textValue=e.value;
             // this.getOutPut();
@@ -95,12 +112,12 @@ export default {
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .input {
-    margin-left: 20;
-    height: 60;
+    margin-left: 20px;
+    height: 60px;
     flex: 1;
 }
 </style>

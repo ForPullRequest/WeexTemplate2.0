@@ -4,9 +4,9 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <baseT :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemColor="rightItemColor" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <div class="under-line">
-            <div style="flex: 1;" v-for="item,index in items">
+            <div style="flex: 1;" v-for="(item,index) in items" :key="index">
                 <div style="flex-direction: row;flex: 1" @click="sheetClick(item,index)">
                     <text class = "sheetTitle" >{{item.text}}</text><text class="arrow"> ▼</text>
                     <text class = "line"></text>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div style="flex: 1;">
-            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
+            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasEnd="hasEnd" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
                 <slot></slot>
             </tsl-refresh-list>
             <sheet :showActionSheet="showSelect" :asWidth="sheetWidth" :asHeight="sheetHeight" :asModel="sheetModel" borderWidth="1" borderRadius="sheetBorderRadius" @touchBg="actionSheet">
@@ -22,14 +22,13 @@
                 <select-section :tag="tag" :list="sheetList" :itemHeight="sheetItemHeight" :scrollerHeight="sheetHeight" :selectedIndex="selectedIndex" @itemClick="itemClick"></select-section>
             </sheet>
         </div>
-    </base>
+    </baseT>
 <!-- </div> -->
 </template>
 
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-import config from './config.js';
 
 export default {
     props:{
@@ -39,9 +38,11 @@ export default {
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: imageLoad('back.png',true)},
+        backItemImage:  {default: imageLoad('back',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
+        //标题栏的右侧文字颜色
+        rightItemColor: {default: '#666666'},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
         //是否自定义返回事件 配合事件listBack
@@ -53,13 +54,13 @@ export default {
         //用来控制“无数据页面”的显示和隐藏 通常为list.length!=0 因为listT不直接与list接触 所以由外部给
         hasData:        {default: 0},
         //用来控制是否能进行load操作 通常为pageNo >= totalPage（pageNo为当前的页码 totalPage为当前list的总页数）
-        hasMore:        {default: true},
+        hasEnd:         {default: true},
         //是否启用刷新控件
         hasRefresh:     {default: true},
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
+        noContentImg:   {default: imageLoad('noContent',true)},
         //无数据文字
         noContentTxt:   {default: '暂无数据'},
 
@@ -80,7 +81,7 @@ export default {
         selected:          {default:[]},
     },
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
         'tsl-refresh-list':require('./UIRefreshList.vue'),
         'sheet':require('./UISheet.vue'),
         'select-section':require('./UISelectSection.vue'),
@@ -115,7 +116,7 @@ export default {
                 //页面自定义退出事件
                 this.$emit('sheetBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear() {
@@ -194,39 +195,39 @@ export default {
     flex: 1;
 }
 .itemDiv{
-    padding: 20;
+    padding: 20px;
 }
 .item {
     height: 88px;
     align-items: center;
-    font-size: 32
+    font-size: 32px;
 }
 .sheetTitle {
-    margin-top: 20;
+    margin-top: 20px;
     flex: 1;
-    margin-left: 20;
-    height: 60;
+    margin-left: 20px;
+    height: 60px;
     color: #999999;
-    font-size: 28;
+    font-size: 28px;
     text-align: center;
     lines: 1;
     text-overflow: end;
 }
 .arrow{
-    margin-top: 20;
-    margin-right: 20;
+    margin-top: 20px;
+    margin-right: 20px;
     color: #999999;
-    font-size: 28;
+    font-size: 28px;
     text-align: center;
 }
 .line {
-    margin-top: 20;
-    width: 1;
-    height: 40;
+    margin-top: 20px;
+    width: 1px;
+    height: 40px;
     background-color: #999999;
 }
 .under-line {
-    border-bottom-width: 1;
+    border-bottom-width: 1px;
     border-bottom-color: #cccccc;
     flex-direction: row;
     background-color: white;

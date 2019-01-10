@@ -1,12 +1,12 @@
 <template>
     <div class="column-view" :tag="tag">
-        <list class="left-selection" :style="{ width: leftColumnWidth, borderRightWidth: borderRightWidth, borderRightColor: borderRightColor}">
-            <cell v-for="(item,index) in getList" :key="item.name">
+        <list class="left-selection" :style="{ width: leftColumnWidth+'px', borderRightWidth: borderRightWidth+'px', borderRightColor: borderRightColor}">
+            <cell v-for="(item,index) in getList" :key="index">
                 <column-item @itemClick="touchPage(item,index)" :titleColor="item.titleColor" :borderLeftWidth="item.borderLeftWidth" :borderLeftColor="item.borderLeftColor" :margin="20" :titleSize="item.titleSize" :background="item.background" :title="item.name" :index="index">
                 </column-item>
             </cell>
         </list>
-        <div class="content" :style="{ width: 750-leftColumnWidth }">
+        <div class="content" :style="{ width: 750-leftColumnWidth+'px' }">
             <slot></slot>
         </div>
     </div>
@@ -30,8 +30,8 @@
 .item {
     justify-content: center;
     align-items: center;
-    borderBottomWidth:1;
-    borderBottomColor:#dddddd;
+    border-bottom-width:1px;
+    border-bottom-color:#dddddd;
 }
 .left-selection{
     position: absolute;

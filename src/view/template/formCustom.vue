@@ -1,7 +1,7 @@
 <template>
     <div class="itemDiv">
         <div class="form">
-            <text class="require" :style="{visibility:ifRequire?'visible':'hidden', 'font-size': titleSize}">*</text>
+            <text class="require" :style="{visibility:ifRequire?'visible':'hidden', 'font-size': titleSize+'px'}">*</text>
             <slot></slot>
         </div>
         <slot name="below"></slot>
@@ -10,10 +10,10 @@
 
 <style scoped>
 .require {
-    margin-left: 10;
-    margin-right: 10;
-    margin-top: 12;
-    margin-bottom: 10;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 12px;
+    margin-bottom: 10px;
     color: red;
 }
 .itemDiv{
@@ -21,7 +21,7 @@
 }
 .form {
     flex-direction:row;
-    margin-right: 20;
+    margin-right: 20px;
 }
 </style>
 

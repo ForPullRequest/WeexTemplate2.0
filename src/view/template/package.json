@@ -1,0 +1,14 @@
+{
+  "name": "teslax-field",
+  "version": "1.0.0-beta10",
+  "description": "修复企业微信上下划线显示不正确",
+  "dependencies": {
+    "tesla-native-js": "^1.0.4-beta13"
+  },
+  "main": "normal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hkq\u001b[D\u001b[D\u001b:hkq@ucmed",
+  "license": "ISC"
+}

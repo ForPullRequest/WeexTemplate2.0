@@ -1,18 +1,21 @@
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" :isShow="isShow" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
-        <columnview :selectColor="selectColorCol" :unSelectColor="unSelectColorCol" :titleSize="titleSizeCol" :selectTitleColor="selectTitleColorCol" :unSelectTitleColor="unSelectTitleColorCol" :borderLeftWidth="borderLeftWidthCol" :borderLeftColor="borderLeftColorCol" :items="items" :leftColumnWidth="leftColumnWidthCol" @touchPage="touchPage">
-            <!-- myWidth必须要填 为了iOS中的显示问题 -->
-            <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :myWidth="750-leftColumnWidthCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
-                <!-- <cell v-for="itemData, index in list" :key="itemData">
-                    <listitem class="itemDiv" v-on:onclick="itemClick(index)">
-                        <text class="text">{{itemData}}</text>
-                    </listitem>
-                </cell> -->
-                <slot></slot>
-            </tsl-refresh-list>
-        </columnview>
-    </base>
+    <baseT :backItemImage="backItemImage" :barTitleColor="barTitleColor" :barBackGroundColor="barBackGroundColor" :title="title" :rightItemText="rightItemText" :rightItemColor="rightItemColor" :rightItemImage="rightItemImage" :isIndex="isIndex" :customBack="customBack" :isShow="isShow" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+        <slot name="middle"></slot>
+        <div style="flex: 1">
+            <columnview :selectColor="selectColorCol" :unSelectColor="unSelectColorCol" :titleSize="titleSizeCol" :selectTitleColor="selectTitleColorCol" :unSelectTitleColor="unSelectTitleColorCol" :borderLeftWidth="borderLeftWidthCol" :borderLeftColor="borderLeftColorCol" :items="items" :leftColumnWidth="leftColumnWidthCol" @touchPage="touchPage">
+                <!-- myWidth必须要填 为了iOS中的显示问题 -->
+                <tsl-refresh-list :hasLoad="hasLoad" :hasRefresh="hasRefresh" class="list" ref="mlist" :hasData="hasData" :hasMore="hasMore" :myWidth="750-leftColumnWidthCol" :noContentImg="noContentImg" :noContentTxt="noContentTxt" @mload="load" @mrefresh="refresh">
+                    <!-- <cell v-for="itemData, index in list" :key="itemData">
+                        <listitem class="itemDiv" v-on:onclick="itemClick(index)">
+                            <text class="text">{{itemData}}</text>
+                        </listitem>
+                    </cell> -->
+                    <slot></slot>
+                </tsl-refresh-list>
+            </columnview>
+        </div>
+    </baseT>
 <!-- </div> -->
 </template>
 
@@ -43,37 +46,40 @@
 }
 .line{
     background-color: #e5e5e5;
-    height: 1;
-    width: 750;
+    height: 1px;
+    width: 750px;
 }
 
 .text {
-    font-size: 36;
+    font-size: 36px;
     align-self: center;
 }
 .list{
     flex: 1;
 }
 .itemDiv{
-    padding: 20;
+    padding: 20px;
 }
 </style>
 
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     props:{
         //第一部分继承自base
         //页面的标题
         title:          {default: 'column'},
+        //页面的标题背景颜色
+        barBackGroundColor:  {default: '#314D87'},
         //页面的标题颜色
         barTitleColor:  {default: 'white'},
         //标题栏的返回图片
-        backItemImage:  {default: imageLoad('back.png',true)},
+        backItemImage:  {default: imageLoad('back',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
+        //标题栏的右侧文字颜色
+        rightItemColor: {default: '#666666'},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
         //是否自定义返回事件 配合事件listBack
@@ -85,13 +91,13 @@ export default{
         //用来控制“无数据页面”的显示和隐藏 通常为list.length!=0 因为listT不直接与list接触 所以由外部给
         hasData:        {default: 0},
         //用来控制是否能进行load操作 通常为pageNo >= totalPage（pageNo为当前的页码 totalPage为当前list的总页数）
-        hasMore:        {default: true},
+        hasEnd:         {default: true},
         //是否启用刷新控件
         hasRefresh:     {default: true},
         //是否启用加载控件
         hasLoad:        {default: true},
         //无数据图片
-        noContentImg:   {default: imageLoad('components/ic_no_content.png',true)},
+        noContentImg:   {default: imageLoad('noContent',true)},
         //无数据文字
         noContentTxt:   {default:'暂无数据'},
 
@@ -126,7 +132,7 @@ export default{
         isRefresh:false,
     }),
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
         columnview: require('./UIColumnView.vue'),
         'tsl-refresh-list': require('./UIRefreshList.vue'),
     },
@@ -137,7 +143,7 @@ export default{
                 //页面自定义退出事件
                 this.$emit('columnBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear() {

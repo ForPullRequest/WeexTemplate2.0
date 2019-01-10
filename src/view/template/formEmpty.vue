@@ -1,19 +1,19 @@
 <template>
     <listT ref="list" title="申请单" :hasData="1" :hasRefresh="false" :hasLoad="false" :customBack="false" @listBack="listBack" @listAdapter="getList" @listAppear="appear" node="tree">
-        <cell v-for = "itemData, index in list">
+        <cell v-for = "(itemData,index) in list" :key="index">
             <formT class="borderBottom paddingTB20 white" :itemData="itemData" @imgClick="imgClick" @imgCancel="imgCancel" @addPic="addPic" @getOutPut="getOutPut" @textClick="textClick" @formInput="formInput" @radioSelect="radioSelect" @checkSelect="checkSelect" @ddItemClick="ddItemClick"></formT>
         </cell>
         <cell>
             
         <!-- 按钮 -->
             <div class="btn" @click="clickBtn">
-                <text class="btnText" value="下一步"></text>
+                <text class="btnText" >下一步</text>
             </div>
         </cell>
 
         <!-- 按钮 -->
         <div slot="action" class="btnAbsolute" @click="clickBtn">
-            <text class="btnText" value="下一步"></text>
+            <text class="btnText" >下一步</text>
         </div>
     </listT>
 </template>
@@ -22,44 +22,43 @@
     background-color: white;
 }
 .paddingTB20{
-    padding-top: 20;
-    padding-bottom: 20;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .borderBottom{
-    border-bottom-width: 1;
+    border-bottom-width: 1px;
     border-bottom-color: #e9e9e9;
 }
 .btnAbsolute{
-    height: 80;
-    margin-left: 40;
-    margin-right: 40;
-    margin-top: 20;
-    margin-bottom: 20;
+    height: 80px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background-color: #1C86EE;
     justify-content: center;
-    border-radius: 10;
+    border-radius: 10px;
 }
 .btn{
     flex: 1;
-    height: 80;
-    margin-left: 40;
-    margin-right: 40;
-    margin-top: 20;
-    margin-bottom: 20;
+    height: 80px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     background-color: #1C86EE;
     justify-content: center;
-    border-radius: 10;
+    border-radius: 10px;
 }
 .btnText{
     text-align: center;
-    font-size: 28;
+    font-size: 28px;
     color: white;
 }
 </style>
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-// import config from './config.js';
 export default{
     components: {
         listT: require('./listT.vue'),
@@ -233,10 +232,10 @@ export default{
                             imgWidth:100,//图片的宽
                             imgHeight:100,//图片的高
                             list:[{//要显示的图片行表
-                                src:imageLoad('ic_immune.png',true),
+                                src:imageLoad('samplePic1',true),
                                 title:"标题1"
                             },{
-                                src:imageLoad('ic_image.png',true),
+                                src:imageLoad('samplePic2',true),
                                 title:"标题2"
                             }],
                             fontSize:34,//字体大小，默认34
@@ -255,10 +254,10 @@ export default{
                             imgWidth:100,//图片的宽
                             imgHeight:100,//图片的高
                             list:[{//要显示的图片行表
-                                src:imageLoad('ic_immune.png',true),
+                                src:imageLoad('samplePic1',true),
                                 title:"标题1"
                             },{
-                                src:imageLoad('ic_image.png',true),
+                                src:imageLoad('samplePic2',true),
                                 title:"标题2"
                             }],
                             fontSize:34,//字体大小，默认34
@@ -270,8 +269,8 @@ export default{
                             title:'性别:',//该行的标题
                             titleColor:'#5f5f5f',//标题颜色
                             titleWidth:'',//标题宽，默认180
-                            isCheck:imageLoad('ico-radio-selected.png',true),//选中的图片
-                            unCheck:imageLoad('ico-radio-selected-gray.png',true),//未选中图片
+                            isCheck:imageLoad('radioSelected',true),//选中的图片
+                            unCheck:imageLoad('radioUnselected',true),//未选中图片
                             selectRadio:'0',//默认选中第一个选项时需要写为'0'
                             ifRequire:true,//是否必填（显示星号）
                             isLeft:false,//是否靠左
@@ -285,8 +284,8 @@ export default{
                             title:'复选:',//该行的标题
                             titleColor:'#5f5f5f',//标题颜色
                             titleWidth:'',//标题宽，默认180
-                            isCheck:imageLoad('star_select.png',true),//选中的图片
-                            unCheck:imageLoad('star.png',true),//未选中图片
+                            isCheck:imageLoad('starSelected',true),//选中的图片
+                            unCheck:imageLoad('starUnSelected',true),//未选中图片
                             ifRequire:true,//是否必填（显示星号）
                             isLeft:false,//是否靠左
                             //title为选项名，selected为是否选中

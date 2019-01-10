@@ -3,7 +3,7 @@
         <div v-if="asModel=='bottom'" class="common_type">
             <div ref="view_actionsheet_ref"
                  class="botton_actionsheet"
-                 :style="{'background-color':asBackground, height:asHeight+'px', bottom: -asHeight+'px', 'border-color':borderColor, 'border-top-left-radius':borderRadius, 'border-top-right-radius':borderRadius, 'border-width':borderWidth}"
+                 :style="{'background-color':asBackground, height:asHeight+'px', bottom: -asHeight+'px', 'border-color':borderColor, 'border-top-left-radius':borderRadius+'px', 'border-top-right-radius':borderRadius+'px', 'border-width':borderWidth+'px'}"
                  v-if="isShowActionSheet"
                  @click="touchActionSheet">
                 <slot></slot>
@@ -13,7 +13,7 @@
         <div v-if="asModel=='top'"  class="common_type">
             <div ref="view_actionsheet_ref"
                  class="top_actionsheet"
-                 :style="{'background-color':asBackground, height:asHeight+'px', top: -asHeight+'px', 'border-color':borderColor, 'border-bottom-left-radius':borderRadius, 'border-bottom-right-radius':borderRadius, 'border-width':borderWidth}"
+                 :style="{'background-color':asBackground, height:asHeight+'px', top: -asHeight+'px', 'border-color':borderColor, 'border-bottom-left-radius':borderRadius+'px', 'border-bottom-right-radius':borderRadius+'px', 'border-width':borderWidth+'px'}"
                  v-if="isShowActionSheet"
                  @click="touchActionSheet">
                 <slot></slot>
@@ -23,7 +23,7 @@
         <div v-if="asModel=='left'"  class="common_type">
             <div ref="view_actionsheet_ref"
                  class="left_actionsheet"
-                 :style="{'background-color':asBackground, height:asHeight+'px', width:asWidth+'px', left: -asWidth+'px', 'border-color':borderColor, 'border-top-right-radius':borderRadius, 'border-bottom-right-radius':borderRadius, 'border-width':borderWidth}"
+                 :style="{'background-color':asBackground, height:asHeight+'px', width:asWidth+'px', left: -asWidth+'px', 'border-color':borderColor, 'border-top-right-radius':borderRadius+'px', 'border-bottom-right-radius':borderRadius+'px', 'border-width':borderWidth+'px'}"
                  v-if="isShowActionSheet"
                  @click="touchActionSheet">
                 <slot></slot>
@@ -33,7 +33,7 @@
         <div v-if="asModel=='right'"  class="common_type">
             <div ref="view_actionsheet_ref"
                  class="right_actionsheet"
-                 :style="{'background-color':asBackground, height:asHeight+'px', width:asWidth+'px',right: -asWidth+'px', 'border-color':borderColor, 'border-top-left-radius':borderRadius, 'border-bottom-left-radius':borderRadius, 'border-width':borderWidth}"
+                 :style="{'background-color':asBackground, height:asHeight+'px', width:asWidth+'px',right: -asWidth+'px', 'border-color':borderColor, 'border-top-left-radius':borderRadius+'px', 'border-bottom-left-radius':borderRadius+'px', 'border-width':borderWidth+'px'}"
                  v-if="isShowActionSheet"
                  @click="touchActionSheet">
                 <slot></slot>

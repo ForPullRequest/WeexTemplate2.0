@@ -4,10 +4,11 @@
 <template>
     <!-- 单选框 -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}">{{title}}</text>
         <div class="groupDiv">
-            <radio-group class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}" :selectImg="isCheck" :unselectImg="unCheck" :value="selectRadio" :textSize=fontSize @input="radioSelect">
-                <div v-for="item in list">
+            <radio-group class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}" :selectImg="isCheck" :unselectImg="unCheck" :value="selectRadio" :textSize=fontSize @onRadioSelect="radioSelect">
+                <!--:key 多层嵌套时, 如果与外部key相同会导致在原生中重复bug-->
+                <div v-for="(item,index) in list">
                     <radio :label="item"></radio>
                 </div>
             </radio-group>
@@ -78,19 +79,21 @@ export default {
     },
     created(){
     
+    },
+    mounted(){
     }
 }
 </script>
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .groupDiv{
     flex: 1;
     flex-direction:row;
-    margin-left: 20;
+    margin-left: 20px;
 }
 .group{
     flex-wrap: wrap;

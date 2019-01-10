@@ -1,6 +1,6 @@
 <template>
-    <sheetT ref="list" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :maxShowNum="5" :selected="selected" :sheetHeight="sheetHeight" :sheetItemHeight="sheetItemHeight" :items="items" :sheetBorderRadius="sheetBorderRadius" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @sheetBack="sheetBack" @sheetAdapter="getList" @sheetAppear="appear" @sheetDisappear="sheetDisappear" @itemClick="itemClick" @sheetRight="sheetRight" @sheetTitle="sheetTitle">
-        <cell v-for="item, index in list" >
+    <sheetT ref="list" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasEnd="pageNo >= totalPage" :maxShowNum="5" :selected="selected" :sheetHeight="sheetHeight" :sheetItemHeight="sheetItemHeight" :items="items" :sheetBorderRadius="sheetBorderRadius" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemColor="#666666" rightItemImage="" :isIndex="false" @sheetBack="sheetBack" @sheetAdapter="getList" @sheetAppear="appear" @sheetDisappear="sheetDisappear" @itemClick="itemClick" @sheetRight="sheetRight" @sheetTitle="sheetTitle">
+        <cell v-for="(item, index) in list" :key="index">
             <list-item class="itemDiv" :hasTouchStyle="true" @onclick="itemClick(index)">
             </list-item>
         </cell>

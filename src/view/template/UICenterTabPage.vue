@@ -7,9 +7,9 @@
  -->
 <template>
     <div class="page" :style="{'background-color':itemViewColor, height: itemViewHeight + 'px'}">
-        <div class="row" v-for="(item, index) in items" :ref="'tabItem'+index" @click="touchPage(item,index)">
+        <div class="row" v-for="(item, index) in items" :key="index" :ref="'tabItem'+index" @click="touchPage(item,index)">
             <text style="font-family: PingFangSC-Regular;" :style="{'font-size': itemTextFont + 'px', color: item.isSelect?itemSelectColor:itemNormolColor}">{{item.name}}</text>
-            <div v-if="item.isSelect" class="line" :style="{'background-color':itemSelectColor}"></div>
+            <div v-if="item.isSelect" class="underline" :style="{'background-color':itemSelectColor}"></div>
         </div>
     </div>
 </template>
@@ -31,7 +31,7 @@
         padding-left: 20px;
         padding-right: 20px;
     }
-    .line {
+    .underline {
         position: absolute;
         left: 15px;
         right: 15px;

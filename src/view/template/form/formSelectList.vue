@@ -5,10 +5,10 @@
     <div>
         <!-- 选择列表 -->
         <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-            <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+            <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}">{{title}}</text>
             <div class="dropdowm-title" @click="dropDown" :style="{'justify-content':isLeft?'flex-start':'flex-end'}">
-                <text class="dropdown-text" :style="{color:titleColor, 'font-size': fontSize}">{{textValue}}</text>
-                <image class="icon-arrow" ref="arrowImg" :src="imageLoad('arrow.png',true)"></image>
+                <text class="dropdown-text" :style="{color:titleColor, 'font-size': fontSize+'px'}">{{textValue}}</text>
+                <image class="icon-arrow" ref="arrowImg" :src="imageLoad('arrow',true)"></image>
             </div>
             <dropdown slot="below" ref="dropdownList" :items="list" :textColor="titleColor" class="dropdowm-list" tag="tag" @dd_itemClick="itemClick"></dropdown>
         </formCustom>
@@ -18,7 +18,6 @@
 <script>
 import {imageLoad} from '../imageUtil.js';
 import formCustom from '../formCustom.vue';
-import config from '../config.js';
 export default {
     components:{
         formCustom,
@@ -43,7 +42,6 @@ export default {
     },
     data:()=> ({
         imageLoad,
-        config,
         output:'',
         selectCheck:[],
         numColor:'#999999',
@@ -78,8 +76,8 @@ export default {
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .dropdown-text{
     color:#41484d;
@@ -88,19 +86,19 @@ export default {
     lines: 1;
 }
 .icon-arrow{
-    width: 18;
-    height: 24;
+    width: 18px;
+    height: 24px;
     align-self: center;
     transform: rotate(90deg);
-    margin-left: 20;
-    margin-right: 20;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .dropdowm-title{
     flex:1;
     flex-direction:row;
-    padding-top: 10;
-    padding-bottom: 10;
-    margin-left: 20;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 20px;
 }
 .dropdowm-list{
     align-content: stretch;

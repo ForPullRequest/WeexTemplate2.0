@@ -5,7 +5,8 @@
          @touchcancel="touchcancel"
          @longpress = "longpress"
          @click="click"
-         :style="{ backgroundColor: touched&&hasTouchStyle?highlightedColor:(selected?selectedColor:backgroundColor), borderBottomWidth: seprationHidden?0:1, borderBottomColor: seprationColor }">
+         :style="{ backgroundColor: touched&&hasTouchStyle?highlightedColor:(selected?selectedColor:backgroundColor),
+          borderBottomWidth: (seprationHidden?0:1)+'px', borderBottomColor: seprationColor }">
         <slot></slot>
     </div>
 </template>

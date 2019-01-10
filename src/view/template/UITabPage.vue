@@ -5,8 +5,8 @@
 
 <template>
     <div class="page" :style="{'background-color':itemViewColor, height: itemViewHeight+'px'}">
-        <scroller style="flex-direction: row;" :style="{height: tabHeight()}" scroll-direction="horizontal" showScrollbar=false ref="scr">
-                <div class="row" v-for="(item, index) in items" :ref="'tabItem'+index" @click="touchPage(item,index)">
+        <scroller style="flex-direction: row;" :style="{height: tabHeight()+'px'}" scroll-direction="horizontal" showScrollbar=false ref="scr">
+                <div class="row" v-for="(item, index) in items" :key="index" :ref="'tabItem'+index" @click="touchPage(item,index)">
                     <text :style="{'font-size': itemTextFont + 'px', color: item.isSelect?itemSelectColor:itemNormolColor}">{{item.name}}</text>
                     <div v-if="item.isSelect" class="line" :style="{'background-color':itemSelectColor}"></div>
                 </div>
@@ -16,9 +16,10 @@
 
 <style scoped>
     .page {
-        width: 750;
+        width: 750px;
         border-bottom-width: 2px;
         border-bottom-color: #D4D4D4;
+        justify-content: space-around;
     }
     .row {
         justify-content: center;
@@ -28,9 +29,9 @@
     }
     .line {
         position: absolute;
-        left: 20px;
-        right: 20px;
-        bottom: 10px;
+        left: 15px;
+        right: 15px;
+        bottom: 0px;
         height: 6px;
     }
 </style>

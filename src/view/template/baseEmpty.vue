@@ -1,7 +1,7 @@
 <template>
-    <base title="title" :isShow="isShow" @baseAppear="appear">
+    <baseT title="title" :isShow="isShow" @baseAppear="appear">
     
-    </base>
+    </baseT>
 </template>
 
 <style scoped>
@@ -12,7 +12,7 @@
 const normal = require('./normal.js').normal;
 export default{
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
     },
     data:()=>({
         isShow:true,

@@ -1,17 +1,17 @@
 <template>
-    <base :title="title" contentBackGroundColor="white" @backItemAction="back">
+    <baseT :title="title" contentBackGroundColor="white" @backItemAction="back">
          <tsl-web class="content" ref="webc" :src="pageUrl"  @pagestart="webload"  @pagefinish="loadfinish"   @event="notice" ></tsl-web>
-    </base>
+    </baseT>
 </template>
 
 
 <style lang="css">
     .content {
         position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        top: 0px;
     }
 </style>
 
@@ -23,7 +23,7 @@
     // import userInfo     from '../../../js/cache/userInfo.js';
     export default {
         components: {
-            base: require('./base.vue'),
+            baseT: require('./base.vue'),
         },
         computed: {
 
@@ -70,7 +70,7 @@
                 if (!this.cangoback) {
                     navigator.pop({
                         delta:1
-                    });
+                    }, this);
                 } else {
                     // this.titleShow = false;
                     web.goBack(this.$refs.webc)
@@ -84,7 +84,7 @@
                         if (!self.cangoback) {
                             navigator.pop({
                                 delta:1
-                            });
+                            }, this);
                         } else {
                             web.goBack(self.$refs.webc)
                         //    self.titleShow= false

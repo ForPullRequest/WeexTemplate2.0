@@ -6,8 +6,8 @@
                 <image class="cancelImg" :src="config.dir+'/images/tmp/ic_close.png'"></image>
             </div>
         </div> -->
-        <scroller :style="{height: scrollerHeight}">
-            <div :style="{height: itemHeight}" v-for="item, index in list" :key="item">
+        <scroller :style="{height: scrollerHeight+'px'}">
+            <div :style="{height: itemHeight+'px'}" v-for="(item, index) in list" :key="index">
                 <div style="flex-direction: row" @click="itemClick(index)">
                     <text class="text" >{{item.text}}</text>
                     <text class="selectText" v-if="index==selectedIndex">√</text>
@@ -19,36 +19,36 @@
 </template>
 <style scoped>
 .cancelDiv{
-    width: 100;
-    height: 100;
+    width: 100px;
+    height: 100px;
     justify-content: center;
     position: absolute;
     right: 0;
 }
 .line{
-    height: 2;
+    height: 2px;
     background-color: #f2f2f2
 }
 .dataDiv{
-    width: 750;
-    height: 580;
+    width: 750px;
+    height: 580px;
     background-color: white;
-    border-radius: 6;
-    border-width: 1;
+    border-radius: 6px;
+    border-width: 1px;
     border-color: #F3F3F3;
 }
 .upView{
     flex-direction: row;
-    height: 100;
+    height: 100px;
     background-color: #FAFAFA;
-    border-top-left-radius: 4.4;
-    border-top-right-radius: 4.4;
+    border-top-left-radius: 4.4px;
+    border-top-right-radius: 4.4px;
 }
 .title{
     flex: 1;
     align-self: center;
     text-align: center;
-    font-size: 32;
+    font-size: 32px;
     color: #6C7880;
 }
 .cancelImg{
@@ -57,33 +57,31 @@
     height: 40px;
 }
 .text{
-    padding-left: 40;
-    padding-right: 40;
-    padding-top: 30;
-    padding-bottom: 30;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-overflow: ellipsis;
-    font-size: 28;
+    font-size: 28px;
     color:#41484d;
     flex: 1;
     lines:1;
 }
 .selectText{
-    padding-left: 40;
-    padding-right: 40;
-    padding-top: 30;
-    padding-bottom: 30;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     text-overflow: ellipsis;
-    font-size: 28;
+    font-size: 28px;
     color:#41484d;
     lines:1;
 }
 </style>
 <script>
 const normal = require('./normal.js').normal;
-// import config from './config.js';
 export default {
     data:()=> ({
-        // config,
         list:[],
         tag:'',
     }),

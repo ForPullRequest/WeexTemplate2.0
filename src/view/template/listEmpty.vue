@@ -1,6 +1,6 @@
 <template>
-    <listT ref="list" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :customBack="false" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :isShow="isShow" @listBack="listBack" @listAdapter="getList" @listAppear="appear" @listDisappear="listDisappear" @listRight="listRight" @listTitle="listTitle">
-        <cell v-for="item, index in list" >
+    <listT ref="list" title="title" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasEnd="pageNo >= totalPage" barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemColor="#666666" rightItemImage="" :isIndex="false" :customBack="false" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :isShow="isShow" @listBack="listBack" @listAdapter="getList" @listAppear="appear" @listDisappear="listDisappear" @listRight="listRight" @listTitle="listTitle">
+        <cell v-for="(item, index) in list" :key="index">
             <list-item class="itemDiv" :hasTouchStyle="true" @onclick="itemClick(index)">
             </list-item>
         </cell>

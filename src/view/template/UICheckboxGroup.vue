@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <div v-for="(checkbox,index) in  checkboxs" :index="index" class="div-container" @click="onCheckboxSelect">
-            <image :style="{width:imgWidth+'px', height:imgHeight+'px'}" v-if="checkbox.selected" :src="selectImg"></image>
-            <image :style="{width:imgWidth+'px', height:imgHeight+'px'}" v-if="!checkbox.selected" :src="unselectImg"></image>
-            <text class="radio-text" :style="{'font-size': textSize}">{{checkbox.title}}</text>
+        <div v-for="(checkbox,index) in  checkboxs" :key="index" :index="index" class="div-container" @click="onCheckboxSelect(index)">
+            <image class="div-image" v-if="checkbox.selected" :src="selectImg"></image>
+            <image  class="div-image" v-if="!checkbox.selected" :src="unselectImg"></image>
+            <text class="radio-text" :style="{'font-size': textSize+'px'}">{{checkbox.title}}</text>
         </div>
         <slot></slot>
     </div>
@@ -47,12 +47,6 @@ module.exports = {
         },
         textSize:{
             default: 34,
-        },
-        imgWidth:{
-            default: 40,
-        },
-        imgHeight:{
-            default: 40,
         }
     },
     data(){
@@ -63,14 +57,13 @@ module.exports = {
         }
     },
     methods: {
-        onCheckboxSelect:function (val) {
-            var index = val.target.attr.index;
+        onCheckboxSelect:function (index) {
             for(var i=0;i<this.checkboxs.length;i++){
                 if(index==i){
                     this.checkboxs[i].selected=!this.checkboxs[i].selected
                 }
             }
-            this.$emit('input', this.getEmitData());
+            this.$emit('onCheckboxSelect', this.getEmitData());
         },
         getEmitData:function () {
             var data = []

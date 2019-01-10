@@ -1,6 +1,6 @@
 <template>
     <scrollerT ref="list" title="title" barTitleColor="white" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" :customBack="false" @scrollerBack="scrollerBack" @scrollerAppear="scrollerAppear" @scrollerDisappear="scrollerDisappear" @scrollerRight="scrollerRight" @scrollerTitle="scrollerTitle">
-        <div v-for="item, index in list" >
+        <div v-for="(item, index) in list" :key="index">
             <list-item class="itemDiv" :hasTouchStyle="true" @onclick="itemClick(index)">
             </list-item>
         </div>

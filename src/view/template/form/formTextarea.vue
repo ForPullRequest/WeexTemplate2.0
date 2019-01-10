@@ -4,17 +4,17 @@
 <template>
     <!-- textarea -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
-        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" v-if="!isBelow" :type="inputType" :value="textValue" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}">{{title}}</text>
+        <textarea class="textarea" :style="{color:textColor, 'font-size': fontSize+'px', 'lines': lines, 'height':areaHeight+'px'}" v-if="!isBelow" :type="inputType" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
         <div class="inputNum" slot="below" v-if="!isBelow && maxNum>0">
-            <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
-            <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
+            <text :style="{color:numColor, 'font-size': fontSize+'px'}">{{textValue.length}}</text>
+            <text :style="{color:numColor, 'font-size': fontSize+'px'}">/{{maxNum}}</text>
         </div>
         <div slot="below" style="flex-direction: column;margin-right: 16;padding-left: 16">
-            <textarea class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': fontSize, 'lines': lines, 'height':areaHeight}" :type="inputType" :value="textValue" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
+            <textarea class="textarea" v-if="isBelow" :style="{color:textColor, 'font-size': fontSize+'px', 'lines': lines, 'height':areaHeight+'px'}" :type="inputType" v-model="textValue" @input="input" :placeholder="placeholder" :placeholder-color="placeholderColor"></textarea>
             <div class="inputNum" v-if="isBelow && maxNum>0">
-                <text :style="{color:numColor, 'font-size': fontSize}">{{textValue.length}}</text>
-                <text :style="{color:numColor, 'font-size': fontSize}">/{{maxNum}}</text>
+                <text :style="{color:numColor, 'font-size': fontSize+'px'}">{{textValue.length}}</text>
+                <text :style="{color:numColor, 'font-size': fontSize+'px'}">/{{maxNum}}</text>
             </div>
         </div>
     </formCustom>
@@ -83,19 +83,19 @@ export default {
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .textarea{
-    margin-top: 10;
-    margin-bottom: 10;
-    margin-left: 20;
-    height: 160;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    height: 160px;
     flex: 1;
 }
 .inputNum{
     flex-direction: row;
     justify-content: flex-end;
-    padding-right: 20;
+    padding-right: 20px;
 }
 </style>

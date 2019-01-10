@@ -1,7 +1,7 @@
 <template>
-    <base :title="title" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back">
-        <zoom-img class="img" :style="{width:myWidth,height:myHeight,}" :src='imgUrl'></zoom-img>
-    </base>
+    <baseT :title="title" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back">
+        <zoom-img class="img" :style="{width:myWidth+'px',height:myHeight+'px',}" :src='imgUrl'></zoom-img>
+    </baseT>
 </template>
 
 <style scoped>
@@ -9,29 +9,27 @@
     resize: contain;
 }
 .closeImg{
-    width: 66;
-    height: 66;
+    width: 66px;
+    height: 66px;
 }
 .closeDiv{
     position: absolute;
-    right: 20;
-    top: 20;
+    right: 20px;
+    top: 20px;
 }
 </style>
 
 <script>
 const normal = require('./normal.js').normal;
-import config from './config.js';
 export default{
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
     },
     props:{
         //是否自定义返回事件
         customBack:     {default: false},
     },
     data:()=>({
-        config,
         isShow:true,
         title:"查看图片",
         myWidth:750,
@@ -51,14 +49,14 @@ export default{
                 //页面自定义退出事件
                 this.$emit('showPicBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear(){
 
         },
         close(){
-            normal.back();
+            normal.back(this);
         },
         getNavHeight(){
             let height = 0;

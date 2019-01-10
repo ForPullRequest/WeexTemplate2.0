@@ -1,14 +1,14 @@
 <template>
-    <div class="item" :index="index" :style="{backgroundColor:background, borderLeftColor:borderLeftColor, borderLeftWidth:borderLeftWidth}" @click="itemClick(index)">
-        <text class="item-title" :style="{fontSize:titleSize, color:titleColor, margin: margin}">{{title}}</text>
+    <div class="item" :index="index" :style="{backgroundColor:background, borderLeftColor:borderLeftColor, borderLeftWidth:borderLeftWidth+'px'}" @click="itemClick(index)">
+        <text class="item-title" :style="{fontSize:titleSize+'px', color:titleColor, margin: margin+'px'}">{{title}}</text>
     </div>
 </template>
 <style scoped>
 .item {
     justify-content: center;
     align-items: center;
-    borderBottomWidth:1;
-    borderBottomColor:#dddddd;
+    border-bottom-width:1px;
+    border-bottom-color:#dddddd;
 }
 .item-title {
     text-align: center;

@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <div v-for="(radio,index) in  radios" :index="index" class="div-container" @click="onRadioSelect">
+        <div v-for="(radio,index) in  radios" :key="index" :index="index" class="div-container" @click="onRadioSelect(index)">
             <image class="div-image" v-if="selectPosition==index" :src="selectImg"></image>
             <image class="div-image" v-if="selectPosition!=index" :src="unselectImg"></image>
-            <text class="radio-text" :style="{'font-size': textSize}">{{radio.title}}</text>
+            <text class="radio-text" :style="{'font-size': textSize+'px'}">{{radio.title}}</text>
         </div>
         <slot></slot>
     </div>
@@ -21,7 +21,7 @@
     height: 40px;
 }
 .radio-text{
-    font-size: 28;
+    font-size: 28px;
     color: #666666;
     margin-left: 10px;
     align-self: center;
@@ -63,9 +63,9 @@ module.exports = {
         },
     },
     methods: {
-        onRadioSelect:function (val) {
-            this.selectPosition = val.target.attr.index
-            this.$emit('input', val.target.attr.index);
+        onRadioSelect:function (index) {
+            this.selectPosition = index
+            this.$emit('onRadioSelect', index);
         },
         addPanes: function (item, name) {
             const index = this.$slots.default.indexOf(item.$vnode)

@@ -1,11 +1,11 @@
 <template>
-    <div class="wrapper" :style="{overflow: 'hidden', height: isMaskShow?getHeight:0}" :tag="tag">
+    <div class="wrapper" :style="{overflow: 'hidden', height: (isMaskShow?getHeight:0)+'px'}" :tag="tag">
 
-        <div class="options" ref="options" :style="{ height: getHeight, visibility: isMaskShow ?'visible':'hidden'}"><!-- , width: mWidth -->
+        <div class="options" ref="options" :style="{ height: getHeight+'px', visibility: isMaskShow ?'visible':'hidden'}"><!-- , width: mWidth -->
             <scroller>
-                <div v-for="item,index in items" class="cell" :style="{ height: itemHeight, backgroundColor: itemColor }"
+                <div v-for="(item,index) in items" :key="index" class="cell" :style="{ height: itemHeight+'px', backgroundColor: itemColor }"
                       @click="onItemClick(index)">
-                    <text class="name" :style="{ color: index==selectedIndex?selectedTextColor:textColor, fontSize: textSize }">{{item.name}}</text>
+                    <text class="name" :style="{ color: index==selectedIndex?selectedTextColor:textColor, fontSize: textSize+'px' }">{{item.name}}</text>
                     <image class="icon-curr-flag" :src="iconSelect" v-if="index==selectedIndex"></image>
                 </div>
             </scroller>
@@ -40,26 +40,26 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding-left: 54;
-        padding-right: 54;
+        padding-left: 54px;
+        padding-right: 54px;
     }
 
     .name {
         flex: 1;
-        padding-right: 10;
+        padding-right: 10px;
         flex-wrap: wrap;
         lines:2;
         text-overflow: ellipsis;
     }
 
     .icon-curr-flag {
-        width: 32;
-        height: 32;
+        width: 32px;
+        height: 32px;
     }
 
     .icon-arrow {
-        width: 27;
-        height: 23;
+        width: 27px;
+        height: 23px;
     }
 
 

@@ -4,38 +4,38 @@
 <template>
     <div>
         <!-- 图片选择 -->
-        <formCustom :ifRequire=ifRequire :titleSize=fontSize>
+        <formCustom :ifRequire="ifRequire" :titleSize="fontSize">
             <div>
-                <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+                <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}">{{title}}</text>
                 <text class="maxPrompt" v-if="maxImg!=99&&!isBelow">{{list.length}}/{{maxImg}}</text>
             </div>
             <text class="maxPrompt" v-if="maxImg!=99&&isBelow">{{list.length}}/{{maxImg}}</text>
             <div class="group" v-if="!isBelow"  style="flex-wrap: wrap;flex: 1;"><!--  :style="{'justify-content':isLeft?'flex-start':'flex-end'}" -->
-                <div class="picBlock" v-for="item,index in list" >
+                <div class="picBlock" v-for="(item,index) in list" :key="index">
                     <div style="flex-direction: column;" @click="imgClick(index)">
-                        <image class="img" :src="item.src" :style="{width:imgWidth, height:imgHeight}"></image>
-                        <text style="font-size: 28;lines:2;text-overflow: ellipsis;" v-if="item.text">{{item.text}}</text>
+                        <image class="img" :src="item.src" :style="{width:imgWidth+'px', height:imgHeight+'px'}"></image>
+                        <text style="font-size: 28px;lines:2;text-overflow: ellipsis;" v-if="item.text">{{item.text}}</text>
                     </div>
-                    <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
-                        <image class="img-cancel" :src="imageLoad('components/erase-normal.png',true)"></image>
+                    <div class="img-cancel" style="width:42px;height:42px;padding:6px;" @click="imgCancel(index)" v-if="canCancel">
+                        <image class="img-cancel" :src="imageLoad('erase',true)"></image>
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="imageLoad('upload.png',true)" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <image class="img" :src="imageLoad('upload',true)" :style="{width:imgWidth+'px', height:imgHeight+'px'}"></image>
                 </div>
             </div>
             <div slot="below" class="belowBox" style="flex-wrap: wrap;flex: 1;" v-if="isBelow">
-                <div class="picBlock" v-for="item,index in list" >
+                <div class="picBlock" v-for="(item,index) in list" :key="index">
                     <div style="flex-direction: column;align-items: center;justify-content: center;" @click="imgClick(index)">
-                        <image class="img" :src="item.src" :style="{width:imgWidth, height:imgHeight}"></image>
-                        <text style="font-size: 28;lines:2;text-overflow: ellipsis;max-width: 100;" v-if="item.text">{{item.text}}</text>
+                        <image class="img" :src="item.src" :style="{width:imgWidth+'px', height:imgHeight+'px'}"></image>
+                        <text style="font-size: 28px;lines:2;text-overflow: ellipsis;max-width: 100px;" v-if="item.text">{{item.text}}</text>
                     </div>
-                    <div class="img-cancel" style="width:42;height:42;padding:6;" @click="imgCancel(index)" v-if="canCancel">
-                        <image class="img-cancel" :src="imageLoad('components/erase-normal.png',true)"></image>
+                    <div class="img-cancel" style="width:42px;height:42px;padding:6px;" @click="imgCancel(index)" v-if="canCancel">
+                        <image class="img-cancel" :src="imageLoad('erase',true)"></image>
                     </div>
                 </div>
                 <div class="picBlock" v-if="hasAdd&&list.length<maxImg" @click="addPic(index)">
-                    <image class="img" :src="imageLoad('upload.png',true)" :style="{width:imgWidth, height:imgHeight}"></image>
+                    <image class="img" :src="imageLoad('upload',true)" :style="{width:imgWidth+'px', height:imgHeight+'px'}"></image>
                 </div>
             </div>
         </formCustom>
@@ -45,7 +45,6 @@
 <script>
 import {imageLoad} from '../imageUtil.js';
 import formCustom from '../formCustom.vue';
-import config from '../config.js';
 export default {
     components:{
         formCustom,
@@ -72,7 +71,6 @@ export default {
     },
     data:()=> ({
         imageLoad,
-        config,
         output:'',
         numColor:'#999999',
     }),
@@ -113,47 +111,47 @@ export default {
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .img-cancel{
-    width: 30;
-    height: 30;
+    width: 30px;
+    height: 30px;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 0px;
+    top: 0px;
 }
 .img{
-    width: 100;
-    height: 100;
-    padding: 5;
+    width: 100px;
+    height: 100px;
+    padding: 5px;
 }
 .picBlock{
-    margin-left: 10;
-    margin-right: 10;
+    margin-left: 10px;
+    margin-right: 10px;
     justify-content: center;
 }
 .group{
     flex: 1;
     flex-direction:row;
-    margin-left: 20;
+    margin-left: 20px;
 }
 .maxPrompt{
     flex: 1;
     text-align: right;
-    font-size: 28;
+    font-size: 28px;
     color: #999999;
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .belowBox{
     flex-direction: row;
-    border-top-width: 1;
+    border-top-width: 1px;
     border-color: #e9e9e9;
-    margin-top: 10;
-    padding-top: 20;
-    padding-right: 20;
-    padding-left: 20;
+    margin-top: 10px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 .belowPrompt{
     align-self: flex-end;

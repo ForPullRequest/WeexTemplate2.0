@@ -1,8 +1,8 @@
 //customBack为true时可用<template>
-    <searchT ref="search" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="pageNo >= totalPage" :isCenter="true" :noContentImg="noContentImg" :hasSearch="true" :placeholder="placeholder" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @searchBack="searchBack" @searchAdapter="getList" @searchDisappear="searchDisappear" @searchAppear="appear" @searchInput="searchInput" @searchRight="searchRight" @searchTitle="searchTitle">
-        <cell v-for="itemData, index in list" :key="itemData">
+    <searchT ref="search" title="title" barTitleColor="white" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasEnd="pageNo >= totalPage" :isCenter="true" :noContentImg="noContentImg" :hasSearch="true" :placeholder="placeholder" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemColor="#666666" rightItemImage="" :isIndex="false" @searchBack="searchBack" @searchAdapter="getList" @searchDisappear="searchDisappear" @searchAppear="appear" @searchInput="searchInput" @searchRight="searchRight" @searchTitle="searchTitle">
+        <cell v-for="(itemData, index) in list" :key="index">
             <list-item class="itemDiv" @onclick="itemClick(index)" @longpress="longpress(index)">
-                <text class="item" :value="itemData.text"></text>
+                <text class="item">{{itemData.text}}</text>
             </list-item>
         </cell>
     </searchT>
@@ -11,12 +11,12 @@
 <style scoped>
 
 .itemDiv{
-    padding: 20;
+    padding: 20px;
 }
 .item {
     height: 88px;
     align-items: center;
-    font-size: 32
+    font-size: 32px;
 }
 </style>
 

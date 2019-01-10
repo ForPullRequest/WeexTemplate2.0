@@ -226,7 +226,6 @@ import formImage from './form/formImage.vue';
 import formCheckbox from './form/formCheckbox.vue';
 import formRadio from './form/formRadio.vue';
 import formList  from './form/formSelectList.vue';
-import config from './config.js';
 
 export default {
     props:{
@@ -474,8 +473,8 @@ export default {
             this.$emit('textClick',e);
         },
         clickOpen(e){
-            if(this.itemData.lines!= -1){
-                this.itemData.lines = -1;
+            if(this.itemData.lines!= 99){
+                this.itemData.lines = 99;
             }else{
                 this.itemData.lines = this.myLines;
             }
@@ -493,7 +492,6 @@ export default {
         },
         imgClick(img) {
             let showPic = function(){
-                // normal.push(config.dir + '/view/template/showPic',{imgUrl:img.item.src});
                 let arr = [];
                 for (var i = 0; i < this.itemData.list.length; i++) {
                     arr.push(this.itemData.list[i].src);
@@ -527,93 +525,3 @@ export default {
 }
 </script>
 
-<style scoped>
-.red {
-    background-color: red;
-}
-.title {
-    width: 180;
-    margin-top: 10;
-    margin-bottom: 10;
-}
-.textDiv{
-    flex: 1;
-}
-.text {
-    margin-top: 10;
-    margin-bottom: 10;
-    flex: 1;
-    text-overflow: ellipsis;
-}
-.input {
-    margin-left: 20;
-    height: 60;
-    flex: 1;
-}
-.textarea{
-    margin-top: 10;
-    margin-bottom: 10;
-    margin-left: 20;
-    height: 160;
-    flex: 1;
-}
-.inputNum{
-    flex-direction: row;
-    justify-content: flex-end;
-    padding-right: 20;
-}
-.img-cancel{
-    width: 30;
-    height: 30;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-.img{
-    width: 100;
-    height: 100;
-    padding: 5;
-}
-.picBlock{
-    margin-left: 10;
-    margin-right: 10;
-    justify-content: center;
-}
-.group{
-    flex: 1;
-    flex-direction:row;
-    margin-left: 20;
-}
-.dropdown-text{
-    color:#41484d;
-    text-align: right;
-    text-overflow: ellipsis;
-    lines: 1;
-}
-.icon-arrow{
-    width: 18;
-    height: 24;
-    align-self: center;
-    transform: rotate(90deg);
-    margin-left: 20;
-    margin-right: 20;
-}
-.dropdowm-title{
-    flex:1;
-    flex-direction:row;
-    padding-top: 10;
-    padding-bottom: 10;
-    margin-left: 20;
-}
-.dropdowm-list{
-    align-content: stretch;
-    position: relative;
-    z-index: 100;
-}
-.open{
-    width: 100;
-    height:50;
-    align-items: flex-end;
-    justify-content: center;
-}
-</style>

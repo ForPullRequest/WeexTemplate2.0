@@ -1,8 +1,8 @@
 <template>
-    <tabListT ref="tabList" title="title" barTitleColor="white" :items="tabs" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasMore="getHasMore()" :isCenter="true" :itemViewColor="itemViewColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @tabListBack="tabListBack" @tabListAdapter="getList" @tabListAppear="appear" @tabListDisappear="tabListDisappear" @tabListPage="tabListPage" @tabListRight="tabListRight" @tabListTitle="tabListTitle">
-        <cell v-for="itemData, index in list" :key="itemData">
+    <tabListT ref="tabList" title="title" barTitleColor="white" :items="tabs" :hasData="list.length!=0" :hasRefresh="true" :hasLoad="true" :hasEnd="gethasEnd()" :isCenter="true" :itemViewColor="itemViewColor" :itemViewHeight="itemViewHeight" :itemTextFont="itemTextFont" :itemNormolColor="itemNormolColor" :itemSelectColor="itemSelectColor" :noContentImg="noContentImg" :noContentTxt="noContentTxt" :customBack="false" :backItemImage="backItemImage" rightItemText="" rightItemImage="" :isIndex="false" @tabListBack="tabListBack" @tabListAdapter="getList" @tabListAppear="appear" @tabListDisappear="tabListDisappear" @tabListPage="tabListPage" @tabListRight="tabListRight" @tabListTitle="tabListTitle">
+        <cell v-for="(itemData, index) in list" :key="index">
             <list-item class="itemDiv" @onclick="itemClick(index)" @longpress="longpress(index)">
-                <text class="item" :value="itemData.text"></text>
+                <text class="item">{{itemData.text}}</text>
             </list-item>
         </cell>
     </tabListT>
@@ -11,12 +11,12 @@
 <style scoped>
 
 .itemDiv{
-    padding: 20;
+    padding: 20px;
 }
 .item {
     height: 88px;
     align-items: center;
-    font-size: 32
+    font-size: 32px;
 }
 </style>
 
@@ -58,7 +58,7 @@ export default{
             totalPage: 1,//总页数
         }],
         list:[],//只用于显示
-        selectIndex:0,//当前选择的tab 为了HasMore
+        selectIndex:0,//当前选择的tab 为了hasEnd
         isCache:false,
         // lastIndex:0,//上次显示的tab
     }),
@@ -78,7 +78,7 @@ export default{
             this.isCache = true;
             page.showData();
         },
-        getHasMore() {
+        gethasEnd() {
             return this.items[this.selectIndex].pageNo >= this.items[this.selectIndex].totalPage
         },
         getList(tabListT) {

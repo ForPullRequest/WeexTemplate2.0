@@ -4,13 +4,13 @@
  -->
 <template>
 <!-- <div> -->
-    <base :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemImage="rightItemImage" :contentBackGroundColor="contentBackGroundColor" :barBackGroundColor="barBackGroundColor" :isIndex="isIndex" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
+    <baseT :backItemImage="backItemImage" :barTitleColor="barTitleColor" :title="title" :rightItemText="rightItemText" :rightItemColor="rightItemColor" :rightItemImage="rightItemImage" :contentBackGroundColor="contentBackGroundColor" :barBackGroundColor="barBackGroundColor" :isIndex="isIndex" :isShow="isShow" :customBack="customBack" @baseAppear="appear" @baseBack="back" @baseTitle="titleClick" @baseRight="right" @baseDisappear="disappear">
         <scroller class="scroller" ref="mscroller">
             <!-- 通过slot将item布局外放 -->
             <slot></slot>
         </scroller>
         <slot name="action"></slot>
-    </base>
+    </baseT>
 <!-- </div> -->
 
 </template>
@@ -24,13 +24,12 @@
     flex: 1;
 }
 .itemDiv{
-    padding: 20;
+    padding: 20px;
 }
 </style>
 <script>
 import {imageLoad} from './imageUtil.js';
 const normal = require('./normal.js').normal;
-import config from './config.js';
 
 export default{
     props:{
@@ -42,9 +41,11 @@ export default{
         //页面的标题背景颜色
         barBackGroundColor:  {default: '#314D87'},
         //标题栏的返回图片
-        backItemImage:  {default: imageLoad('back.png',true)},
+        backItemImage:  {default: imageLoad('back',true)},
         //标题栏的右侧文字
         rightItemText:  {default: ''},
+        //标题栏的右侧文字颜色
+        rightItemColor: {default: '#666666'},
         //标题栏的右侧图片
         rightItemImage: {default: ''},
         //主体背景色
@@ -57,7 +58,7 @@ export default{
         isShow:         {default: true},
     },
     components: {
-        base: require('./base.vue'),
+        baseT: require('./base.vue'),
     },
     data:()=>({
         imageLoad,
@@ -72,7 +73,7 @@ export default{
                 //页面自定义退出事件
                 this.$emit('scrollerBack',{});
             }else{
-                normal.back();
+                normal.back(this);
             }
         },
         appear() {

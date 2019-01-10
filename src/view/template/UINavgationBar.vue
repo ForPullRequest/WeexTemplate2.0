@@ -1,5 +1,8 @@
+<!-- 
+    废弃 直接用base替代功能
+ -->
 <template>
-    <div style="flex:1" @viewappear="viewWillAppear" @viewdisappear="viewWillDisAppear">
+    <div  @viewappear="viewWillAppear" @viewdisappear="viewWillDisAppear">
         <div class="container" :style="{height:height+'px','background-color':barBackGroundColor,'padding-top':top+'px'}" v-if="isShow">
             <div class="left_item" @click="touchBack" >
                 <image class="back_image" v-if="backItemImage!=''" :src="backItemImage"></image>
@@ -14,7 +17,7 @@
         </div>
         <div class="content"
              :style="{'background-color':contentBackGroundColor,
-                      'padding-bottom':bottom}">
+                      'padding-bottom':bottom+'px'}">
             <slot></slot>
         </div>
     </div>
@@ -78,13 +81,14 @@ export default {
     props: {
         BRPageId                : {default: ''},                    //博睿监控PageId
         BRPageName              : {default: ''},                    //博睿监控PageName
-        backItemImage           : {default: imageLoad('back.png',true)},
+        backItemImage           : {default: imageLoad('back',true)},
         rightItemText           : {default: ''},
         rightItemImage          : {default: ''},//ico_menu.png
         contentBackGroundColor  : {default: '#f6f6f6'},
         barBackGroundColor      : {default: 'white'},
         title                   : {default: ''},
         barTitleColor           : {default: '#333333'},
+        rightItemColor          : {default: '#666666'},
         isIndex                 : {default: false},
         isShow                  : {default: true},
     },

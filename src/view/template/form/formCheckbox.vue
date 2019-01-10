@@ -4,9 +4,9 @@
 <template>
     <!-- 复选框 -->
     <formCustom :ifRequire=ifRequire :titleSize=fontSize>
-        <text class="title" :style="{color:titleColor, 'font-size': fontSize, 'width': titleWidth}" :value="title"></text>
+        <text class="title" :style="{color:titleColor, 'font-size': fontSize+'px', 'width': titleWidth+'px'}">{{title}}</text>
         <div class="groupDiv">
-            <checkbox-group class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}" :checkboxs="list" :selectImg="isCheck" :unselectImg="unCheck" :textSize=fontSize @input="checkSelect">
+            <checkbox-group class="group" :style="{'justify-content':isLeft?'flex-start':'flex-end'}" :checkboxs="list" :selectImg="isCheck" :unselectImg="unCheck" :textSize=fontSize @onCheckboxSelect="checkSelect">
             </checkbox-group>
         </div>
     </formCustom>
@@ -74,13 +74,13 @@ export default {
 
 <style scoped>
 .title {
-    margin-top: 10;
-    margin-bottom: 10;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .groupDiv{
     flex: 1;
     flex-direction:row;
-    margin-left: 20;
+    margin-left: 20px;
 }
 .group{
     flex-wrap: wrap;
