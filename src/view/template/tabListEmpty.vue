@@ -107,11 +107,14 @@ export default{
             //模拟数据获取
             setTimeout(function() {
                 //赋值total
-                this.items[tabListT.selectIndex].totalPage = 3;
+                this.items[tabListT.selectIndex].totalPage = 2;
                 //赋值list
-                this.list = [{
-                    text:'text'+tabListT.selectIndex
-                }];
+                this.list = [];
+                for (var i = 0; i < this.items[tabListT.selectIndex].pageSize; i++) {
+                    this.list.push({
+                        text:'text'+tabListT.selectIndex+i
+                    })
+                }
                 //赋值cache
                 this.items[tabListT.selectIndex].list = this.list;
                 //结束
@@ -123,9 +126,11 @@ export default{
             //模拟数据获取
             setTimeout(function() {
                 //赋值list 一般为list的concat操作
-                this.list.push({
-                    text:'empty'+tabListT.selectIndex,
-                })
+                for (var i = 0; i < this.items[tabListT.selectIndex].pageSize; i++) {
+                    this.list.push({
+                        text:'empty'+tabListT.selectIndex+i,
+                    })
+                }
                 //赋值cache
                 this.items[tabListT.selectIndex].list = this.list;
                 //结束

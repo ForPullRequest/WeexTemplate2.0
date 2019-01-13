@@ -29,6 +29,7 @@ export default{
     },
     data:()=>({
         pageNo:1,
+        pageSize:10,
         totalPage:1,
         list:[],//只用于显示
         // noContentImg:'../../images/tmp/components/ic_no_content.png',
@@ -58,15 +59,14 @@ export default{
             //模拟数据获取
             setTimeout(function() {
                 //赋值total
-                this.totalPage = 3;
+                this.totalPage = 2;
                 //赋值list
-                this.list = [{
-                    text:'text'+searchT.isRefresh
-                },{
-                    text:'text'+'end'
-                },{
-                    text:'text'+searchT.keyword
-                },];
+                this.list = [];
+                for (var i = 0; i < this.pageSize; i++) {
+                    this.list.push({
+                        text:'text'+i
+                    })
+                }
                 //结束
                 searchT.end();
             }.bind(this), 1000);
@@ -76,9 +76,11 @@ export default{
             //模拟数据获取
             setTimeout(function() {
                 //赋值list 一般为list的concat操作
-                this.list.push({
-                    text:'empty'+searchT.keyword,
-                })
+                for (var i = 0; i < this.pageSize; i++) {
+                    this.list.push({
+                        text:'empty'+i,
+                    })
+                }
                 //结束
                 searchT.end();
             }.bind(this), 1000);

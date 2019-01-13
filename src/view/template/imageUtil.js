@@ -15,8 +15,20 @@ var list = {
     starSelected: 'https://tesla-1251304050.picsh.myqcloud.com/tmp/star_select.png',
     upload: 'https://tesla-1251304050.picsh.myqcloud.com/tmp/upload.png',
 }
+
+var dir = '';//每个项目都不同 如：TURN
+import {
+    tslenv
+} from 'tesla-native-js'
+var isBrowser = tslenv.getCurrentPlatform() == tslenv.TSL_ENV_CONSTANTS_PLATFORM.browser
+let rootDir = process.env.NODE_ENV == 'release' ? "/web" : ''
+
 var imageLoad = function (name, isTemplateRes) {
-    return list[name];
+    if(isTemplateRes){
+        return list[name];
+    } else {
+        return (isBrowser ? rootDir : dir) + '/images/' + name;
+    }
 }
 
 export {

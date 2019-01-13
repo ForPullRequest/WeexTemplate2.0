@@ -1,7 +1,7 @@
 {
   "name": "teslax-field",
-  "version": "1.0.0-beta11",
-  "description": "修复formEmpty中的空星不展示 修复refresh图标不展示",
+  "version": "1.0.0-beta12",
+  "description": "改进imageUtil.js searchEmpty和tabListEmpty",
   "dependencies": {
     "tesla-native-js": "^1.0.4-beta13"
   },
