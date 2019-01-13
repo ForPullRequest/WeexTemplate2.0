@@ -7,7 +7,6 @@
             <refresh @refresh="refresh" @pullingdown="onpullingdown" :display="mRefreshStatus" ref="pageR" :style="{width:myWidth+'px'}"
                 class="refresh" v-if="hasRefresh">
                 <image ref="imgs" :src="imageLoad('loading',true)" class="refresh-icon"></image>
-                <image ref="imgs" :src="imageLoad('pageNext',true)" class="direction-icon"></image>
                 <div class="refresh-div">
                     <text class="refresh-text-1">{{refreshTitle}}</text>
                     <text class="refresh-text-2">最后更新: {{lastRefreshDate}}</text>
@@ -44,6 +43,12 @@
         text-align: center;
         font-size: 26px;
         margin-top: 10px;
+    }
+    .refresh-icon{
+        width: 40px;height: 40px;margin-right: 30px;align-self: center;
+    }
+    .direction-icon{
+        width: 40px;height: 45px;margin-right: 30px;align-self: center;
     }
 
     .list {

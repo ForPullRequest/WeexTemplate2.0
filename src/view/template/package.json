@@ -1,7 +1,7 @@
 {
   "name": "teslax-field",
-  "version": "1.0.0-beta10",
-  "description": "修复企业微信上下划线显示不正确",
+  "version": "1.0.0-beta11",
+  "description": "修复formEmpty中的空星不展示 修复refresh图标不展示",
   "dependencies": {
     "tesla-native-js": "^1.0.4-beta13"
   },

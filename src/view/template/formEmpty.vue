@@ -285,7 +285,7 @@ export default{
                             titleColor:'#5f5f5f',//标题颜色
                             titleWidth:'',//标题宽，默认180
                             isCheck:imageLoad('starSelected',true),//选中的图片
-                            unCheck:imageLoad('starUnSelected',true),//未选中图片
+                            unCheck:imageLoad('starUnselected',true),//未选中图片
                             ifRequire:true,//是否必填（显示星号）
                             isLeft:false,//是否靠左
                             //title为选项名，selected为是否选中
