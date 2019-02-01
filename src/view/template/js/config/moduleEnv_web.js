@@ -1,6 +1,6 @@
 
 import * as config from "./ApplicationConfig_web.js";
-import {tslenv} from "tesla-native-js";
+import {tslEnv} from "tesla-native-js";
 
 /**
  * 获取当前模块配置信息
