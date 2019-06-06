@@ -1,4 +1,5 @@
 const path = require('path');
+var utils = require('./utils')
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('./config');
@@ -10,8 +11,6 @@ const isWin = /^win/.test(process.platform);
 const webEntry = {};
 const weexEntry = {};
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const cssImport = require('./css_import');
-cssImport();
 // Wraping the entry file for web.
 const getEntryFileContent = (entryPath, vueFilePath) => {
   let relativeVuePath = path.relative(path.join(entryPath, '../'), vueFilePath);
@@ -52,8 +51,7 @@ const getEntryFile = (dir) => {
         webEntry[name] = entryFile;
       }
       weexEntry[name] = fullpath + '?entry=true';
-    }
-    else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
+    } else if (stat.isDirectory() && file !== 'build' && file !== 'include') {
       const subdir = path.join(dir, file);
       getEntryFile(subdir);
     }
@@ -90,23 +88,83 @@ const plugins = [
     raw: true,
     exclude: 'Vue'
   }),
-   /**
+  /**
    * 复制文件到dist下
    */
-  new CopyWebpackPlugin([
-    { from: 'images', to: './images' },
-    { from: 'app.json', to: './app.json', toType: 'file' }
-  ], { context: "./src" }),
+  new CopyWebpackPlugin([{
+      from: 'images',
+      to: './images'
+    },
+    {
+      from: 'app.json',
+      to: './app.json',
+      toType: 'file'
+    }
+  ], {
+    context: "./src"
+  }),
+];
+
+
+/**
+ * Plugins for webpack configuration.
+ */
+const pluginsWeb = [
+  /*
+   * Plugin: BannerPlugin
+   * Description: Adds a banner to the top of each generated chunk.
+   * See: https://webpack.js.org/plugins/banner-plugin/
+   */
+  new webpack.BannerPlugin({
+    banner: '// { "framework": "Vue"} \n',
+    raw: true,
+    exclude: 'Vue'
+  }),
+  /**
+   * 复制文件到dist下
+   */
+  new CopyWebpackPlugin([{
+      from: 'src/images',
+      to: './images'
+    },
+    {
+      from: 'static/weex-vue-render.min.js',
+      to: './weex-vue-render.min.js',
+      toType: 'file'
+    },
+    {
+      from: 'static/vue.min.js',
+      to: './vue.min.js',
+      toType: 'file'
+    },
+    {
+      from: 'static/index.html',
+      to: './index.html',
+      toType: 'file'
+    },
+  ], {
+    context: "./"
+  }),
+
+  /**清除打包记录 */
+  // new CleanWebpackPlugin(
+  //     ['dist/*'],　 //匹配删除的文件
+  //     {
+  //         root: helper.rootNode('.'),       　　　　　　　　　　//根目录
+  //         verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
+  //         dry:      false        　　　　　　　　　　//启用删除文件
+  //     }
+  // )
 ];
 
 // Config for compile jsbundle for web.
 const webConfig = {
-  entry: Object.assign(webEntry, {
-    'vendor': [path.resolve('node_modules/phantom-limb/index.js')]
-  }),
+  entry: {
+    main: helper.rootNode('./src/entry_web.js'),
+  },
   output: {
     path: helper.rootNode('./dist/web'),
-    filename: '[name].web.js'
+    filename: 'bundle_[name].js'
   },
   /**
    * Options affecting the resolving of modules.
@@ -115,7 +173,8 @@ const webConfig = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': helper.resolve('src')
+      '@': helper.resolve('src'),
+      'tesla-native-js': 'tesla-native-js-browser'
     }
   },
   /*
@@ -125,19 +184,21 @@ const webConfig = {
    */
   module: {
     // webpack 2.0 
-    rules: useEslint.concat([
-      {
+    rules: useEslint.concat([{
         test: /\.js$/,
         use: [{
           loader: 'babel-loader'
         }],
-        exclude: /node_modules(?!(\/|\\).*(weex).*)/
+        exclude: /node_modules(?!(\/|\\).*(weex|tesla).*)/
       },
       {
         test: /\.vue(\?[^?]+)?$/,
         use: [{
           loader: 'vue-loader',
-          options: Object.assign(vueLoaderConfig({useVue: true, usePostCSS: false}), {
+          options: Object.assign(vueLoaderConfig({
+            useVue: true,
+            usePostCSS: false
+          }), {
             /**
              * important! should use postTransformNode to add $processStyle for
              * inline style prefixing.
@@ -156,15 +217,13 @@ const webConfig = {
                 minPixelValue: 1.01
               })
             ],
-            compilerModules: [
-              {
-                postTransformNode: el => {
-                  // to convert vnode for weex components.
-                  require('weex-vue-precompiler')()(el)
-                }
+            compilerModules: [{
+              postTransformNode: el => {
+                // to convert vnode for weex components.
+                require('weex-vue-precompiler')()(el)
               }
-            ]
-            
+            }]
+
           })
         }]
       }
@@ -175,7 +234,7 @@ const webConfig = {
    *
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
-  plugins: plugins
+  plugins: pluginsWeb
 };
 // Config for compile jsbundle for native.
 const weexConfig = {
@@ -200,8 +259,7 @@ const weexConfig = {
    * See: http://webpack.github.io/docs/configuration.html#module
    */
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.js$/,
         use: [{
           loader: 'babel-loader'
@@ -211,7 +269,9 @@ const weexConfig = {
         test: /\.vue(\?[^?]+)?$/,
         use: [{
           loader: 'weex-loader',
-          options: vueLoaderConfig({useVue: false})
+          options: vueLoaderConfig({
+            useVue: false
+          })
         }]
       }
     ]
@@ -223,11 +283,11 @@ const weexConfig = {
    */
   plugins: plugins,
   /*
-  * Include polyfills or mocks for various node stuff
-  * Description: Node configuration
-  *
-  * See: https://webpack.github.io/docs/configuration.html#node
-  */
+   * Include polyfills or mocks for various node stuff
+   * Description: Node configuration
+   *
+   * See: https://webpack.github.io/docs/configuration.html#node
+   */
   node: config.nodeConfiguration
 };
 

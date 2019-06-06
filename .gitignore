@@ -1,5 +1,8 @@
-node_modules
+﻿node_modules
 .temp
 dist
 .vscode
 /config.js
+release
+.DS_Store
+/package-lock.json

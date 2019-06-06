@@ -1,0 +1,14 @@
+{
+  "name": "teslax-field",
+  "version": "2.1.0",
+  "description": "修改formT适应设计部需要，tabPage对红点的支持，select的修改",
+  "dependencies": {
+    "tesla-native-js": "^1.0.4-beta15"
+  },
+  "main": "normal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hkq@ucmed、lgl@ucmed",
+  "license": "ISC"
+}

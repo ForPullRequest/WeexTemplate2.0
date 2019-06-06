@@ -1,0 +1,113 @@
+.width750{
+    width: 750px;
+}
+.visible{
+    visibility: visible;
+}
+.hidden{
+    visibility: hidden;
+}
+.lines1 {
+    lines: 1;
+    text-overflow: ellipsis;
+}
+.lines2 {
+    lines: 2;
+    text-overflow: ellipsis;
+}
+.row {
+    flex-direction: row;
+}
+.column {
+    flex-direction: column;
+}
+.jcCenter {
+    justify-content: center;
+}
+.aiCenter {
+    align-items: center;
+}
+.asCenter {
+    align-self: center;
+}
+.flex {
+    flex: 1;
+}
+.rowBetween{
+    justify-content: flex-between;
+    align-items: flex-between;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.white {
+    background-color: white;
+}
+.red {
+    background-color: red;
+}
+.green{
+    background-color: green;
+}
+.transBlack {
+    background-color:black;
+    opacity:0.4;
+    position: absolute;
+}
+.marginR28{
+    margin-left: 28px;
+}
+.marginL28{
+    margin-left: 28px;
+}
+.imgDiv{
+    padding: 10px;
+}
+.weightBold{
+    font-weight: bold;
+}
+.text24 {
+    font-size: 24px;
+}
+.text26{
+    font-size: 26px;
+}
+.text28 {
+    font-size: 28px;
+}
+.text30{
+    font-size: 30px;
+}
+.text32 {
+    font-size: 32px;
+}
+.text34 {
+    font-size: 34px;
+}
+.text36 {
+    font-size: 36px;
+}
+.text38 {
+    font-size: 38px;
+}
+.text40{
+    font-size: 40px;
+}
+.fontBlack99{
+    color: #999999;
+}
+.fontBlack66{
+    color: #666666;
+}
+.fontBlack33 {
+    color: #333333;
+}
+.fontBlack11 {
+    color: #111111;
+}
+.fontWhite {
+    color: white;
+}
+.fontBlue {
+    color: #1C97FC;
+}

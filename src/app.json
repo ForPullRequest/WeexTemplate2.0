@@ -9,7 +9,8 @@
         "navigationBarTextStyle": "black",
         "backgroundColor": "#eeeeee",
         "backgroundTextStyle": "light",
-        "showContentInSystemUI":false
+        "showContentInSystemUI":false,
+        "softInputMode":"adjustResize|stateAlwaysHidden"
     },
     "networkTimeout": {
       "request": 10000,
@@ -38,6 +39,11 @@
           "window":{
             "navigationBarBackgroundColor": "#F6F6F6",
             "navigationBarTextStyle": "black"
+          },
+          "main":{
+                "window":{
+                  "softInputMode":"adjustPan|stateAlwaysHidden"
+                }
           }
         }
       },

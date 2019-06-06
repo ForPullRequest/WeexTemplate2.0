@@ -1,38 +1,17 @@
 ## Commands
 
-### npm start
-
-Starts the development server for you to preview your weex page on browser.
-You can also scan the QR code using weex playground to preview weex page on native.
-
 ### npm run dev
 
-Open the code compilation task in watch mode.
+开发运行,监听文件变化
 
-### npm run ios
+### npm run release
 
-(Mac only, requires Xcode)
-Starts the development server and loads your app in an iOS simulator.
+打包发布版本(压缩js文件, 体积更小), 输出至release文件夹并自动生成zip
 
-### npm run android
+### npm run serve
 
-(Requires Android build tools)
-Starts the development server and loads your app on a connected Android device or emulator.
+启动weex原生服务
 
-### npm run pack:ios
+### npm run serve:web
 
-(Mac only, requires Xcode)
-Packaging ios project into ipa package.
-
-### npm run pack:android
-
-(Requires Android build tools)
-Packaging android project into apk package.
-
-### npm run pack:web
-
-Packaging html5 project into `web/build` folder.
-
-### npm run test
-
-Starts the test runner.
+启动weex web服务, 运行此命令前确保dist/web 目录存在
